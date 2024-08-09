@@ -52,4 +52,7 @@ Journal CSV Data:
 https://github.com/xivapi/ffxiv-datamining/blob/b9af2b78e7525d44a2d44b345db4404350a9de31/csv/quest/001/ChrHdb401_00166.csv
 
 Image CSV Data:
-?? Not sure yet how to get this
+(XIV API on demand)
+
+List of MSQ Quests: 
+https://ffxiv.consolegameswiki.com/wiki/Main_Scenario_Quests

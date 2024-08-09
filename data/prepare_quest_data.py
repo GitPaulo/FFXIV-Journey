@@ -2,7 +2,6 @@ import pandas as pd
 import json
 import requests
 import time
-
 from tqdm import tqdm
 from io import StringIO
 
@@ -17,7 +16,7 @@ else:
     exit()
 
 # Load the CSV content into a DataFrame, skip the first and third rows, and use the second row as the header
-usecols = ["#", "Name", "Id", "Expansion", "EventIconType", "PreviousQuest[0]"]
+usecols = ["#", "Name", "Id", "Expansion", "EventIconType", "PreviousQuest[0]", "PreviousQuest[1]", "PreviousQuest[2]", "PreviousQuest[3]"]
 quest_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2], low_memory=False, usecols=usecols)
 
 # Drop rows where 'Name' column has NaN values
@@ -26,59 +25,111 @@ quest_data = quest_data.dropna(subset=['Name'])
 # Filter to keep rows where EventIconType is 3 which represents Main Scenario Quests
 filtered_data = quest_data[quest_data['EventIconType'] == 3]
 
-# Fetch the Image path for each quest
+# Detect starting location based on the quest ID prefix
+def detect_starting_location(quest_id):
+    if "Fst" in quest_id:
+        return "Gridania"
+    elif "Sea" in quest_id:
+        return "Limsa Lominsa"
+    elif "Wil" in quest_id:  
+        return "Ul'dah"
+    else:
+        return None
+
+# Convert expansion number to expansion name
+def convert_expansion_number_to_name(expansion_number):
+    if expansion_number == 0:
+        return "A Realm Reborn"
+    elif expansion_number == 1:
+        return "Heavensward"
+    elif expansion_number == 2:
+        return "Stormblood"
+    elif expansion_number == 3:
+        return "Shadowbringers"
+    elif expansion_number == 4:
+        return "Endwalker"
+    elif expansion_number == 5:
+        return "Dawntrail"
+    else:
+        return "Unknown"
+
+# Fetch the Image path for each quest (this part can be skipped if necessary)
 api_base_url = "https://beta.xivapi.com/api/1/search"
 quests_by_number = {}
-with tqdm(total=len(filtered_data), desc="Fetching Images", ncols=100) as pbar:
-    # Populate the dictionary with quest data
+
+# Prompt user if they want to fetch images
+fetch_images = input("Do you want to fetch images? (yes/no): ").strip().lower() == 'yes'
+
+with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar:
     for _, row in filtered_data.iterrows():
         quest_name = row["Name"]
-        
-        # Make API call to fetch the Image path
-        response = requests.get(
-            api_base_url, 
-            params={
-                "sheets": "Quest",
-                "query": f"Name~\"{quest_name}\"",
-                "fields": "Icon,Name"
-            }
-        )
-        
-        image_path = None
-        if response.status_code == 200:
-            data = response.json()
-            if data["results"]:
-                image_path = data["results"][0]["fields"]["Icon"]["path_hr1"]
+        starting_location = detect_starting_location(row["Id"])
+        expansion_name = convert_expansion_number_to_name(row["Expansion"])
 
+        # Optionally fetch the Image path
+        image_path = None
+        if fetch_images:
+            response = requests.get(
+                api_base_url, 
+                params={
+                    "sheets": "Quest",
+                    "query": f"Name~\"{quest_name}\"",
+                    "fields": "Icon,Name"
+                }
+            )
+            if response.status_code == 200:
+                data = response.json()
+                if data["results"]:
+                    image_path = data["results"][0]["fields"]["Icon"]["path_hr1"]
+
+            # To avoid hitting the API rate limit
+            time.sleep(0.777)
+        
+        # Create the quest entry
         quest = {
             "#": row["#"],
             "Id": row["Id"],
             "Name": row["Name"],
-            "Expansion": row["Expansion"],
+            "Expansion": expansion_name,
             "EventIconType": row["EventIconType"],
-            "PreviousQuest": row["PreviousQuest[0]"],
-            "NextQuest": None,  # Initialize as None, to be filled later
+            "PreviousQuests": [row[col] for col in ["PreviousQuest[0]", "PreviousQuest[1]", "PreviousQuest[2]", "PreviousQuest[3]"] if not pd.isna(row[col])],
+            "NextMSQ": None,  # Initialize as None, to be filled later
+            "StartingLocation": starting_location,
             "Image": image_path
         }
         quests_by_number[row["#"]] = quest
 
-        # Wait for 100ms to avoid hitting the API rate limit
-        # Rate limit is 20 requests per second (1000ms/20 = 50ms) so we double it
-        time.sleep(.100)
-
-        # Update the progress bar
         pbar.update(1)
 
-# Calculate the next quest for each quest
+# Calculate the next MSQ for each quest
 for quest in quests_by_number.values():
-    previous_quest_number = quest["PreviousQuest"]
-    if previous_quest_number in quests_by_number:
-        quests_by_number[previous_quest_number]["NextQuest"] = quest["#"]
+    for previous_quest_number in quest["PreviousQuests"]:
+        if previous_quest_number in quests_by_number:
+            quests_by_number[previous_quest_number]["NextMSQ"] = quest["#"]
 
-# Save the filtered data to a JSON file for use in the application
-quests_list = list(quests_by_number.values())
-output_json_path = 'data/Quests.json'
+# Organize the data into the desired structure
+quests_by_expansion = {}
+
+for quest in quests_by_number.values():
+    expansion = quest["Expansion"]
+    starting_location = quest["StartingLocation"] if quest["StartingLocation"] else "Main Quest Line"
+    
+    if expansion not in quests_by_expansion:
+        quests_by_expansion[expansion] = {}
+    
+    if starting_location not in quests_by_expansion[expansion]:
+        quests_by_expansion[expansion][starting_location] = []
+    
+    quests_by_expansion[expansion][starting_location].append(quest)
+
+# Sort quests within each group by their "#"
+for expansion in quests_by_expansion:
+    for location in quests_by_expansion[expansion]:
+        quests_by_expansion[expansion][location].sort(key=lambda x: x["#"])
+
+# Save the structured data to a JSON file
+output_json_path = 'static/Quests.json'  # svelte app expects the file to be in the static folder
 with open(output_json_path, 'w') as json_file:
-    json.dump(quests_list, json_file, indent=4)
+    json.dump({"expansions": quests_by_expansion}, json_file, indent=4)
 
 print(f'Filtered data saved to {output_json_path}')
