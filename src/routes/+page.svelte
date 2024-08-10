@@ -1,179 +1,168 @@
 <script lang="ts">
   import "../app.css";
-  import { onMount } from "svelte";
-  import { createEventDispatcher } from "svelte";
-  import type { Quest, FilteredQuests, Expansions } from "$lib/model";
+  import type { Quest, Quests } from "$lib/model";
 
-  let expansions: Expansions = {};
-  let filteredQuests: FilteredQuests = {};
-  let searchQuery = "";
-  let loading = true;
+  export let data: { quests: Promise<Quests>; loading: boolean };
 
-  const dispatch = createEventDispatcher();
-  const placeholderImage = "/default_quest_image.png";
-
+  let loading = data.loading;
+  let quests: Quests = [];
+  let filteredQuests: Quests = [];
+  let searchQuery: string = "";
+  let currentExpansion: string = "";
   let openExpansions: Record<string, boolean> = {};
   let openLocations: Record<string, Record<string, boolean>> = {};
   let completedQuests: Record<number, boolean> = {};
-
-  let currentExpansion = "";
-
-  onMount(async () => {
-    await fetchQuests();
-    updateBackground();
-  });
-
-  async function fetchQuests(): Promise<void> {
-    try {
-      const response = await fetch("/Quests.json");
-      const data = await response.json();
-      expansions = data.expansions;
-      filteredQuests = expansions;
-      resetOpenStates();
-    } catch (error) {
-      console.error("Error loading quests:", error);
-    } finally {
-      loading = false;
-    }
-  }
-
-  function updateBackground(): void {
-    if (typeof document !== "undefined") {
-      const bgImage = currentExpansion
-        ? `/background_${currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
-        : "/background.jpg";
-      const bgElement = document.getElementById("background");
-      if (bgElement) {
-        bgElement.style.backgroundImage = `url('${bgImage}')`;
-      }
-    }
-  }
-
-  function getImageUrl(imagePath: string | null): string {
-    return imagePath
-      ? `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`
-      : placeholderImage;
-  }
+  let progress: Record<
+    string,
+    { percent: number; completed: number; total: number }
+  > = {};
 
   function resetOpenStates(): void {
     openExpansions = {};
     openLocations = {};
 
-    for (const expansion of Object.keys(expansions)) {
-      openExpansions[expansion] = false;
-      openLocations[expansion] = {};
+    for (const expansion of quests) {
+      openExpansions[expansion.name] = false;
+      openLocations[expansion.name] = {};
 
-      for (const location of Object.keys(expansions[expansion])) {
-        openLocations[expansion][location] = false;
+      for (const location of Object.keys(expansion.quests)) {
+        openLocations[expansion.name][location] = false;
       }
     }
   }
 
-  function calculateProgress(expansion: string): {
-    percent: number;
-    completed: number;
-    total: number;
-  } {
-    const quests = Object.values(expansions[expansion]).flat();
-    const totalQuests = quests.length;
-    const completedQuestsCount = quests.filter(
+  function calculateProgress(expansionName: string) {
+    const expansion = quests.find((exp) => exp.name === expansionName);
+    if (!expansion) return { percent: 0, completed: 0, total: 0 };
+
+    const questsArray: Quest[] = Object.values(expansion.quests).flat();
+    const totalQuests = questsArray.length;
+    const completedQuestsCount = questsArray.filter(
       (quest) => completedQuests[quest["#"]]
     ).length;
 
-    const percent = Math.floor((completedQuestsCount / totalQuests) * 100);
-    return { percent, completed: completedQuestsCount, total: totalQuests };
+    const percent =
+      totalQuests > 0
+        ? Math.floor((completedQuestsCount / totalQuests) * 100)
+        : 0;
+
+    return {
+      percent,
+      completed: completedQuestsCount,
+      total: totalQuests,
+    };
   }
 
   function toggleQuestCompletion(quest: Quest, isChecked: boolean): void {
-    const questIds = Object.values(expansions[quest.Expansion])
-      .flat()
-      .map((q) => q["#"]);
-    const questIndex = questIds.indexOf(quest["#"]);
+    let questFound = false;
 
-    if (isChecked) {
-      for (let i = 0; i <= questIndex; i++) {
-        completedQuests[questIds[i]] = true;
-      }
-    } else {
-      for (let i = questIndex; i < questIds.length; i++) {
-        completedQuests[questIds[i]] = false;
+    for (const expansion of quests) {
+      const questIds: number[] = Object.values(expansion.quests)
+        .flat()
+        .map((q) => q["#"]);
+
+      for (let i = 0; i < questIds.length; i++) {
+        if (questFound) {
+          // Uncheck all quests after the found quest
+          completedQuests[questIds[i]] = false;
+        } else {
+          // Check all quests leading up to and including the found quest
+          completedQuests[questIds[i]] = true;
+        }
+
+        if (questIds[i] === quest["#"]) {
+          questFound = true;
+
+          // If the current quest is unchecked, uncheck it and uncheck all following quests
+          if (!isChecked) {
+            completedQuests[questIds[i]] = false;
+          }
+        }
       }
     }
 
-    if (isChecked) {
-      const expansionsList = Object.keys(expansions);
-      const currentExpansionIndex = expansionsList.indexOf(quest.Expansion);
-      for (let i = 0; i <= currentExpansionIndex; i++) {
-        const previousExpansion = expansionsList[i];
-        Object.values(expansions[previousExpansion])
-          .flat()
-          .forEach((prevQuest) => {
-            completedQuests[prevQuest["#"]] = true;
-          });
-      }
-    }
-
+    // Update progress bars for all expansions
     calculateAllProgress();
   }
 
   function calculateAllProgress(): void {
-    for (const expansion of Object.keys(expansions)) {
-      calculateProgress(expansion);
+    for (const expansion of quests) {
+      progress[expansion.name] = calculateProgress(expansion.name);
     }
   }
 
   function filterQuests(): void {
     if (searchQuery.trim() === "") {
-      filteredQuests = expansions;
+      filteredQuests = quests;
       resetOpenStates();
       return;
     }
 
-    filteredQuests = {};
+    filteredQuests = [];
     resetOpenStates();
 
-    for (const expansion of Object.keys(expansions)) {
-      for (const location of Object.keys(expansions[expansion])) {
-        const quests = expansions[expansion][location].filter((quest: Quest) =>
+    for (const expansion of quests) {
+      const filteredExpansion = {
+        name: expansion.name,
+        quests: {} as typeof expansion.quests,
+      };
+
+      for (const location of Object.keys(expansion.quests)) {
+        const locationQuests = expansion.quests[location].filter((quest) =>
           quest.Name.toLowerCase().includes(searchQuery.toLowerCase())
         );
 
-        if (quests.length > 0) {
-          if (!filteredQuests[expansion]) {
-            filteredQuests[expansion] = {};
-            openExpansions[expansion] = true;
-          }
-
-          filteredQuests[expansion][location] = quests;
-          openLocations[expansion][location] = true;
+        if (locationQuests.length > 0) {
+          filteredExpansion.quests[location] = locationQuests;
+          openExpansions[expansion.name] = true;
+          openLocations[expansion.name][location] = true;
         }
+      }
+
+      if (Object.keys(filteredExpansion.quests).length > 0) {
+        filteredQuests.push(filteredExpansion);
       }
     }
   }
 
-  function lazyLoadImage(node: HTMLImageElement): {
-    destroy(): void;
-  } {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          node.src = node.dataset.src!;
-          observer.unobserve(node);
-        }
-      },
-      {
-        rootMargin: "100px",
-      }
-    );
-    observer.observe(node);
-    return {
-      destroy() {
-        observer.unobserve(node);
-      },
-    };
+  function getImageUrl(imagePath: string | null): string {
+    const placeholderImage = "/default_quest_image.png";
+    return imagePath
+      ? `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`
+      : placeholderImage;
+  }
+
+  function handleCheckboxChange(event: Event, quest: Quest) {
+    const input = event.target as HTMLInputElement;
+    toggleQuestCompletion(quest, input.checked);
+  }
+
+  function updateBackground(): void {
+    const bgImage = currentExpansion
+      ? `/background_${currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
+      : "/background.jpg";
+    const bgElement = document.getElementById("background");
+    if (bgElement) {
+      bgElement.style.backgroundImage = `url('${bgImage}')`;
+    }
+  }
+
+  /**
+   * Init
+   */
+  $: {
+    data.quests.then((loadedQuests: Quests) => {
+      quests = loadedQuests;
+      filteredQuests = loadedQuests;
+      loading = false;
+
+      resetOpenStates();
+      calculateAllProgress();
+    });
   }
 </script>
 
+<!-- Title -->
 <div class="flex flex-col mb-8 justify-center items-center">
   <div class="bg-white rounded-lg p-6 shadow max-w-xl w-full">
     <div class="text-center">
@@ -189,30 +178,24 @@
   </div>
 </div>
 
-{#if !loading && currentExpansion}
+<!--- Progress --->
+{#if !loading}
   <div
     class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg p-4 shadow"
   >
-    {#each Object.keys(expansions) as expansion}
-      <div
-        class="flex flex-col items-center"
-        on:click={() => {
-          currentExpansion = expansion;
-          updateBackground();
-        }}
-      >
-        <p class="font-semibold text-gray-700">{expansion}</p>
+    {#each quests as expansion}
+      <div class="flex flex-col items-center">
+        <p class="font-semibold text-gray-700">{expansion.name}</p>
         <div class="w-full bg-gray-200 rounded-full h-4 relative">
           <div
             class="bg-blue-600 h-4 rounded-full absolute"
-            style="width: {calculateProgress(expansion).percent}%"
+            style="width: {progress[expansion.name]?.percent}%"
           ></div>
           <p
             class="absolute w-full text-center text-xs font-semibold top-0 left-0"
           >
-            {calculateProgress(expansion).completed}/{calculateProgress(
-              expansion
-            ).total} ({calculateProgress(expansion).percent}%)
+            {progress[expansion.name]?.completed}/{progress[expansion.name]
+              ?.total} ({progress[expansion.name]?.percent}%)
           </p>
         </div>
       </div>
@@ -220,7 +203,11 @@
   </div>
 {/if}
 
-{#if !loading}
+<!-- Content -->
+{#if loading}
+  <p class="text-center text-gray-600">Loading quests...</p>
+  <img src="loading.gif" alt="Loading" class="mx-auto mt-4" />
+{:else}
   <div class="mb-6">
     <input
       type="text"
@@ -230,33 +217,28 @@
       on:input={filterQuests}
     />
   </div>
-{/if}
 
-{#if loading}
-  <p class="text-center text-gray-600">Loading quests...</p>
-  <img src="loading.gif" alt="Loading" class="mx-auto mt-4" />
-{:else if Object.keys(filteredQuests).length > 0}
-  {#each Object.keys(filteredQuests) as expansion}
-    <details class="mb-8" {...openExpansions[expansion] ? { open: true } : {}}>
+  {#each filteredQuests as expansion}
+    <details class="mb-8" open={openExpansions[expansion.name]}>
       <summary
         class="text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow"
         on:click={() => {
-          currentExpansion = expansion;
+          currentExpansion = expansion.name;
           updateBackground();
         }}
       >
-        {expansion}
+        {expansion.name}
       </summary>
-      {#each Object.keys(filteredQuests[expansion]) as location}
+      {#each Object.keys(expansion.quests) as location}
         <details
           class="ml-6 mb-6 pl-6"
-          {...openLocations[expansion][location] ? { open: true } : {}}
+          open={openLocations[expansion.name][location]}
         >
           {#if location !== "Main"}
             <summary
               class="text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow"
               on:click={() => {
-                currentExpansion = expansion;
+                currentExpansion = expansion.name;
                 updateBackground();
               }}
             >
@@ -264,7 +246,7 @@
             </summary>
           {/if}
           <ul class="space-y-4">
-            {#each filteredQuests[expansion][location] as quest}
+            {#each expansion.quests[location] as quest}
               <li
                 class="flex items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
               >
@@ -273,18 +255,16 @@
                     type="checkbox"
                     class="form-checkbox h-6 w-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                     checked={completedQuests[quest["#"]] || false}
-                    on:change={(e) =>
-                      toggleQuestCompletion(quest, e.target.checked)}
+                    on:change={(e) => handleCheckboxChange(e, quest)}
                   />
                 </div>
                 <div class="flex-grow ml-4">
                   <p class="font-bold text-xl text-gray-800">{quest.Name}</p>
                   <p class="text-sm text-gray-500 mt-1">ID: {quest.Id}</p>
                   <img
-                    data-src={getImageUrl(quest.Image)}
+                    src={getImageUrl(quest.Image)}
                     alt="Quest Icon"
                     class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm"
-                    use:lazyLoadImage
                   />
                 </div>
               </li>
@@ -294,6 +274,8 @@
       {/each}
     </details>
   {/each}
-{:else}
-  <p class="text-center text-gray-600">No quests found.</p>
+
+  {#if filteredQuests && filteredQuests.length === 0}
+    <p class="text-center text-gray-600">No quests found.</p>
+  {/if}
 {/if}

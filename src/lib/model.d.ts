@@ -13,14 +13,11 @@ export type Quest = {
   StartingLocation: "Gridania" | "Limsa Lominsa" | "Ul'dah" | null; // Starting location or null if not applicable
   Image: string | null; // Path to the quest image or null if not available
 };
-export type Quests = Quest[];
-export type FilteredQuests = {
-  [expansion: string]: {
+
+export type Quests = Array<{
+  name: string;
+  quests: {
     [location: string]: Quest[];
   };
-};
-export type Expansions = {
-  [expansion: string]: {
-    [location: string]: Quest[];
-  };
-};
+}>;
+

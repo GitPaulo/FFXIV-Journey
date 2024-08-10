@@ -107,19 +107,12 @@ for quest in quests_by_number.values():
         if previous_quest_number in quests_by_number:
             quests_by_number[previous_quest_number]["NextMSQ"] = quest["#"]
 
-# Identify final quests
-final_quests = set()
-next_msq_values = set(quest["NextMSQ"] for quest in quests_by_number.values() if quest["NextMSQ"])
-
-# Any quest without a NextMSQ and not in the set of `next_msq_values` is considered a final quest
-for quest in quests_by_number.values():
-    if not quest["NextMSQ"] and quest["#"] not in next_msq_values:
-        final_quests.add(quest["#"])
-
-# Remove quests that do not have a NextMSQ but are not final quests
+# Remove quests that do not have a NextMSQ but are not final quests,
+# but keep the quest with the highest # number.
+max_quest_id = max(quests_by_number.keys())
 quests_by_number = {
     quest_id: quest for quest_id, quest in quests_by_number.items()
-    if quest["NextMSQ"] or quest["#"] in final_quests
+    if quest["NextMSQ"] or quest_id == max_quest_id
 }
 
 print(f"After filtering, {len(quests_by_number)} quests remain.")
@@ -154,9 +147,17 @@ for quest in quests_by_number.values():
     
     quests_by_expansion[expansion][starting_location].append(quest)
 
+# Convert the dictionary into the desired array format
+quests_array = []
+for expansion, locations in quests_by_expansion.items():
+    quests_array.append({
+        "name": expansion,
+        "quests": locations
+    })
+
 # Save the structured data to a JSON file
 output_json_path = 'static/Quests.json'  # svelte app expects the file to be in the static folder
 with open(output_json_path, 'w') as json_file:
-    json.dump({"expansions": quests_by_expansion}, json_file, indent=4)
+    json.dump(quests_array, json_file, indent=4)
 
 print(f'Filtered data saved to {output_json_path}')
