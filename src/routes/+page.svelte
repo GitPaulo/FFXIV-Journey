@@ -234,6 +234,7 @@
 
 {#if loading}
   <p class="text-center text-gray-600">Loading quests...</p>
+  <img src="loading.gif" alt="Loading" class="mx-auto mt-4" />
 {:else if Object.keys(filteredQuests).length > 0}
   {#each Object.keys(filteredQuests) as expansion}
     <details class="mb-8" {...openExpansions[expansion] ? { open: true } : {}}>
@@ -282,7 +283,7 @@
                   <img
                     data-src={getImageUrl(quest.Image)}
                     alt="Quest Icon"
-                    class="mt-4 w-16 h-16 rounded-md border border-gray-300 shadow-sm"
+                    class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm"
                     use:lazyLoadImage
                   />
                 </div>

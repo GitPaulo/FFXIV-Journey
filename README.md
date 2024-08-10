@@ -2,6 +2,17 @@
 
 TODO
 
+## TODO
+
+- [ ] Finish post processing quest data into the right format
+- [ ] Correct checkbox system and progress bar updating
+- [ ] Local storage current checkbox data
+- [ ] Fancy loading bars magic effect!
+- [ ] Quest id link to quest lodestone?
+- [ ] Quest descriptions?
+- [ ] Quest map viewer!
+- [ ] Music?
+
 ## Notes
 
 Similar python script:

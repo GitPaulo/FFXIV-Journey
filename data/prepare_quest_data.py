@@ -83,7 +83,7 @@ with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar
                     image_path = data["results"][0]["fields"]["Icon"]["path_hr1"]
 
             # To avoid hitting the API rate limit
-            time.sleep(0.777)
+            time.sleep(0.100)
         
         # Create the quest entry
         quest = {
@@ -107,7 +107,39 @@ for quest in quests_by_number.values():
         if previous_quest_number in quests_by_number:
             quests_by_number[previous_quest_number]["NextMSQ"] = quest["#"]
 
-# Organize the data into the desired structure
+# Identify final quests
+final_quests = set()
+next_msq_values = set(quest["NextMSQ"] for quest in quests_by_number.values() if quest["NextMSQ"])
+
+# Any quest without a NextMSQ and not in the set of `next_msq_values` is considered a final quest
+for quest in quests_by_number.values():
+    if not quest["NextMSQ"] and quest["#"] not in next_msq_values:
+        final_quests.add(quest["#"])
+
+# Remove quests that do not have a NextMSQ but are not final quests
+quests_by_number = {
+    quest_id: quest for quest_id, quest in quests_by_number.items()
+    if quest["NextMSQ"] or quest["#"] in final_quests
+}
+
+print(f"After filtering, {len(quests_by_number)} quests remain.")
+
+# Filter out duplicate quests with the same Name, NextMSQ, and StartingLocation
+seen_quests = {}
+filtered_quests_by_number = {}
+for quest_id, quest in quests_by_number.items():
+    key = (quest["Name"], quest["NextMSQ"], quest["StartingLocation"])
+    if key not in seen_quests:
+        seen_quests[key] = quest_id
+        filtered_quests_by_number[quest_id] = quest
+
+# Update quests_by_number to only include filtered quests
+quests_by_number = filtered_quests_by_number
+
+print(f"After removing duplicates, {len(quests_by_number)} quests remain.")
+
+
+# Organize the data into the desired structure with correct MSQ order
 quests_by_expansion = {}
 
 for quest in quests_by_number.values():
@@ -121,11 +153,6 @@ for quest in quests_by_number.values():
         quests_by_expansion[expansion][starting_location] = []
     
     quests_by_expansion[expansion][starting_location].append(quest)
-
-# Sort quests within each group by their "#"
-for expansion in quests_by_expansion:
-    for location in quests_by_expansion[expansion]:
-        quests_by_expansion[expansion][location].sort(key=lambda x: x["#"])
 
 # Save the structured data to a JSON file
 output_json_path = 'static/Quests.json'  # svelte app expects the file to be in the static folder
