@@ -1,6 +1,7 @@
 <script lang="ts">
   import "../app.css";
   import { base } from "$app/paths";
+  import { slide } from "svelte/transition";
   import type { Quest, Quests } from "$lib/model";
 
   export let data: { quests: Promise<Quests>; loading: boolean };
@@ -127,14 +128,19 @@
   }
 
   function getImageUrl(imagePath: string | null): string {
-    const placeholderImage = "/default_quest_image.png";
-    if (!imagePath || imagePath.trim() === "") {
+    const placeholderImage = `${base}/default_quest_image.png`;
+    if (
+      !imagePath ||
+      imagePath.trim() === "" ||
+      imagePath.includes("000000_hr1")
+    ) {
       return placeholderImage;
     }
     try {
       // Validate that there is an image path
-      new URL(imagePath);
-      return `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`;
+      const assetPath = `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`;
+      new URL(assetPath);
+      return assetPath;
     } catch {
       return placeholderImage;
     }
@@ -156,6 +162,29 @@
     }
   }
 
+  let showTitle = true;
+  function toggleTitleVisibility() {
+    showTitle = !showTitle;
+  }
+
+  let tooltipVisible = false;
+  function showTooltip() {
+    tooltipVisible = true;
+  }
+  function hideTooltip() {
+    tooltipVisible = false;
+  }
+
+  let searchInput: HTMLInputElement;
+  ``;
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === "/") {
+      event.preventDefault(); // Prevent the default '/' action
+      searchInput?.focus();
+    }
+  };
+  window.addEventListener("keydown", handleKeydown);
+
   /**
    * Init
    */
@@ -163,29 +192,60 @@
     data.quests.then((loadedQuests: Quests) => {
       quests = loadedQuests;
       filteredQuests = loadedQuests;
-      loading = false;
-
       resetOpenStates();
       calculateAllProgress();
+
+      // Load always a bit
+      setTimeout(() => {
+        loading = false;
+      }, 250);
+
+      // Show footer after loading
+      const footer = document.getElementById("footer");
+      if (footer) {
+        footer.style.display = "block";
+      }
     });
   }
 </script>
 
 <!-- Title -->
-<div class="flex flex-col mb-8 justify-center items-center">
-  <div class="bg-white rounded-lg p-6 shadow max-w-xl w-full">
-    <div class="text-center">
-      <img src="logo.png" alt="FFXIV Journey" class="h-16 mx-auto" />
-      <h1 class="text-3xl font-bold text-blue-600 mt-2">
-        FFXIV Journey Tracker
-      </h1>
-    </div>
+{#if showTitle}
+  <div
+    class="relative flex flex-col mb-8 justify-center items-center"
+    transition:slide
+  >
+    <div class="bg-white rounded-lg p-6 shadow max-w-xl w-full relative">
+      <!-- Hide Button -->
+      <button
+        on:click={toggleTitleVisibility}
+        on:mouseover={showTooltip}
+        on:mouseleave={hideTooltip}
+        class="absolute top-2 right-2 text-gray-200 hover:text-gray-700 p-3"
+      >
+        ✕
+        {#if tooltipVisible}
+          <div
+            class="absolute top-full mt-1 right-0 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
+          >
+            Hide!
+          </div>
+        {/if}
+      </button>
 
-    <h3 class="font-bold text-center text-gray-600 mt-4 text-lg">
-      Track your main story quest journey with the utmost ease.
-    </h3>
+      <div class="text-center">
+        <img src="logo.png" alt="FFXIV Journey" class="h-16 mx-auto" />
+        <h1 class="text-3xl font-bold text-blue-600 mt-2">
+          FFXIV Journey Tracker
+        </h1>
+      </div>
+
+      <h3 class="font-bold text-center text-gray-600 mt-4 text-lg">
+        Track your main story quest journey with the utmost ease.
+      </h3>
+    </div>
   </div>
-</div>
+{/if}
 
 <!--- Progress --->
 {#if !loading}
@@ -195,13 +255,15 @@
     {#each quests as expansion}
       <div class="flex flex-col items-center">
         <p class="font-semibold text-gray-700">{expansion.name}</p>
-        <div class="w-full bg-gray-200 rounded-full h-4 relative">
+        <div
+          class="w-full bg-gray-200 rounded-full h-4 relative overflow-hidden shadow-inner"
+        >
           <div
-            class="bg-blue-600 h-4 rounded-full absolute"
+            class="h-full rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 transition-all duration-700 ease-in-out"
             style="width: {progress[expansion.name]?.percent}%"
           ></div>
           <p
-            class="absolute w-full text-center text-xs font-semibold top-0 left-0"
+            class="absolute w-full text-center text-xs font-semibold top-0 left-0 text-white"
           >
             {progress[expansion.name]?.completed}/{progress[expansion.name]
               ?.total} ({progress[expansion.name]?.percent}%)
@@ -214,17 +276,42 @@
 
 <!-- Content -->
 {#if loading}
-  <p class="text-center text-gray-600">Loading quests...</p>
+  <p class="text-center text-gray-600">
+    Perparing your quests... <b>K-kupo!</b>
+  </p>
   <img src="loading.gif" alt="Loading" class="mx-auto mt-4" />
 {:else}
-  <div class="mb-6">
+  <div class="mb-6 flex relative">
     <input
       type="text"
       placeholder="Search quests..."
-      class="p-3 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+      autofocus
+      class="p-3 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
       bind:value={searchQuery}
+      bind:this={searchInput}
       on:input={filterQuests}
     />
+    <svg
+      class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-300 pointer-events-none"
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.2939 7.17041L11.9998 12L10.7058 16.8297"
+        stroke="#888888"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <path
+        d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+        stroke="#888888"
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+    </svg>
   </div>
 
   {#each filteredQuests as expansion}
@@ -272,9 +359,19 @@
                   <p class="text-sm text-gray-500 mt-1">ID: {quest.Id}</p>
                   <img
                     src={getImageUrl(quest.Image)}
-                    alt="Quest Icon"
+                    alt="Quest journal thumbnail"
+                    loading="lazy"
                     class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm"
                   />
+                </div>
+                <div class="ml-auto">
+                  <a
+                    href={`https://www.garlandtools.org/db/#quest/${quest["#"]}`}
+                    target="_blank"
+                    class="text-blue-600 hover:underline"
+                  >
+                    Open in Garland Tools
+                  </a>
                 </div>
               </li>
             {/each}
