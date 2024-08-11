@@ -53,38 +53,38 @@ export function calculateAllProgress() {
 
 export function toggleQuestCompletion(quest: Quest, isChecked: boolean) {
   const $quests = get(quests);
-  const questIds: number[] = Object.values($quests)
-    .flat()
-    .map((q: any) => q["#"]);
 
   let questFound = false;
 
-  for (let i = 0; i < questIds.length; i++) {
-    if (questFound) {
-      // Uncheck all quests after the found quest
-      completedQuests.update((current) => {
-        current[questIds[i]] = false;
-        return current;
-      });
-    } else {
-      // Check all quests leading up to and including the found quest
-      completedQuests.update((current) => {
-        current[questIds[i]] = true;
-        return current;
-      });
-    }
+  for (const expansion of $quests) {
+    const questIds = Object.values(expansion.quests)
+      .flat()
+      .map((q: Quest) => q["#"]);
 
-    if (questIds[i] === quest["#"]) {
-      questFound = true;
+    completedQuests.update((current) => {
+      const newCompletedQuests = { ...current };
 
-      // If the current quest is unchecked, uncheck it and uncheck all following quests
-      if (!isChecked) {
-        completedQuests.update((current) => {
-          current[questIds[i]] = false;
-          return current;
-        });
+      for (let i = 0; i < questIds.length; i++) {
+        if (questFound) {
+          // Uncheck all quests after the found quest
+          newCompletedQuests[questIds[i]] = false;
+        } else {
+          // Check all quests leading up to and including the found quest
+          newCompletedQuests[questIds[i]] = true;
+        }
+
+        if (questIds[i] === quest["#"]) {
+          questFound = true;
+
+          // If the current quest is unchecked, uncheck it and uncheck all following quests
+          if (!isChecked) {
+            newCompletedQuests[questIds[i]] = false;
+          }
+        }
       }
-    }
+
+      return newCompletedQuests; // Return a new object to trigger reactivity
+    });
   }
 
   saveCompletedQuests();
