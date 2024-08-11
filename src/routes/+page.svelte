@@ -6,6 +6,8 @@
 
   export let data: { quests: Promise<Quests>; loading: boolean };
 
+  const LOCAL_STORAGE_KEY = "ffxiv-journey:completed";
+
   let loading = data.loading;
   let quests: Quests = [];
   let filteredQuests: Quests = [];
@@ -13,11 +15,17 @@
   let currentExpansion: string = "";
   let openExpansions: Record<string, boolean> = {};
   let openLocations: Record<string, Record<string, boolean>> = {};
-  let completedQuests: Record<number, boolean> = {};
+  let completedQuests: Record<number, boolean> = JSON.parse(
+    localStorage.getItem(LOCAL_STORAGE_KEY) || "{}"
+  );
   let progress: Record<
     string,
     { percent: number; completed: number; total: number }
   > = {};
+
+  function saveCompletedQuests() {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(completedQuests));
+  }
 
   function resetOpenStates(): void {
     openExpansions = {};
@@ -82,6 +90,9 @@
         }
       }
     }
+
+    // Save the updated quest completion state
+    saveCompletedQuests();
 
     // Update progress bars for all expansions
     calculateAllProgress();
