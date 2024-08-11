@@ -101,7 +101,7 @@
   function updateBackground() {
     const bgImage = $currentExpansion
       ? `${base}/background_${$currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
-      : `${base}/background.jpg`;
+      : ""; // No background is default
 
     const bgElement = document.getElementById("background");
     if (bgElement) {

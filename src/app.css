@@ -46,7 +46,8 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: url('background.jpg') no-repeat center center;
+  background: url('') no-repeat center center;
+  /* Background is rogramatically set */
   background-size: cover;
   opacity: 0.9;
   z-index: 1;
@@ -63,10 +64,4 @@ body {
   overflow: auto;
   background-color: rgba(244, 246, 244, 0.7);
   border-radius: 8px;
-}
-
-@media (max-width: 640px) {
-  #footer-text {
-    display: none;
-  }
 }
