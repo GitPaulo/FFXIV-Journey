@@ -4,22 +4,6 @@
         "quests": {
             "Gridania": [
                 {
-                    "#": 65564,
-                    "Id": "SubFst005_00028",
-                    "Name": "To the Bannock",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65621,
-                        0,
-                        65659,
-                        65660
-                    ],
-                    "NextMSQ": 65737,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
                     "#": 65621,
                     "Id": "ManFst002_00085",
                     "Name": "Close to Home",
@@ -36,98 +20,18 @@
                     "Image": "ui/icon/100000/100004_hr1.tex"
                 },
                 {
-                    "#": 65665,
-                    "Id": "SubFst035_00129",
-                    "Name": "Spirithold Broken",
+                    "#": 65564,
+                    "Id": "SubFst005_00028",
+                    "Name": "To the Bannock",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        69391,
+                        65621,
                         0,
-                        0,
-                        0
+                        65659,
+                        65660
                     ],
-                    "NextMSQ": 65712,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100003_hr1.tex"
-                },
-                {
-                    "#": 65697,
-                    "Id": "SubFst055_00161",
-                    "Name": "Leia's Legacy",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65923,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65982,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100036_hr1.tex"
-                },
-                {
-                    "#": 65711,
-                    "Id": "SubFst038_00175",
-                    "Name": "Surveying the Damage",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69390,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69391,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65712,
-                    "Id": "SubFst027_00176",
-                    "Name": "On to Bentbranch",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65665,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65912,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65732,
-                    "Id": "SubFst039_00196",
-                    "Name": "An Eft for Effort",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65981,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65664,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65734,
-                    "Id": "SubFst042_00198",
-                    "Name": "Butcher of Greentear",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65711,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65661,
+                    "NextMSQ": 65737,
                     "StartingLocation": "Gridania",
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -148,36 +52,100 @@
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65808,
-                    "Id": "ManFst208_00272",
-                    "Name": "Life, Materia and Everything",
+                    "#": 65981,
+                    "Id": "ManFst005_00445",
+                    "Name": "Chasing Shadows",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66110,
+                        65737,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65879,
+                    "NextMSQ": 69390,
                     "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100075_hr1.tex"
+                    "Image": "ui/icon/100000/100064_hr1.tex"
                 },
                 {
-                    "#": 65879,
-                    "Id": "ManFst209_00343",
-                    "Name": "Lord of the Inferno",
+                    "#": 69390,
+                    "Id": "XxaFst034_03854",
+                    "Name": "Eggs over Queasy",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65808,
+                        65981,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66047,
+                    "NextMSQ": 65711,
                     "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100076_hr1.tex"
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65711,
+                    "Id": "SubFst038_00175",
+                    "Name": "Surveying the Damage",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69390,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 69391,
+                    "StartingLocation": "Gridania",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69391,
+                    "Id": "XxaFst031_03855",
+                    "Name": "A Soldier's Breakfast",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65711,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65665,
+                    "StartingLocation": "Gridania",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65665,
+                    "Id": "SubFst035_00129",
+                    "Name": "Spirithold Broken",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69391,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65712,
+                    "StartingLocation": "Gridania",
+                    "Image": "ui/icon/100000/100003_hr1.tex"
+                },
+                {
+                    "#": 65712,
+                    "Id": "SubFst027_00176",
+                    "Name": "On to Bentbranch",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65665,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65912,
+                    "StartingLocation": "Gridania",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
                     "#": 65912,
@@ -292,20 +260,20 @@
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65981,
-                    "Id": "ManFst005_00445",
-                    "Name": "Chasing Shadows",
+                    "#": 65697,
+                    "Id": "SubFst055_00161",
+                    "Name": "Leia's Legacy",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65737,
+                        65923,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 69390,
+                    "NextMSQ": 65982,
                     "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100064_hr1.tex"
+                    "Image": "ui/icon/100000/100036_hr1.tex"
                 },
                 {
                     "#": 65982,
@@ -386,215 +354,733 @@
                     "NextMSQ": 66210,
                     "StartingLocation": "Gridania",
                     "Image": "ui/icon/100000/100067_hr1.tex"
-                },
+                }
+            ],
+            "Ul'dah": [
                 {
-                    "#": 66045,
-                    "Id": "ManFst206_00509",
-                    "Name": "The Scions of the Seventh Dawn",
+                    "#": 66104,
+                    "Id": "ManWil002_00568",
+                    "Name": "Close to Home",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66196,
+                        66130,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66046,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100073_hr1.tex"
+                    "NextMSQ": 66131,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100004_hr1.tex"
                 },
                 {
-                    "#": 66046,
-                    "Id": "ManFst207_00510",
-                    "Name": "A Wild Rose by Any Other Name",
+                    "#": 66131,
+                    "Id": "SubWil027_00595",
+                    "Name": "We Must Rebuild",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66045,
+                        66104,
+                        0,
+                        66105,
+                        66106
+                    ],
+                    "NextMSQ": 66207,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66207,
+                    "Id": "SubWil025_00671",
+                    "Name": "Nothing to See Here",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66131,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66154,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100074_hr1.tex"
+                    "NextMSQ": 66086,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66047,
-                    "Id": "ManFst300_00511",
-                    "Name": "A Hero in the Making",
+                    "#": 66086,
+                    "Id": "ManWil005_00550",
+                    "Name": "Underneath the Sultantree",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65879,
+                        66207,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66218,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100077_hr1.tex"
+                    "NextMSQ": 65839,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100088_hr1.tex"
                 },
                 {
-                    "#": 66049,
-                    "Id": "ManFst304_00513",
-                    "Name": "Sylph-management",
+                    "#": 65839,
+                    "Id": "SubWil060_00303",
+                    "Name": "Step Nine",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66219,
-                        0,
-                        66220,
-                        66221
-                    ],
-                    "NextMSQ": 69392,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100157_hr1.tex"
-                },
-                {
-                    "#": 66050,
-                    "Id": "ManFst306_00514",
-                    "Name": "Into the Beast's Maw",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69398,
+                        66086,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66279,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/112000/112005_hr1.tex"
+                    "NextMSQ": 69388,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66052,
-                    "Id": "ManFst309_00516",
-                    "Name": "Wrath of the Titan",
+                    "#": 69388,
+                    "Id": "XxaWil063_03852",
+                    "Name": "Prudence at This Junction",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66337,
+                        65839,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66345,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100158_hr1.tex"
+                    "NextMSQ": 65843,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66053,
-                    "Id": "ManFst313_00517",
-                    "Name": "All Good Things",
+                    "#": 65843,
+                    "Id": "SubWil064_00307",
+                    "Name": "Out of House and Home",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66393,
+                        69388,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 69403,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100159_hr1.tex"
+                    "NextMSQ": 65856,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66054,
-                    "Id": "ManFst401_00518",
-                    "Name": "Eyes on Me",
+                    "#": 65856,
+                    "Id": "SubWil066_00320",
+                    "Name": "Way Down in the Hole",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66414,
+                        65843,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66419,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100160_hr1.tex"
+                    "NextMSQ": 66159,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100046_hr1.tex"
                 },
                 {
-                    "#": 66055,
-                    "Id": "ManFst404_00519",
-                    "Name": "Lady of the Vortex",
+                    "#": 66159,
+                    "Id": "SubWil026_00623",
+                    "Name": "Takin' What They're Givin'",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66511,
+                        65856,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66056,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100161_hr1.tex"
+                    "NextMSQ": 65864,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66056,
-                    "Id": "ManFst405_00520",
-                    "Name": "Reclamation",
+                    "#": 65864,
+                    "Id": "SubWil080_00328",
+                    "Name": "Supply and Demands",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66055,
+                        66159,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66514,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100162_hr1.tex"
+                    "NextMSQ": 66039,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66057,
-                    "Id": "ManFst407_00521",
-                    "Name": "Escape from Castrum Centri",
+                    "#": 66039,
+                    "Id": "SubWil095_00503",
+                    "Name": "Give It to Me Raw",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66541,
+                        65864,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66058,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100163_hr1.tex"
+                    "NextMSQ": 65865,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66058,
-                    "Id": "ManFst408_00522",
-                    "Name": "The Black Wolf's Ultimatum",
+                    "#": 65865,
+                    "Id": "SubWil081_00329",
+                    "Name": "The Perfect Swarm",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66057,
+                        66039,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 70057,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100164_hr1.tex"
+                    "NextMSQ": 65866,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66196,
-                    "Id": "ManFst205_00660",
-                    "Name": "Into a Copper Hell",
+                    "#": 65866,
+                    "Id": "SubWil082_00330",
+                    "Name": "Last Letter to Lost Hope",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66214,
+                        65865,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66045,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100072_hr1.tex"
+                    "NextMSQ": 69389,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
+                {
+                    "#": 69389,
+                    "Id": "XxaWil083_03853",
+                    "Name": "Heir Today, Gone Tomorrow",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65866,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65868,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65868,
+                    "Id": "SubWil084_00332",
+                    "Name": "Passing the Blade",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69389,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65869,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65869,
+                    "Id": "SubWil085_00333",
+                    "Name": "Following Footfalls",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65868,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65870,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65870,
+                    "Id": "SubWil086_00334",
+                    "Name": "Storms on the Horizon",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65869,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65872,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65872,
+                    "Id": "SubWil088_00336",
+                    "Name": "Oh Captain, My Captain",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65870,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66164,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100098_hr1.tex"
+                },
+                {
+                    "#": 66164,
+                    "Id": "ManWil006_00628",
+                    "Name": "Secrets and Lies",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65872,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66087,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66087,
+                    "Id": "ManWil007_00551",
+                    "Name": "Duty, Honor, Country",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66164,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66177,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100089_hr1.tex"
+                },
+                {
+                    "#": 66177,
+                    "Id": "ManWil008_00641",
+                    "Name": "A Matter of Tradition",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66087,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66088,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66088,
+                    "Id": "ManWil009_00552",
+                    "Name": "A Royal Reception",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66177,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66064,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100090_hr1.tex"
+                },
+                {
+                    "#": 66064,
+                    "Id": "ManWil200_00528",
+                    "Name": "The Ul'dahn Envoy",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66088,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66209,
+                    "StartingLocation": "Ul'dah",
+                    "Image": "ui/icon/100000/100091_hr1.tex"
+                }
+            ],
+            "Limsa Lominsa": [
+                {
+                    "#": 65644,
+                    "Id": "ManSea002_00108",
+                    "Name": "Close to Home",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65643,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65998,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100004_hr1.tex"
+                },
+                {
+                    "#": 65998,
+                    "Id": "SubSea050_00462",
+                    "Name": "On to Summerford",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65644,
+                        0,
+                        65645,
+                        0
+                    ],
+                    "NextMSQ": 65999,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65999,
+                    "Id": "SubSea051_00463",
+                    "Name": "Dressed to Call",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65998,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66079,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66079,
+                    "Id": "ManSea005_00543",
+                    "Name": "Lurkers in the Grotto",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65999,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66001,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100080_hr1.tex"
+                },
+                {
+                    "#": 66001,
+                    "Id": "SubSea053_00465",
+                    "Name": "Washed Up",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66079,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66002,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66002,
+                    "Id": "SubSea054_00466",
+                    "Name": "Double Dealing",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66001,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66003,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66003,
+                    "Id": "SubSea055_00467",
+                    "Name": "Loam Maintenance",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66002,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66004,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66004,
+                    "Id": "SubSea056_00468",
+                    "Name": "Plowshares to Swords",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66003,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66005,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66005,
+                    "Id": "SubSea057_00469",
+                    "Name": "Just Deserts",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66004,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65933,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100094_hr1.tex"
+                },
+                {
+                    "#": 65933,
+                    "Id": "SubSea100_00397",
+                    "Name": "Sky-high",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66005,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65938,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65938,
+                    "Id": "SubSea105_00402",
+                    "Name": "Thanks a Million",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65933,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65939,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65939,
+                    "Id": "SubSea106_00403",
+                    "Name": "Relighting the Torch",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65938,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65942,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65942,
+                    "Id": "SubSea109_00406",
+                    "Name": "On to the Drydocks",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65939,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65948,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65948,
+                    "Id": "SubSea115_00412",
+                    "Name": "Without a Doubt",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65942,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65951,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65951,
+                    "Id": "SubSea118_00415",
+                    "Name": "Righting the Shipwright",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65948,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65949,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65949,
+                    "Id": "SubSea116_00413",
+                    "Name": "Do Angry Pirates Dream",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65951,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65950,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65950,
+                    "Id": "SubSea117_00414",
+                    "Name": "Victory in Peril",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65949,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66225,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100096_hr1.tex"
+                },
+                {
+                    "#": 66225,
+                    "Id": "ManSea006_00689",
+                    "Name": "Men of the Blue Tattoos",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65950,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66080,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66080,
+                    "Id": "ManSea007_00544",
+                    "Name": "Feint and Strike",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66225,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66226,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100081_hr1.tex"
+                },
+                {
+                    "#": 66226,
+                    "Id": "ManSea008_00690",
+                    "Name": "High Society",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66080,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66081,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66081,
+                    "Id": "ManSea009_00545",
+                    "Name": "A Mizzenmast Repast",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66226,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66082,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100082_hr1.tex"
+                },
+                {
+                    "#": 66082,
+                    "Id": "ManSea200_00546",
+                    "Name": "The Lominsan Envoy",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66081,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66210,
+                    "StartingLocation": "Limsa Lominsa",
+                    "Image": "ui/icon/100000/100083_hr1.tex"
+                }
+            ],
+            "Main Quest Line": [
                 {
                     "#": 66209,
                     "Id": "SubFst102_00673",
@@ -607,8 +1093,40 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66211,
-                    "StartingLocation": "Gridania",
+                    "NextMSQ": 65781,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65781,
+                    "Id": "ManSea203_00245",
+                    "Name": "It's Probably Pirates",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66209,
+                        0,
+                        66210,
+                        0
+                    ],
+                    "NextMSQ": 66212,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100070_hr1.tex"
+                },
+                {
+                    "#": 66212,
+                    "Id": "SubSea150_00676",
+                    "Name": "Call of the Forest",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65781,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66213,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
@@ -624,7 +1142,7 @@
                         0
                     ],
                     "NextMSQ": 66214,
-                    "StartingLocation": "Gridania",
+                    "StartingLocation": null,
                     "Image": "ui/icon/100000/100071_hr1.tex"
                 },
                 {
@@ -640,13 +1158,205 @@
                         0
                     ],
                     "NextMSQ": 66196,
-                    "StartingLocation": "Gridania",
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66216,
-                    "Id": "ManFst302_00680",
-                    "Name": "The Company You Keep (Twin Adder)",
+                    "#": 66196,
+                    "Id": "ManFst205_00660",
+                    "Name": "Into a Copper Hell",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66214,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66045,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100072_hr1.tex"
+                },
+                {
+                    "#": 66045,
+                    "Id": "ManFst206_00509",
+                    "Name": "The Scions of the Seventh Dawn",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66196,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66046,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100073_hr1.tex"
+                },
+                {
+                    "#": 66046,
+                    "Id": "ManFst207_00510",
+                    "Name": "A Wild Rose by Any Other Name",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66045,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66154,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100074_hr1.tex"
+                },
+                {
+                    "#": 66154,
+                    "Id": "SubWil110_00618",
+                    "Name": "Unsolved Mystery",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66046,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66155,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66155,
+                    "Id": "SubWil111_00619",
+                    "Name": "What Poor People Think",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66154,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66156,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66156,
+                    "Id": "SubWil112_00620",
+                    "Name": "A Proper Burial",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66155,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66157,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66157,
+                    "Id": "SubWil113_00621",
+                    "Name": "For the Children",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66156,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66158,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66158,
+                    "Id": "SubWil114_00622",
+                    "Name": "Amalj'aa Wrong Places",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66157,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66110,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 66110,
+                    "Id": "SubWil129_00574",
+                    "Name": "Dressed to Deceive",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66158,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65808,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100099_hr1.tex"
+                },
+                {
+                    "#": 65808,
+                    "Id": "ManFst208_00272",
+                    "Name": "Life, Materia and Everything",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66110,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65879,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100075_hr1.tex"
+                },
+                {
+                    "#": 65879,
+                    "Id": "ManFst209_00343",
+                    "Name": "Lord of the Inferno",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65808,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66047,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100076_hr1.tex"
+                },
+                {
+                    "#": 66047,
+                    "Id": "ManFst300_00511",
+                    "Name": "A Hero in the Making",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65879,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66218,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100077_hr1.tex"
+                },
+                {
+                    "#": 66218,
+                    "Id": "ManWil302_00682",
+                    "Name": "The Company You Keep (Immortal Flames)",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -655,731 +1365,57 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66219,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100068_hr1.tex"
+                    "NextMSQ": 66221,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100092_hr1.tex"
                 },
                 {
-                    "#": 66219,
-                    "Id": "ManFst303_00683",
-                    "Name": "Wood's Will Be Done",
+                    "#": 66221,
+                    "Id": "ManWil303_00685",
+                    "Name": "For Coin and Country",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66216,
+                        66218,
                         0,
                         0,
                         0
                     ],
                     "NextMSQ": 66049,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/100000/100069_hr1.tex"
-                },
-                {
-                    "#": 69390,
-                    "Id": "XxaFst034_03854",
-                    "Name": "Eggs over Queasy",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65981,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65711,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69391,
-                    "Id": "XxaFst031_03855",
-                    "Name": "A Soldier's Breakfast",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65711,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65665,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69409,
-                    "Id": "XxaFst502_03873",
-                    "Name": "Rock the Castrum",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69408,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 70058,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/112000/112016_hr1.tex"
-                },
-                {
-                    "#": 70058,
-                    "Id": "XxcFst503_04522",
-                    "Name": "The Ultimate Weapon",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69409,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66711,
-                    "StartingLocation": "Gridania",
-                    "Image": "ui/icon/112000/112017_hr1.tex"
-                }
-            ],
-            "Main Quest Line": [
-                {
-                    "#": 65588,
-                    "Id": "GaiUse401_00052",
-                    "Name": "Traitor in the Midst",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66996,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65589,
                     "StartingLocation": null,
-                    "Image": "ui/icon/100000/100316_hr1.tex"
+                    "Image": "ui/icon/100000/100093_hr1.tex"
                 },
                 {
-                    "#": 65589,
-                    "Id": "GaiUse402_00053",
-                    "Name": "Back and Fourth",
+                    "#": 66049,
+                    "Id": "ManFst304_00513",
+                    "Name": "Sylph-management",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65588,
+                        66219,
+                        0,
+                        66220,
+                        66221
+                    ],
+                    "NextMSQ": 69392,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100157_hr1.tex"
+                },
+                {
+                    "#": 69392,
+                    "Id": "XxaUsa002_03856",
+                    "Name": "We Come in Peace",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66049,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65590,
+                    "NextMSQ": 66245,
                     "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65590,
-                    "Id": "GaiUse403_00054",
-                    "Name": "Coming to Terms",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65589,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65593,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100317_hr1.tex"
-                },
-                {
-                    "#": 65593,
-                    "Id": "GaiUse404_00057",
-                    "Name": "The Intercession of Saints",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65590,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65598,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65598,
-                    "Id": "GaiUse405_00062",
-                    "Name": "Strength in Unity",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65593,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65605,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65605,
-                    "Id": "GaiUse406_00069",
-                    "Name": "Dark Words, Dark Deeds",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65598,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65610,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65610,
-                    "Id": "GaiUse407_00074",
-                    "Name": "First Blood",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65605,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65611,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65611,
-                    "Id": "GaiUse408_00075",
-                    "Name": "The Path of the Righteous",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65610,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65613,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100318_hr1.tex"
-                },
-                {
-                    "#": 65613,
-                    "Id": "GaiUse409_00077",
-                    "Name": "For the Greater Good",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65611,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65614,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65614,
-                    "Id": "GaiUse410_00078",
-                    "Name": "Tendrils of Intrigue",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65613,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69422,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100319_hr1.tex"
-                },
-                {
-                    "#": 65615,
-                    "Id": "GaiUse411_00079",
-                    "Name": "Chasing Ivy",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65614,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65616,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65616,
-                    "Id": "GaiUse412_00080",
-                    "Name": "Doman Connection",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65615,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65617,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65618,
-                    "Id": "GaiUse414_00082",
-                    "Name": "A Simple Plan",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69423,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65620,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65620,
-                    "Id": "GaiUse415_00084",
-                    "Name": "The Instruments of Our Deliverance",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65618,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65622,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100321_hr1.tex"
-                },
-                {
-                    "#": 65622,
-                    "Id": "GaiUse416_00086",
-                    "Name": "The Road Less Traveled",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65620,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65623,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65623,
-                    "Id": "GaiUse417_00087",
-                    "Name": "Eyes Unclouded",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65622,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65624,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100322_hr1.tex"
-                },
-                {
-                    "#": 65624,
-                    "Id": "GaiUse418_00088",
-                    "Name": "The Reason Roaille",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65623,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65625,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65625,
-                    "Id": "GaiUse419_00089",
-                    "Name": "Let Us Cling Together",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65624,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65899,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100323_hr1.tex"
-                },
-                {
-                    "#": 65899,
-                    "Id": "GaiUse501_00363",
-                    "Name": "Good Intentions",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65625,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65900,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100365_hr1.tex"
-                },
-                {
-                    "#": 65900,
-                    "Id": "GaiUse502_00364",
-                    "Name": "Bait and Switch",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65899,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65901,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65901,
-                    "Id": "GaiUse503_00365",
-                    "Name": "Best Laid Schemes",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65900,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65902,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65902,
-                    "Id": "GaiUse504_00366",
-                    "Name": "The Rising Chorus",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65901,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69424,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100366_hr1.tex"
-                },
-                {
-                    "#": 65904,
-                    "Id": "GaiUse506_00368",
-                    "Name": "On the Counteroffensive",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69424,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65905,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65905,
-                    "Id": "GaiUse507_00369",
-                    "Name": "An Uninvited Ascian",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65904,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65965,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100368_hr1.tex"
-                },
-                {
-                    "#": 65906,
-                    "Id": "GaiUse601_00370",
-                    "Name": "Mask of Grief",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65965,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65907,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100370_hr1.tex"
-                },
-                {
-                    "#": 65907,
-                    "Id": "GaiUse602_00371",
-                    "Name": "Defenders for Ishgard",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65906,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65908,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65908,
-                    "Id": "GaiUse603_00372",
-                    "Name": "The Wyrm's Roar",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65907,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65909,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65909,
-                    "Id": "GaiUse604_00373",
-                    "Name": "Committed to the Cause",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65908,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65927,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100371_hr1.tex"
-                },
-                {
-                    "#": 65927,
-                    "Id": "GaiUse605_00391",
-                    "Name": "Volunteer Dragonslayers",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65909,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65954,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65954,
-                    "Id": "GaiUse606_00418",
-                    "Name": "An Allied Perspective",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65927,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 70127,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65956,
-                    "Id": "GaiUse608_00420",
-                    "Name": "Administrative Decision",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        70127,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65959,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65957,
-                    "Id": "GaiUse609_00421",
-                    "Name": "An Unexpected Ambition",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65956,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65958,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65958,
-                    "Id": "GaiUse610_00422",
-                    "Name": "Ancient Ways, Timeless Wants",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65957,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65961,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65959,
-                    "Id": "GaiUse611_00423",
-                    "Name": "Where We Are Needed",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65956,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65960,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65960,
-                    "Id": "GaiUse612_00424",
-                    "Name": "The Least among Us",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65959,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65961,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65961,
-                    "Id": "GaiUse613_00425",
-                    "Name": "A Time to Every Purpose",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65958,
-                        0,
-                        65960,
-                        0
-                    ],
-                    "NextMSQ": 65962,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100373_hr1.tex"
-                },
-                {
-                    "#": 65962,
-                    "Id": "GaiUse614_00426",
-                    "Name": "Come, but Not Gone",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65961,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65963,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65963,
-                    "Id": "GaiUse615_00427",
-                    "Name": "The Parting Glass",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65962,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65964,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100374_hr1.tex"
-                },
-                {
-                    "#": 65964,
-                    "Id": "GaiUse616_00428",
-                    "Name": "Before the Dawn",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65963,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 67116,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100375_hr1.tex"
-                },
-                {
-                    "#": 65965,
-                    "Id": "GaiUse508_00429",
-                    "Name": "In Memory of Moenbryda",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65905,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65906,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100369_hr1.tex"
+                    "Image": "ui/icon/100000/100111_hr1.tex"
                 },
                 {
                     "#": 66245,
@@ -1430,8 +1466,8 @@
                     "Image": "ui/icon/100000/100112_hr1.tex"
                 },
                 {
-                    "#": 66253,
-                    "Id": "GaiUsa103_00717",
+                    "#": 69393,
+                    "Id": "XxaUsa103_03857",
                     "Name": "Dance Dance Diplomacy",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -1441,7 +1477,23 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66254,
+                    "NextMSQ": 69394,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69394,
+                    "Id": "XxaUsa104_03858",
+                    "Name": "Forest Friend",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69393,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66255,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -1494,8 +1546,8 @@
                     "Image": "ui/icon/100000/100114_hr1.tex"
                 },
                 {
-                    "#": 66262,
-                    "Id": "GaiUsa203_00726",
+                    "#": 69395,
+                    "Id": "XxaUsa203_03859",
                     "Name": "Druthers House Rules",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -1505,23 +1557,39 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66269,
+                    "NextMSQ": 69396,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66269,
-                    "Id": "GaiUsa301_00733",
+                    "#": 69396,
+                    "Id": "XxaUsa301_03860",
                     "Name": "Never Forget",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66262,
+                        69395,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66270,
+                    "NextMSQ": 69397,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69397,
+                    "Id": "XxaUsa302_03861",
+                    "Name": "Microbrewing",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69396,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66273,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -1556,6 +1624,38 @@
                     "NextMSQ": 69398,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69398,
+                    "Id": "XxaUsa308_03862",
+                    "Name": "Nouveau Riche",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66274,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66050,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100115_hr1.tex"
+                },
+                {
+                    "#": 66050,
+                    "Id": "ManFst306_00514",
+                    "Name": "Into the Beast's Maw",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69398,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66279,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/112000/112005_hr1.tex"
                 },
                 {
                     "#": 66279,
@@ -1846,8 +1946,8 @@
                     "Image": "ui/icon/100000/100124_hr1.tex"
                 },
                 {
-                    "#": 66320,
-                    "Id": "GaiUsa711_00784",
+                    "#": 69399,
+                    "Id": "XxaUsa711_03863",
                     "Name": "Terror at Fallgourd",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -1857,23 +1957,23 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66321,
+                    "NextMSQ": 69400,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100125_hr1.tex"
                 },
                 {
-                    "#": 66322,
-                    "Id": "GaiUsa802_00786",
-                    "Name": "Seeing Eye to Winged Eye",
+                    "#": 69400,
+                    "Id": "XxaUsa801_03864",
+                    "Name": "Ziz Is So Ridiculous",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        69400,
+                        69399,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66335,
+                    "NextMSQ": 66323,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -1940,6 +2040,22 @@
                     "NextMSQ": 66052,
                     "StartingLocation": null,
                     "Image": "ui/icon/112000/112006_hr1.tex"
+                },
+                {
+                    "#": 66052,
+                    "Id": "ManFst309_00516",
+                    "Name": "Wrath of the Titan",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66337,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66345,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100158_hr1.tex"
                 },
                 {
                     "#": 66345,
@@ -2022,9 +2138,9 @@
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66351,
-                    "Id": "GaiUsb008_00815",
-                    "Name": "The Penitent Man",
+                    "#": 69401,
+                    "Id": "XxaUsb012_03865",
+                    "Name": "Trial by Turtle",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -2033,39 +2149,7 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66352,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100129_hr1.tex"
-                },
-                {
-                    "#": 66352,
-                    "Id": "GaiUsb009_00816",
-                    "Name": "Changing of the Guard",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66351,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66355,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66355,
-                    "Id": "GaiUsb012_00819",
-                    "Name": "Trial by Turtle",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66352,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66356,
+                    "NextMSQ": 66357,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -2132,6 +2216,22 @@
                     "NextMSQ": 69402,
                     "StartingLocation": null,
                     "Image": "ui/icon/112000/112007_hr1.tex"
+                },
+                {
+                    "#": 69402,
+                    "Id": "XxaUsb208_03866",
+                    "Name": "What Do You Mean You Forgot the Wine",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66368,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66376,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
                     "#": 66376,
@@ -2278,24 +2378,24 @@
                     "Image": "ui/icon/100000/100133_hr1.tex"
                 },
                 {
-                    "#": 66407,
-                    "Id": "GaiUsb502_00871",
-                    "Name": "With a Little Elbow Grease",
+                    "#": 66053,
+                    "Id": "ManFst313_00517",
+                    "Name": "All Good Things",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66053,
+                        66393,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66417,
+                    "NextMSQ": 69403,
                     "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
+                    "Image": "ui/icon/100000/100159_hr1.tex"
                 },
                 {
-                    "#": 66408,
-                    "Id": "GaiUsb503_00872",
+                    "#": 69403,
+                    "Id": "XxaUsb503_03867",
                     "Name": "You Can't Take It with You",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -2305,7 +2405,7 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66417,
+                    "NextMSQ": 66412,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100134_hr1.tex"
                 },
@@ -2340,6 +2440,22 @@
                     "NextMSQ": 66054,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100135_hr1.tex"
+                },
+                {
+                    "#": 66054,
+                    "Id": "ManFst401_00518",
+                    "Name": "Eyes on Me",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66414,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66419,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100160_hr1.tex"
                 },
                 {
                     "#": 66419,
@@ -2502,6 +2618,22 @@
                     "Image": "ui/icon/100000/100139_hr1.tex"
                 },
                 {
+                    "#": 69404,
+                    "Id": "XxaUsb808_03868",
+                    "Name": "The Final Flight of the Enterprise",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66448,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66460,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
                     "#": 66460,
                     "Id": "GaiUsb901_00924",
                     "Name": "Ye of Little Faith",
@@ -2518,38 +2650,6 @@
                     "Image": "ui/icon/100000/100140_hr1.tex"
                 },
                 {
-                    "#": 66461,
-                    "Id": "GaiUsb902_00925",
-                    "Name": "Opportunity Knocks",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66460,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66473,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66462,
-                    "Id": "GaiUsb903_00926",
-                    "Name": "All by Ourselves",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66460,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66473,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
                     "#": 66463,
                     "Id": "GaiUsb904_00927",
                     "Name": "Factual Folklore",
@@ -2564,6 +2664,22 @@
                     "NextMSQ": 69405,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69405,
+                    "Id": "XxaUsb914_03869",
+                    "Name": "The Best Inventions",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66463,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66474,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100141_hr1.tex"
                 },
                 {
                     "#": 66474,
@@ -2790,8 +2906,8 @@
                     "Image": "ui/icon/100000/100145_hr1.tex"
                 },
                 {
-                    "#": 66504,
-                    "Id": "GaiUsc301_00968",
+                    "#": 69406,
+                    "Id": "XxaUsc307_03870",
                     "Name": "The Curious Case of Giggity",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -2801,23 +2917,7 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66507,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66507,
-                    "Id": "GaiUsc304_00971",
-                    "Name": "Of Sylphs and Spriggans",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66504,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66510,
+                    "NextMSQ": 66511,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -2836,6 +2936,38 @@
                     "NextMSQ": 66055,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100146_hr1.tex"
+                },
+                {
+                    "#": 66055,
+                    "Id": "ManFst404_00519",
+                    "Name": "Lady of the Vortex",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66511,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66056,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100161_hr1.tex"
+                },
+                {
+                    "#": 66056,
+                    "Id": "ManFst405_00520",
+                    "Name": "Reclamation",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66055,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66514,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100162_hr1.tex"
                 },
                 {
                     "#": 66514,
@@ -2950,22 +3082,6 @@
                     "Image": "ui/icon/100000/100151_hr1.tex"
                 },
                 {
-                    "#": 66537,
-                    "Id": "GaiUsc601_01001",
-                    "Name": "Drowning Out the Voices",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66522,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66540,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
                     "#": 66538,
                     "Id": "GaiUsc602_01002",
                     "Name": "Acting the Part",
@@ -2978,6 +3094,22 @@
                         0
                     ],
                     "NextMSQ": 69407,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69407,
+                    "Id": "XxaUsc603_03871",
+                    "Name": "Dressed for Conquest",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66538,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66540,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -3014,6 +3146,54 @@
                     "Image": "ui/icon/100000/100153_hr1.tex"
                 },
                 {
+                    "#": 66057,
+                    "Id": "ManFst407_00521",
+                    "Name": "Escape from Castrum Centri",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66541,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66058,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100163_hr1.tex"
+                },
+                {
+                    "#": 66058,
+                    "Id": "ManFst408_00522",
+                    "Name": "The Black Wolf's Ultimatum",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66057,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 70057,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100164_hr1.tex"
+                },
+                {
+                    "#": 70057,
+                    "Id": "XxcUsc901_04521",
+                    "Name": "Operation Archon",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        66058,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66573,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100155_hr1.tex"
+                },
+                {
                     "#": 66573,
                     "Id": "GaiUsc902_01037",
                     "Name": "A Hero in Need",
@@ -3030,9 +3210,9 @@
                     "Image": "ui/icon/100000/100156_hr1.tex"
                 },
                 {
-                    "#": 66575,
-                    "Id": "GaiUsc904_01039",
-                    "Name": "The Ladle in the Darkness",
+                    "#": 69408,
+                    "Id": "XxaUsc908_03872",
+                    "Name": "Hearts on Fire",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -3041,57 +3221,41 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66578,
+                    "NextMSQ": 69409,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66578,
-                    "Id": "GaiUsc907_01042",
-                    "Name": "All upon the Watchtowers",
+                    "#": 69409,
+                    "Id": "XxaFst502_03873",
+                    "Name": "Rock the Castrum",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66575,
+                        69408,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66579,
+                    "NextMSQ": 70058,
                     "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
+                    "Image": "ui/icon/112000/112016_hr1.tex"
                 },
                 {
-                    "#": 66579,
-                    "Id": "GaiUsc908_01043",
-                    "Name": "Hearts on Fire",
+                    "#": 70058,
+                    "Id": "XxcFst503_04522",
+                    "Name": "The Ultimate Weapon",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66578,
+                        69409,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66582,
+                    "NextMSQ": 66711,
                     "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66582,
-                    "Id": "GaiUsc911_01046",
-                    "Name": "Setting the Stage",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66579,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66672,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
+                    "Image": "ui/icon/112000/112017_hr1.tex"
                 },
                 {
                     "#": 66711,
@@ -3110,8 +3274,8 @@
                     "Image": "ui/icon/100000/100172_hr1.tex"
                 },
                 {
-                    "#": 66712,
-                    "Id": "GaiUse102_01176",
+                    "#": 69410,
+                    "Id": "XxaUse103_03874",
                     "Name": "Moving On",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -3121,183 +3285,55 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66713,
+                    "NextMSQ": 69411,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66713,
-                    "Id": "GaiUse103_01177",
-                    "Name": "Flowers for One",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66712,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66714,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66714,
-                    "Id": "GaiUse104_01178",
+                    "#": 69411,
+                    "Id": "XxaUse104_03875",
                     "Name": "All Things in Time",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66713,
+                        69410,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66715,
+                    "NextMSQ": 69412,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100173_hr1.tex"
                 },
                 {
-                    "#": 66715,
-                    "Id": "GaiUse105_01179",
-                    "Name": "The Resolute",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66714,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66716,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100174_hr1.tex"
-                },
-                {
-                    "#": 66716,
-                    "Id": "GaiUse106_01180",
+                    "#": 69412,
+                    "Id": "XxaUse106_03876",
                     "Name": "Laying the Foundation",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66715,
+                        69411,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66719,
+                    "NextMSQ": 69413,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66717,
-                    "Id": "GaiUse107_01181",
-                    "Name": "Better Late than Sever",
+                    "#": 69413,
+                    "Id": "XxaUse114_03877",
+                    "Name": "It's Possibly a Primal",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66716,
+                        69412,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 67097,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66718,
-                    "Id": "GaiUse108_01182",
-                    "Name": "Rock-solid Protection",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66716,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 67097,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66719,
-                    "Id": "GaiUse109_01183",
-                    "Name": "Crate Go Kaboom",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66716,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 67097,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66720,
-                    "Id": "GaiUse110_01184",
-                    "Name": "Hest of the Best",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66717,
-                        0,
-                        66718,
-                        66719
-                    ],
-                    "NextMSQ": 67098,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66721,
-                    "Id": "GaiUse111_01185",
-                    "Name": "Pass the Smell Hest",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66720,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66722,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66722,
-                    "Id": "GaiUse112_01186",
-                    "Name": "You're Gonna Carry That",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66721,
-                        0,
-                        67098,
-                        0
-                    ],
-                    "NextMSQ": 66723,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66723,
-                    "Id": "GaiUse113_01187",
-                    "Name": "The Things We Do for Tea",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66722,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66724,
+                    "NextMSQ": 66725,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -3366,8 +3402,8 @@
                     "Image": "ui/icon/100000/100176_hr1.tex"
                 },
                 {
-                    "#": 66729,
-                    "Id": "GaiUse119_01193",
+                    "#": 69414,
+                    "Id": "XxaUse119_03878",
                     "Name": "Build on the Stone",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -3377,9 +3413,25 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66881,
+                    "NextMSQ": 69415,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100177_hr1.tex"
+                },
+                {
+                    "#": 69415,
+                    "Id": "XxaUse201_03879",
+                    "Name": "Still Waters",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69414,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66882,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100219_hr1.tex"
                 },
                 {
                     "#": 66882,
@@ -3414,8 +3466,8 @@
                     "Image": "ui/icon/100000/100220_hr1.tex"
                 },
                 {
-                    "#": 66884,
-                    "Id": "GaiUse204_01348",
+                    "#": 69416,
+                    "Id": "XxaUse204_03880",
                     "Name": "Promises to Keep",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -3425,39 +3477,23 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66885,
+                    "NextMSQ": 69417,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66885,
-                    "Id": "GaiUse205_01349",
-                    "Name": "A Small-scale Operation",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66884,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66886,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66886,
-                    "Id": "GaiUse206_01350",
+                    "#": 69417,
+                    "Id": "XxaUse206_03881",
                     "Name": "Yugiri's Game",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66885,
+                        69416,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66887,
+                    "NextMSQ": 66888,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100221_hr1.tex"
                 },
@@ -3478,8 +3514,8 @@
                     "Image": "ui/icon/100000/100222_hr1.tex"
                 },
                 {
-                    "#": 66889,
-                    "Id": "GaiUse209_01353",
+                    "#": 69418,
+                    "Id": "XxaUse211_03882",
                     "Name": "All Due Respect",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -3489,23 +3525,7 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66890,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66890,
-                    "Id": "GaiUse210_01354",
-                    "Name": "Full Belly, Happy Heart",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66889,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66891,
+                    "NextMSQ": 66892,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -3654,8 +3674,8 @@
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66980,
-                    "Id": "GaiUse303_01444",
+                    "#": 69419,
+                    "Id": "XxaUse303_03883",
                     "Name": "Shock and Awe",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -3665,7 +3685,23 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66981,
+                    "NextMSQ": 69420,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 69420,
+                    "Id": "XxaUse304_03884",
+                    "Name": "Reap the Whirlwind",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69419,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 66982,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
@@ -3718,9 +3754,9 @@
                     "Image": "ui/icon/100000/100252_hr1.tex"
                 },
                 {
-                    "#": 66985,
-                    "Id": "GaiUse308_01449",
-                    "Name": "A Sylphlands Sting",
+                    "#": 69421,
+                    "Id": "XxaUse311_03885",
+                    "Name": "Levin an Impression",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -3729,41 +3765,9 @@
                         0,
                         0
                     ],
-                    "NextMSQ": 66986,
+                    "NextMSQ": 66989,
                     "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66986,
-                    "Id": "GaiUse309_01450",
-                    "Name": "Scattered Scions",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66985,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66987,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66987,
-                    "Id": "GaiUse310_01451",
-                    "Name": "True to Form",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66986,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66988,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
+                    "Image": "ui/icon/100000/100253_hr1.tex"
                 },
                 {
                     "#": 66989,
@@ -3780,22 +3784,6 @@
                     "NextMSQ": 66992,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100254_hr1.tex"
-                },
-                {
-                    "#": 66990,
-                    "Id": "GaiUse313_01454",
-                    "Name": "A Hard Hapalit to Break",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66989,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66991,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
                     "#": 66992,
@@ -3878,500 +3866,164 @@
                     "Image": "ui/icon/100000/100257_hr1.tex"
                 },
                 {
-                    "#": 67097,
-                    "Id": "GaiUsx110_01561",
-                    "Name": "Welcome to Morbol Country",
+                    "#": 65588,
+                    "Id": "GaiUse401_00052",
+                    "Name": "Traitor in the Midst",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66717,
+                        66996,
                         0,
-                        66718,
-                        66719
+                        0,
+                        0
                     ],
-                    "NextMSQ": 67098,
+                    "NextMSQ": 65589,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100316_hr1.tex"
+                },
+                {
+                    "#": 65589,
+                    "Id": "GaiUse402_00053",
+                    "Name": "Back and Fourth",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65588,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65590,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 67098,
-                    "Id": "GaiUsx111_01562",
-                    "Name": "Answering the Call",
+                    "#": 65590,
+                    "Id": "GaiUse403_00054",
+                    "Name": "Coming to Terms",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66720,
+                        65589,
                         0,
-                        67097,
+                        0,
                         0
                     ],
-                    "NextMSQ": 66722,
+                    "NextMSQ": 65593,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100317_hr1.tex"
+                },
+                {
+                    "#": 65593,
+                    "Id": "GaiUse404_00057",
+                    "Name": "The Intercession of Saints",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65590,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65598,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 69392,
-                    "Id": "XxaUsa002_03856",
-                    "Name": "We Come in Peace",
+                    "#": 65598,
+                    "Id": "GaiUse405_00062",
+                    "Name": "Strength in Unity",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66049,
+                        65593,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66245,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100111_hr1.tex"
-                },
-                {
-                    "#": 69393,
-                    "Id": "XxaUsa103_03857",
-                    "Name": "Dance Dance Diplomacy",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66251,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69394,
+                    "NextMSQ": 65605,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 69394,
-                    "Id": "XxaUsa104_03858",
-                    "Name": "Forest Friend",
+                    "#": 65605,
+                    "Id": "GaiUse406_00069",
+                    "Name": "Dark Words, Dark Deeds",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        69393,
+                        65598,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66255,
+                    "NextMSQ": 65610,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 69395,
-                    "Id": "XxaUsa203_03859",
-                    "Name": "Druthers House Rules",
+                    "#": 65610,
+                    "Id": "GaiUse407_00074",
+                    "Name": "First Blood",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66261,
+                        65605,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 69396,
+                    "NextMSQ": 65611,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 69396,
-                    "Id": "XxaUsa301_03860",
-                    "Name": "Never Forget",
+                    "#": 65611,
+                    "Id": "GaiUse408_00075",
+                    "Name": "The Path of the Righteous",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        69395,
+                        65610,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 69397,
+                    "NextMSQ": 65613,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100318_hr1.tex"
+                },
+                {
+                    "#": 65613,
+                    "Id": "GaiUse409_00077",
+                    "Name": "For the Greater Good",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65611,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65614,
                     "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 69397,
-                    "Id": "XxaUsa302_03861",
-                    "Name": "Microbrewing",
+                    "#": 65614,
+                    "Id": "GaiUse410_00078",
+                    "Name": "Tendrils of Intrigue",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        69396,
+                        65613,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66273,
+                    "NextMSQ": 69422,
                     "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69398,
-                    "Id": "XxaUsa308_03862",
-                    "Name": "Nouveau Riche",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66274,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66050,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100115_hr1.tex"
-                },
-                {
-                    "#": 69399,
-                    "Id": "XxaUsa711_03863",
-                    "Name": "Terror at Fallgourd",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66319,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69400,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100125_hr1.tex"
-                },
-                {
-                    "#": 69400,
-                    "Id": "XxaUsa801_03864",
-                    "Name": "Ziz Is So Ridiculous",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69399,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66323,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69401,
-                    "Id": "XxaUsb012_03865",
-                    "Name": "Trial by Turtle",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66350,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66357,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69402,
-                    "Id": "XxaUsb208_03866",
-                    "Name": "What Do You Mean You Forgot the Wine",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66368,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66376,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69403,
-                    "Id": "XxaUsb503_03867",
-                    "Name": "You Can't Take It with You",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66053,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66412,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100134_hr1.tex"
-                },
-                {
-                    "#": 69404,
-                    "Id": "XxaUsb808_03868",
-                    "Name": "The Final Flight of the Enterprise",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66448,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66460,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69405,
-                    "Id": "XxaUsb914_03869",
-                    "Name": "The Best Inventions",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66463,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66474,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100141_hr1.tex"
-                },
-                {
-                    "#": 69406,
-                    "Id": "XxaUsc307_03870",
-                    "Name": "The Curious Case of Giggity",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66503,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66511,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69407,
-                    "Id": "XxaUsc603_03871",
-                    "Name": "Dressed for Conquest",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66538,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66540,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69408,
-                    "Id": "XxaUsc908_03872",
-                    "Name": "Hearts on Fire",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66573,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69409,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69410,
-                    "Id": "XxaUse103_03874",
-                    "Name": "Moving On",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66711,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69411,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69411,
-                    "Id": "XxaUse104_03875",
-                    "Name": "All Things in Time",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69410,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69412,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100173_hr1.tex"
-                },
-                {
-                    "#": 69412,
-                    "Id": "XxaUse106_03876",
-                    "Name": "Laying the Foundation",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69411,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69413,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69413,
-                    "Id": "XxaUse114_03877",
-                    "Name": "It's Possibly a Primal",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69412,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66725,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69414,
-                    "Id": "XxaUse119_03878",
-                    "Name": "Build on the Stone",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66728,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69415,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100177_hr1.tex"
-                },
-                {
-                    "#": 69415,
-                    "Id": "XxaUse201_03879",
-                    "Name": "Still Waters",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69414,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66882,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100219_hr1.tex"
-                },
-                {
-                    "#": 69416,
-                    "Id": "XxaUse204_03880",
-                    "Name": "Promises to Keep",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66883,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69417,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69417,
-                    "Id": "XxaUse206_03881",
-                    "Name": "Yugiri's Game",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69416,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66888,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100221_hr1.tex"
-                },
-                {
-                    "#": 69418,
-                    "Id": "XxaUse211_03882",
-                    "Name": "All Due Respect",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66888,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66892,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69419,
-                    "Id": "XxaUse303_03883",
-                    "Name": "Shock and Awe",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66979,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69420,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69420,
-                    "Id": "XxaUse304_03884",
-                    "Name": "Reap the Whirlwind",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69419,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66982,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69421,
-                    "Id": "XxaUse311_03885",
-                    "Name": "Levin an Impression",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66984,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66989,
-                    "StartingLocation": null,
-                    "Image": "ui/icon/100000/100253_hr1.tex"
+                    "Image": "ui/icon/100000/100319_hr1.tex"
                 },
                 {
                     "#": 69422,
@@ -4406,6 +4058,166 @@
                     "Image": "ui/icon/100000/100320_hr1.tex"
                 },
                 {
+                    "#": 65618,
+                    "Id": "GaiUse414_00082",
+                    "Name": "A Simple Plan",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        69423,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65620,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65620,
+                    "Id": "GaiUse415_00084",
+                    "Name": "The Instruments of Our Deliverance",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65618,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65622,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100321_hr1.tex"
+                },
+                {
+                    "#": 65622,
+                    "Id": "GaiUse416_00086",
+                    "Name": "The Road Less Traveled",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65620,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65623,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65623,
+                    "Id": "GaiUse417_00087",
+                    "Name": "Eyes Unclouded",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65622,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65624,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100322_hr1.tex"
+                },
+                {
+                    "#": 65624,
+                    "Id": "GaiUse418_00088",
+                    "Name": "The Reason Roaille",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65623,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65625,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65625,
+                    "Id": "GaiUse419_00089",
+                    "Name": "Let Us Cling Together",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65624,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65899,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100323_hr1.tex"
+                },
+                {
+                    "#": 65899,
+                    "Id": "GaiUse501_00363",
+                    "Name": "Good Intentions",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65625,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65900,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100365_hr1.tex"
+                },
+                {
+                    "#": 65900,
+                    "Id": "GaiUse502_00364",
+                    "Name": "Bait and Switch",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65899,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65901,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65901,
+                    "Id": "GaiUse503_00365",
+                    "Name": "Best Laid Schemes",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65900,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65902,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65902,
+                    "Id": "GaiUse504_00366",
+                    "Name": "The Rising Chorus",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65901,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 69424,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100366_hr1.tex"
+                },
+                {
                     "#": 69424,
                     "Id": "XxaUse505_03888",
                     "Name": "Aether on Demand",
@@ -4422,20 +4234,148 @@
                     "Image": "ui/icon/100000/100367_hr1.tex"
                 },
                 {
-                    "#": 70057,
-                    "Id": "XxcUsc901_04521",
-                    "Name": "Operation Archon",
+                    "#": 65904,
+                    "Id": "GaiUse506_00368",
+                    "Name": "On the Counteroffensive",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66058,
+                        69424,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66573,
+                    "NextMSQ": 65905,
                     "StartingLocation": null,
-                    "Image": "ui/icon/100000/100155_hr1.tex"
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65905,
+                    "Id": "GaiUse507_00369",
+                    "Name": "An Uninvited Ascian",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65904,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65965,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100368_hr1.tex"
+                },
+                {
+                    "#": 65965,
+                    "Id": "GaiUse508_00429",
+                    "Name": "In Memory of Moenbryda",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65905,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65906,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100369_hr1.tex"
+                },
+                {
+                    "#": 65906,
+                    "Id": "GaiUse601_00370",
+                    "Name": "Mask of Grief",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65965,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65907,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100370_hr1.tex"
+                },
+                {
+                    "#": 65907,
+                    "Id": "GaiUse602_00371",
+                    "Name": "Defenders for Ishgard",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65906,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65908,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65908,
+                    "Id": "GaiUse603_00372",
+                    "Name": "The Wyrm's Roar",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65907,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65909,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65909,
+                    "Id": "GaiUse604_00373",
+                    "Name": "Committed to the Cause",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65908,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65927,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100371_hr1.tex"
+                },
+                {
+                    "#": 65927,
+                    "Id": "GaiUse605_00391",
+                    "Name": "Volunteer Dragonslayers",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65909,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65954,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
+                },
+                {
+                    "#": 65954,
+                    "Id": "GaiUse606_00418",
+                    "Name": "An Allied Perspective",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65927,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 70127,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
                     "#": 70127,
@@ -4452,360 +4392,182 @@
                     "NextMSQ": 65956,
                     "StartingLocation": null,
                     "Image": "ui/icon/100000/100372_hr1.tex"
-                }
-            ],
-            "Limsa Lominsa": [
-                {
-                    "#": 65644,
-                    "Id": "ManSea002_00108",
-                    "Name": "Close to Home",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65643,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65998,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100004_hr1.tex"
                 },
                 {
-                    "#": 65781,
-                    "Id": "ManSea203_00245",
-                    "Name": "It's Probably Pirates",
+                    "#": 65956,
+                    "Id": "GaiUse608_00420",
+                    "Name": "Administrative Decision",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66209,
-                        0,
-                        66210,
-                        0
-                    ],
-                    "NextMSQ": 66212,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100070_hr1.tex"
-                },
-                {
-                    "#": 65933,
-                    "Id": "SubSea100_00397",
-                    "Name": "Sky-high",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66005,
+                        70127,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65938,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 65959,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65938,
-                    "Id": "SubSea105_00402",
-                    "Name": "Thanks a Million",
+                    "#": 65959,
+                    "Id": "GaiUse611_00423",
+                    "Name": "Where We Are Needed",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65933,
+                        65956,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65940,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 65960,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65939,
-                    "Id": "SubSea106_00403",
-                    "Name": "Relighting the Torch",
+                    "#": 65960,
+                    "Id": "GaiUse612_00424",
+                    "Name": "The Least among Us",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65938,
+                        65959,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65942,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 65961,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65942,
-                    "Id": "SubSea109_00406",
-                    "Name": "On to the Drydocks",
+                    "#": 65961,
+                    "Id": "GaiUse613_00425",
+                    "Name": "A Time to Every Purpose",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65939,
+                        65958,
+                        0,
+                        65960,
+                        0
+                    ],
+                    "NextMSQ": 65962,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100373_hr1.tex"
+                },
+                {
+                    "#": 65962,
+                    "Id": "GaiUse614_00426",
+                    "Name": "Come, but Not Gone",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65961,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65948,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 65963,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65948,
-                    "Id": "SubSea115_00412",
-                    "Name": "Without a Doubt",
+                    "#": 65963,
+                    "Id": "GaiUse615_00427",
+                    "Name": "The Parting Glass",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65942,
+                        65962,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65951,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 65964,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100374_hr1.tex"
+                },
+                {
+                    "#": 65964,
+                    "Id": "GaiUse616_00428",
+                    "Name": "Before the Dawn",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65963,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 67116,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100375_hr1.tex"
+                },
+                {
+                    "#": 65957,
+                    "Id": "GaiUse609_00421",
+                    "Name": "An Unexpected Ambition",
+                    "Expansion": "A Realm Reborn",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        65956,
+                        0,
+                        0,
+                        0
+                    ],
+                    "NextMSQ": 65958,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65949,
-                    "Id": "SubSea116_00413",
-                    "Name": "Do Angry Pirates Dream",
+                    "#": 65958,
+                    "Id": "GaiUse610_00422",
+                    "Name": "Ancient Ways, Timeless Wants",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65951,
+                        65957,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65950,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 65961,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65950,
-                    "Id": "SubSea117_00414",
-                    "Name": "Victory in Peril",
+                    "#": 66216,
+                    "Id": "ManFst302_00680",
+                    "Name": "The Company You Keep (Twin Adder)",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65949,
+                        66047,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66225,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100096_hr1.tex"
+                    "NextMSQ": 66219,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100068_hr1.tex"
                 },
                 {
-                    "#": 65951,
-                    "Id": "SubSea118_00415",
-                    "Name": "Righting the Shipwright",
+                    "#": 66219,
+                    "Id": "ManFst303_00683",
+                    "Name": "Wood's Will Be Done",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65948,
+                        66216,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 65949,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65998,
-                    "Id": "SubSea050_00462",
-                    "Name": "On to Summerford",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65644,
-                        0,
-                        65645,
-                        0
-                    ],
-                    "NextMSQ": 65999,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65999,
-                    "Id": "SubSea051_00463",
-                    "Name": "Dressed to Call",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65998,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66079,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66001,
-                    "Id": "SubSea053_00465",
-                    "Name": "Washed Up",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66079,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66002,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66002,
-                    "Id": "SubSea054_00466",
-                    "Name": "Double Dealing",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66001,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66003,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66003,
-                    "Id": "SubSea055_00467",
-                    "Name": "Loam Maintenance",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66002,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66004,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66004,
-                    "Id": "SubSea056_00468",
-                    "Name": "Plowshares to Swords",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66003,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66005,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66005,
-                    "Id": "SubSea057_00469",
-                    "Name": "Just Deserts",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66004,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65933,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100094_hr1.tex"
-                },
-                {
-                    "#": 66079,
-                    "Id": "ManSea005_00543",
-                    "Name": "Lurkers in the Grotto",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65999,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66001,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100080_hr1.tex"
-                },
-                {
-                    "#": 66080,
-                    "Id": "ManSea007_00544",
-                    "Name": "Feint and Strike",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66225,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66226,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100081_hr1.tex"
-                },
-                {
-                    "#": 66081,
-                    "Id": "ManSea009_00545",
-                    "Name": "A Mizzenmast Repast",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66226,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66082,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100082_hr1.tex"
-                },
-                {
-                    "#": 66082,
-                    "Id": "ManSea200_00546",
-                    "Name": "The Lominsan Envoy",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66081,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66210,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/100000/100083_hr1.tex"
-                },
-                {
-                    "#": 66212,
-                    "Id": "SubSea150_00676",
-                    "Name": "Call of the Forest",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65781,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66213,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
+                    "NextMSQ": 66049,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100069_hr1.tex"
                 },
                 {
                     "#": 66217,
@@ -4820,7 +4582,7 @@
                         0
                     ],
                     "NextMSQ": 66220,
-                    "StartingLocation": "Limsa Lominsa",
+                    "StartingLocation": null,
                     "Image": "ui/icon/100000/100084_hr1.tex"
                 },
                 {
@@ -4836,318 +4598,60 @@
                         0
                     ],
                     "NextMSQ": 66049,
-                    "StartingLocation": "Limsa Lominsa",
+                    "StartingLocation": null,
                     "Image": "ui/icon/100000/100085_hr1.tex"
                 },
                 {
-                    "#": 66225,
-                    "Id": "ManSea006_00689",
-                    "Name": "Men of the Blue Tattoos",
+                    "#": 66537,
+                    "Id": "GaiUsc601_01001",
+                    "Name": "Drowning Out the Voices",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        65950,
+                        66522,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66080,
-                    "StartingLocation": "Limsa Lominsa",
+                    "NextMSQ": 66540,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 66226,
-                    "Id": "ManSea008_00690",
-                    "Name": "High Society",
+                    "#": 65645,
+                    "Id": "ManSea003_00109",
+                    "Name": "Close to Home",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66080,
+                        65643,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 66081,
-                    "StartingLocation": "Limsa Lominsa",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                }
-            ],
-            "Ul'dah": [
+                    "NextMSQ": 65998,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100004_hr1.tex"
+                },
                 {
-                    "#": 65839,
-                    "Id": "SubWil060_00303",
-                    "Name": "Step Nine",
+                    "#": 66322,
+                    "Id": "GaiUsa802_00786",
+                    "Name": "Seeing Eye to Winged Eye",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66086,
+                        69400,
                         0,
                         0,
                         0
                     ],
-                    "NextMSQ": 69388,
-                    "StartingLocation": "Ul'dah",
+                    "NextMSQ": 66335,
+                    "StartingLocation": null,
                     "Image": "ui/icon/000000/000000_hr1.tex"
                 },
                 {
-                    "#": 65841,
-                    "Id": "SubWil062_00305",
-                    "Name": "Until a Quieter Time",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65860,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65842,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65843,
-                    "Id": "SubWil064_00307",
-                    "Name": "Out of House and Home",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69388,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65863,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65856,
-                    "Id": "SubWil066_00320",
-                    "Name": "Way Down in the Hole",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65843,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66159,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100046_hr1.tex"
-                },
-                {
-                    "#": 65860,
-                    "Id": "SubWil070_00324",
-                    "Name": "Disorderly Conduct",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65839,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65841,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65864,
-                    "Id": "SubWil080_00328",
-                    "Name": "Supply and Demands",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66159,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66039,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65865,
-                    "Id": "SubWil081_00329",
-                    "Name": "The Perfect Swarm",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66039,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65866,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65866,
-                    "Id": "SubWil082_00330",
-                    "Name": "Last Letter to Lost Hope",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65865,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 69389,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65868,
-                    "Id": "SubWil084_00332",
-                    "Name": "Passing the Blade",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        69389,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65869,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65869,
-                    "Id": "SubWil085_00333",
-                    "Name": "Following Footfalls",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65868,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65870,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65870,
-                    "Id": "SubWil086_00334",
-                    "Name": "Storms on the Horizon",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65869,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65872,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 65872,
-                    "Id": "SubWil088_00336",
-                    "Name": "Oh Captain, My Captain",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65870,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66164,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100098_hr1.tex"
-                },
-                {
-                    "#": 66039,
-                    "Id": "SubWil095_00503",
-                    "Name": "Give It to Me Raw",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65864,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65865,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66064,
-                    "Id": "ManWil200_00528",
-                    "Name": "The Ul'dahn Envoy",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66088,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66209,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100091_hr1.tex"
-                },
-                {
-                    "#": 66086,
-                    "Id": "ManWil005_00550",
-                    "Name": "Underneath the Sultantree",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66207,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65839,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100088_hr1.tex"
-                },
-                {
-                    "#": 66087,
-                    "Id": "ManWil007_00551",
-                    "Name": "Duty, Honor, Country",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66164,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66177,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100089_hr1.tex"
-                },
-                {
-                    "#": 66088,
-                    "Id": "ManWil009_00552",
-                    "Name": "A Royal Reception",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66177,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66064,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100090_hr1.tex"
-                },
-                {
-                    "#": 66104,
-                    "Id": "ManWil002_00568",
+                    "#": 66105,
+                    "Id": "ManWil003_00569",
                     "Name": "Close to Home",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
@@ -5158,264 +4662,24 @@
                         0
                     ],
                     "NextMSQ": 66131,
-                    "StartingLocation": "Ul'dah",
+                    "StartingLocation": null,
                     "Image": "ui/icon/100000/100004_hr1.tex"
                 },
                 {
-                    "#": 66110,
-                    "Id": "SubWil129_00574",
-                    "Name": "Dressed to Deceive",
+                    "#": 65659,
+                    "Id": "ManFst003_00123",
+                    "Name": "Close to Home",
                     "Expansion": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
-                        66158,
                         0,
                         0,
+                        65575,
                         0
                     ],
-                    "NextMSQ": 65808,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100099_hr1.tex"
-                },
-                {
-                    "#": 66131,
-                    "Id": "SubWil027_00595",
-                    "Name": "We Must Rebuild",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66104,
-                        0,
-                        66105,
-                        66106
-                    ],
-                    "NextMSQ": 66207,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66154,
-                    "Id": "SubWil110_00618",
-                    "Name": "Unsolved Mystery",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66046,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66155,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66155,
-                    "Id": "SubWil111_00619",
-                    "Name": "What Poor People Think",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66154,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66156,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66156,
-                    "Id": "SubWil112_00620",
-                    "Name": "A Proper Burial",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66155,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66157,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66157,
-                    "Id": "SubWil113_00621",
-                    "Name": "For the Children",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66156,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66158,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66158,
-                    "Id": "SubWil114_00622",
-                    "Name": "Amalj'aa Wrong Places",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66157,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66110,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66159,
-                    "Id": "SubWil026_00623",
-                    "Name": "Takin' What They're Givin'",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65856,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65864,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66164,
-                    "Id": "ManWil006_00628",
-                    "Name": "Secrets and Lies",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65872,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66087,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66177,
-                    "Id": "ManWil008_00641",
-                    "Name": "A Matter of Tradition",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66087,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66088,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66207,
-                    "Id": "SubWil025_00671",
-                    "Name": "Nothing to See Here",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66131,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66086,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66210,
-                    "Id": "SubWil141_00674",
-                    "Name": "Call of the Sea",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66043,
-                        0,
-                        66082,
-                        0
-                    ],
-                    "NextMSQ": 66211,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 66218,
-                    "Id": "ManWil302_00682",
-                    "Name": "The Company You Keep (Immortal Flames)",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66047,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66221,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100092_hr1.tex"
-                },
-                {
-                    "#": 66221,
-                    "Id": "ManWil303_00685",
-                    "Name": "For Coin and Country",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        66218,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 66049,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/100000/100093_hr1.tex"
-                },
-                {
-                    "#": 69388,
-                    "Id": "XxaWil063_03852",
-                    "Name": "Prudence at This Junction",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65839,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65843,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
-                },
-                {
-                    "#": 69389,
-                    "Id": "XxaWil083_03853",
-                    "Name": "Heir Today, Gone Tomorrow",
-                    "Expansion": "A Realm Reborn",
-                    "EventIconType": 3,
-                    "PreviousQuests": [
-                        65866,
-                        0,
-                        0,
-                        0
-                    ],
-                    "NextMSQ": 65868,
-                    "StartingLocation": "Ul'dah",
-                    "Image": "ui/icon/000000/000000_hr1.tex"
+                    "NextMSQ": 65564,
+                    "StartingLocation": null,
+                    "Image": "ui/icon/100000/100004_hr1.tex"
                 }
             ]
         }

@@ -27,6 +27,27 @@
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(completedQuests));
   }
 
+  function updateCurrentExpansion(): void {
+    let lastCompletedQuestId: number | null = null;
+    let lastCompletedExpansion: string | null = null;
+
+    for (const expansion of quests) {
+      for (const location in expansion.quests) {
+        for (const quest of expansion.quests[location]) {
+          if (completedQuests[quest["#"]]) {
+            lastCompletedQuestId = quest["#"];
+            lastCompletedExpansion = expansion.name;
+          }
+        }
+      }
+    }
+
+    if (lastCompletedExpansion) {
+      currentExpansion = lastCompletedExpansion;
+      updateBackground();
+    }
+  }
+
   function resetOpenStates(): void {
     openExpansions = {};
     openLocations = {};
@@ -96,6 +117,9 @@
 
     // Update progress bars for all expansions
     calculateAllProgress();
+
+    // Update the current expansion
+    updateCurrentExpansion();
   }
 
   function calculateAllProgress(): void {
@@ -205,11 +229,12 @@
       filteredQuests = loadedQuests;
       resetOpenStates();
       calculateAllProgress();
+      updateCurrentExpansion();
 
       // Load always a bit
       setTimeout(() => {
         loading = false;
-      }, 250);
+      }, 350);
 
       // Show footer after loading
       const footer = document.getElementById("footer");
@@ -329,10 +354,6 @@
     <details class="mb-8" open={openExpansions[expansion.name]}>
       <summary
         class="text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow"
-        on:click={() => {
-          currentExpansion = expansion.name;
-          updateBackground();
-        }}
       >
         {expansion.name}
       </summary>
@@ -344,10 +365,6 @@
           {#if location !== "Main"}
             <summary
               class="text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow"
-              on:click={() => {
-                currentExpansion = expansion.name;
-                updateBackground();
-              }}
             >
               {location}
             </summary>

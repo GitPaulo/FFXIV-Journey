@@ -7,17 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     %sveltekit.head%
   </head>
-  <body class="flex flex-col gap-y-8 mt-8" data-sveltekit-preload-data="hover">
+  <body class="flex flex-col mt-8" data-sveltekit-preload-data="hover">
     <div class="background-container">
       <div id="background" class="background-overlay"></div>
       <div class="content-container">%sveltekit.body%</div>
     </div>
   </body>
-  <div id="footer" class="text-sm text-gray-400" style="display: none">
-    FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
-    <br />
-    FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
-    <br />
+  <div id="footer" class="text-sm mt-4 text-gray-400" style="display: none">
+    <div id="foot-text" class="hidden md:block">
+      FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
+      <br />
+      FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
+    </div>
     <!-- Github -->
     <a
       href="https://GitHub.com/GitPaulo/FFXIV-Journey"
