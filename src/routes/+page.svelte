@@ -5,86 +5,86 @@
   import { slide } from "svelte/transition";
   import {
     quests,
+    loading,
+    progress,
     filteredQuests,
     completedQuests,
-    progress,
-    loading,
     currentExpansion,
     calculateAllProgress,
     toggleQuestCompletion,
     updateCurrentExpansion,
   } from "$lib/stores/questsStore";
-  import type { Quest, Quests } from "$lib/model";
+  import type { Quest, ExpansionsQuests, Quests } from "$lib/model";
 
-  export let data: { quests: Promise<Quests>; loading: boolean };
+  export let data: { quests: Promise<ExpansionsQuests>; loading: boolean };
 
-  let searchQuery: string = "";
+  let searchQuery = "";
   let openExpansions: Record<string, boolean> = {};
   let openLocations: Record<string, Record<string, boolean>> = {};
   let showTitle = true;
   let tooltipVisible = false;
   let searchInput: HTMLInputElement;
 
-  function resetOpenStates(): void {
+  // Reset the state of expansions and locations to be closed initially
+  function resetOpenStates() {
+    const $quests = get(quests);
     openExpansions = {};
     openLocations = {};
 
-    quests.subscribe(($quests) => {
-      for (const expansion of $quests) {
-        openExpansions[expansion.name] = false;
-        openLocations[expansion.name] = {};
+    for (const expansion of $quests) {
+      openExpansions[expansion.name] = false;
+      openLocations[expansion.name] = {};
 
-        for (const location of Object.keys(expansion.quests)) {
-          openLocations[expansion.name][location] = false;
-        }
+      for (const location of Object.keys(expansion.quests)) {
+        openLocations[expansion.name][location] = false;
       }
-    });
+    }
   }
 
-  function filterQuests(): void {
-    if (searchQuery.trim() === "") {
-      filteredQuests.set(get(quests));
-      resetOpenStates();
+  // Filter quests based on search query
+  function filterQuests() {
+    const $quests = get(quests);
+    resetOpenStates();
+
+    if (!searchQuery.trim()) {
+      filteredQuests.set($quests);
       return;
     }
 
-    let result: Quests = [];
-    resetOpenStates();
+    const result: ExpansionsQuests = $quests.reduce((acc, expansion) => {
+      const filteredExpansion = {
+        name: expansion.name,
+        quests: {} as Quests,
+      };
 
-    quests.subscribe(($quests) => {
-      for (const expansion of $quests) {
-        const filteredExpansion = {
-          name: expansion.name,
-          quests: {} as typeof expansion.quests,
-        };
+      for (const location in expansion.quests) {
+        const locationQuests = expansion.quests[location].filter((quest) =>
+          quest.Name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
-        for (const location of Object.keys(expansion.quests)) {
-          const locationQuests = expansion.quests[location].filter((quest) =>
-            quest.Name.toLowerCase().includes(searchQuery.toLowerCase())
-          );
-
-          if (locationQuests.length > 0) {
-            filteredExpansion.quests[location] = locationQuests;
-            openExpansions[expansion.name] = true;
-            openLocations[expansion.name][location] = true;
-          }
-        }
-
-        if (Object.keys(filteredExpansion.quests).length > 0) {
-          result.push(filteredExpansion);
+        if (locationQuests.length) {
+          filteredExpansion.quests[location] = locationQuests;
+          openExpansions[expansion.name] = true;
+          openLocations[expansion.name][location] = true;
         }
       }
 
-      filteredQuests.set(result);
-    });
+      if (Object.keys(filteredExpansion.quests).length) {
+        acc.push(filteredExpansion);
+      }
+      return acc;
+    }, [] as ExpansionsQuests);
+
+    filteredQuests.set(result);
   }
 
+  // Get the correct image URL or fallback to placeholder
   function getImageUrl(imagePath: string | null): string {
     const placeholderImage = `${base}/default_quest_image.png`;
     if (
       !imagePath ||
       imagePath.trim() === "" ||
-      imagePath.includes("000000_hr1")
+      imagePath.includes("000000_hr1") // Returned by XIVAPI for missing images
     ) {
       return placeholderImage;
     }
@@ -97,12 +97,8 @@
     }
   }
 
-  function handleCheckboxChange(event: Event, quest: Quest) {
-    const input = event.target as HTMLInputElement;
-    toggleQuestCompletion(quest, input.checked);
-  }
-
-  function updateBackground(): void {
+  // Update the background image based on the current expansion
+  function updateBackground() {
     const bgImage = $currentExpansion
       ? `${base}/background_${$currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
       : `${base}/background.jpg`;
@@ -113,10 +109,12 @@
     }
   }
 
+  // Toggle the visibility of the title section
   function toggleTitleVisibility() {
     showTitle = !showTitle;
   }
 
+  // Show and hide the tooltip for the title close button
   function showTooltip() {
     tooltipVisible = true;
   }
@@ -125,6 +123,14 @@
     tooltipVisible = false;
   }
 
+  // Handle checkbox changes and update quest completion state
+  function handleCheckboxChange(event: Event, quest: Quest) {
+    const input = event.target as HTMLInputElement;
+    toggleQuestCompletion(quest, input.checked);
+    updateBackground();
+  }
+
+  // Handle keyboard shortcut to focus on the search bar
   const handleKeydown = (event: KeyboardEvent) => {
     if (event.key === "/") {
       event.preventDefault(); // Prevent the default '/' action
@@ -134,17 +140,17 @@
 
   window.addEventListener("keydown", handleKeydown);
 
+  // Initialize the quests data and state
   $: {
-    data.quests.then((loadedQuests: Quests) => {
+    data.quests.then((loadedQuests: ExpansionsQuests) => {
       quests.set(loadedQuests);
       filteredQuests.set(loadedQuests);
+
       resetOpenStates();
       calculateAllProgress();
       updateCurrentExpansion();
-
-      setTimeout(() => {
-        loading.set(false);
-      }, 350);
+      updateBackground();
+      setTimeout(() => loading.set(false), 350);
 
       const footer = document.getElementById("footer");
       if (footer) {
@@ -153,6 +159,7 @@
     });
   }
 
+  // Reactively update the background whenever the current expansion changes
   $: updateBackground();
 </script>
 
@@ -238,6 +245,7 @@
       bind:this={searchInput}
       on:input={filterQuests}
     />
+    <!-- Search Focus Icon -->
     <svg
       class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-300 pointer-events-none"
       width="24px"
@@ -295,7 +303,10 @@
                 </div>
                 <div class="flex-grow ml-4">
                   <p class="font-bold text-xl text-gray-800">{quest.Name}</p>
-                  <p class="text-sm text-gray-500 mt-1">ID: {quest.Id}</p>
+                  <p class="text-sm text-gray-500 mt-1 hidden sm:block">
+                    ID: {quest.Id}
+                  </p>
+                  <!-- Hide on mobile -->
                   <img
                     src={getImageUrl(quest.Image)}
                     alt="Quest journal thumbnail"
@@ -307,9 +318,27 @@
                   <a
                     href={`https://www.garlandtools.org/db/#quest/${quest["#"]}`}
                     target="_blank"
-                    class="text-blue-600 hover:underline"
+                    class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-300 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                   >
-                    Open in Garland Tools
+                    <svg
+                      class="mr-1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <path
+                        d="M5 12V6C5 5.44772 5.44772 5 6 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H12M8.11111 12H12M12 12V15.8889M12 12L5 19"
+                        stroke="#464455"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+
+                    <span class="text hidden sm:inline"
+                      >Open in Garland Tools</span
+                    >
                   </a>
                 </div>
               </li>

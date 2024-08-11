@@ -1,23 +1,26 @@
 import { writable, get } from "svelte/store";
-import type { Quests, Quest } from "$lib/model";
+import type { ExpansionsQuests, Quest } from "$lib/model";
 
 const LOCAL_STORAGE_KEY = "ffxiv-journey:completed";
 
+// Types
+export type ExpansionProgress = { percent: number; completed: number; total: number }
+
 // Store for quests
-export const quests = writable<Quests>([]);
-export const filteredQuests = writable<Quests>([]);
+export const quests = writable<ExpansionsQuests>([]);
+export const filteredQuests = writable<ExpansionsQuests>([]);
 export const completedQuests = writable<Record<number, boolean>>(
   JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "{}")
 );
-export const progress = writable<Record<string, { percent: number; completed: number; total: number }>>({});
+export const progress = writable<Record<string, ExpansionProgress>>({});
 export const loading = writable<boolean>(true);
 export const currentExpansion = writable<string>("");
 
-export function saveCompletedQuests() {
+export function storeCompletedQuests() {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(get(completedQuests)));
 }
 
-export function calculateProgress(expansionName: string) {
+export function CalculateExpansionProgress(expansionName: string) {
   const $quests = get(quests);
   const expansion = $quests.find((exp) => exp.name === expansionName);
   if (!expansion) return { percent: 0, completed: 0, total: 0 };
@@ -42,10 +45,10 @@ export function calculateProgress(expansionName: string) {
 
 export function calculateAllProgress() {
   const $quests = get(quests);
-  const newProgress: Record<string, { percent: number; completed: number; total: number }> = {};
+  const newProgress: Record<string, ExpansionProgress> = {};
 
   for (const expansion of $quests) {
-    newProgress[expansion.name] = calculateProgress(expansion.name);
+    newProgress[expansion.name] = CalculateExpansionProgress(expansion.name);
   }
 
   progress.set(newProgress);
@@ -87,8 +90,9 @@ export function toggleQuestCompletion(quest: Quest, isChecked: boolean) {
     });
   }
 
-  saveCompletedQuests();
+  storeCompletedQuests();
   calculateAllProgress();
+  updateCurrentExpansion();
 }
 
 export function updateCurrentExpansion() {

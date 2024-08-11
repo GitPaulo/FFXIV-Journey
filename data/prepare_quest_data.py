@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import requests
 import time
+
 from tqdm import tqdm
 from io import StringIO
 
@@ -81,7 +82,7 @@ with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar
             "#": row["#"],
             "Id": row["Id"],
             "Name": row["Name"],
-            "Expansion": expansion_name,
+            "ExpansionName": expansion_name,
             "EventIconType": row["EventIconType"],
             "PreviousQuests": [row[col] for col in ["PreviousQuest[0]", "PreviousQuest[1]", "PreviousQuest[2]", "PreviousQuest[3]"] if not pd.isna(row[col])],
             "NextMSQ": None,  # Initialize as None, to be filled later
@@ -161,7 +162,7 @@ print(f"After removing duplicates, {len(quests_by_number)} quests remain.")
 quests_by_expansion = {}
 
 for quest in quests_by_number.values():
-    expansion = quest["Expansion"]
+    expansion = quest["ExpansionName"]
     starting_location = quest["StartingLocation"] if quest["StartingLocation"] else "Main Quest Line"
     
     if expansion not in quests_by_expansion:
@@ -173,7 +174,7 @@ for quest in quests_by_number.values():
     quests_by_expansion[expansion][starting_location].append(quest)
 
 # Extract A Realm Reborn quests
-arr_quests = [quest for quest in quests_by_number.values() if quest["Expansion"] == "A Realm Reborn"]
+arr_quests = [quest for quest in quests_by_number.values() if quest["ExpansionName"] == "A Realm Reborn"]
 
 # Function to order quests based on the NextMSQ path, considering StartingLocation
 def order_quests_by_next_msq(quests, location=None):

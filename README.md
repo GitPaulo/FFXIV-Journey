@@ -1,6 +1,10 @@
-# FFXIV-Journey
+# FFXIV Journey
 
-Track your main story quest journey with the utmost ease.
+![Title](image.png)
+
+Sveltekit static site for tracking FFXIV MSQ quest progress.
+
+The goal is to provide a **simple but well designed** way to track your progress whilst being **self-updating from open source datamining** sources.
 
 ## TODO
 
