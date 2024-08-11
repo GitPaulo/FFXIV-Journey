@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../app.css";
+  import { base } from "$app/paths";
   import type { Quest, Quests } from "$lib/model";
 
   export let data: { quests: Promise<Quests>; loading: boolean };
@@ -127,9 +128,16 @@
 
   function getImageUrl(imagePath: string | null): string {
     const placeholderImage = "/default_quest_image.png";
-    return imagePath
-      ? `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`
-      : placeholderImage;
+    if (!imagePath || imagePath.trim() === "") {
+      return placeholderImage;
+    }
+    try {
+      // Validate that there is an image path
+      new URL(imagePath);
+      return `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`;
+    } catch {
+      return placeholderImage;
+    }
   }
 
   function handleCheckboxChange(event: Event, quest: Quest) {
@@ -139,8 +147,9 @@
 
   function updateBackground(): void {
     const bgImage = currentExpansion
-      ? `/background_${currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
-      : "/background.jpg";
+      ? `${base}/background_${currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
+      : `${base}/background.jpg`;
+
     const bgElement = document.getElementById("background");
     if (bgElement) {
       bgElement.style.backgroundImage = `url('${bgImage}')`;
