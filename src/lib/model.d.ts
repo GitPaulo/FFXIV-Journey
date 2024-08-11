@@ -14,10 +14,12 @@ export type Quest = {
   Image: string | null; // Path to the quest image or null if not available
 };
 
-export type Quests = Array<{
+export type Expansion = {
   name: string;
   quests: {
     [location: string]: Quest[];
   };
-}>;
+}
+
+export type Quests = Array<Expansion>;
 
