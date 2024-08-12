@@ -295,7 +295,7 @@
               <li
                 class="flex items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
               >
-                <div class="flex-none w-16">
+                <div class="flex-none w-10 sm:w-16">
                   <input
                     type="checkbox"
                     class="form-checkbox h-6 w-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
@@ -303,27 +303,29 @@
                     on:change={(e) => handleCheckboxChange(e, quest)}
                   />
                 </div>
+
                 <div class="flex-grow ml-4">
-                  <p class="font-bold text-xl text-gray-800">{quest.Name}</p>
+                  <p class="font-bold text-lg sm:text-xl text-gray-800">
+                    {quest.Name}
+                  </p>
                   <p class="text-sm text-gray-500 mt-1 hidden sm:block">
                     ID: {quest.Id}
                   </p>
                   <p class="text-sm text-gray-400 mt-1 hidden sm:block">
                     <i>"{quest.Description}"</i>
                   </p>
-                  <!-- Hide on mobile -->
                   <img
                     src={getImageUrl(quest.Image)}
                     alt="Quest journal thumbnail"
                     loading="lazy"
-                    class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm"
+                    class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm hidden sm:block"
                   />
                 </div>
-                <div class="ml-auto">
+                <div class="ml-auto flex items-center">
                   <a
                     href={`https://www.garlandtools.org/db/#quest/${quest["#"]}`}
                     target="_blank"
-                    class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-300 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                    class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-300 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 whitespace-nowrap"
                   >
                     <svg
                       class="mr-1"
@@ -341,9 +343,7 @@
                       />
                     </svg>
 
-                    <span class="text hidden sm:inline"
-                      >Open in Garland Tools</span
-                    >
+                    <span class="hidden sm:inline">Open in Garland Tools</span>
                   </a>
                 </div>
               </li>
