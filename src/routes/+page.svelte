@@ -100,7 +100,7 @@
   // Update the background image based on the current expansion
   function updateBackground() {
     const bgImage = $currentExpansion
-      ? `${base}/background_${$currentExpansion.replace(/\s/g, "").toLowerCase()}.jpg`
+      ? `${base}/background_${$currentExpansion.replace(/\s/g, "").toLowerCase()}.webp`
       : ""; // No background is default
 
     const bgElement = document.getElementById("background");
@@ -137,7 +137,6 @@
       searchInput?.focus();
     }
   };
-
   window.addEventListener("keydown", handleKeydown);
 
   // Initialize the quests data and state
@@ -151,11 +150,6 @@
       updateCurrentExpansion();
       updateBackground();
       setTimeout(() => loading.set(false), 350);
-
-      const footer = document.getElementById("footer");
-      if (footer) {
-        footer.style.display = "block";
-      }
     });
   }
 

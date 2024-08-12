@@ -5,6 +5,14 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Preload backgrounds -->
+    <link rel="preload" href="background_arealmreborn.webp" as="image" />
+    <link rel="preload" href="background_heavensward.webp" as="image" />
+    <link rel="preload" href="background_stormblood.webp" as="image" />
+    <link rel="preload" href="background_shadowbringers.webp" as="image" />
+    <link rel="preload" href="background_endwalker.webp" as="image" />
+    <link rel="preload" href="background_dawntrail.webp" as="image" />
+    <!-- Head -->
     %sveltekit.head%
   </head>
   <body class="flex flex-col mt-8" data-sveltekit-preload-data="hover">
@@ -13,12 +21,8 @@
       <div class="content-container">%sveltekit.body%</div>
     </div>
   </body>
-  <div
-    id="footer"
-    class="text-sm mt-1 md:mt-4 text-gray-400"
-    style="display: block"
-  >
-    <div id="foot-text" class="hidden md:block">
+  <div id="footer" class="text-sm mt-1 md:mt-4 text-gray-400">
+    <div id="copyright" class="hidden md:block">
       FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
       <br />
       FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
@@ -29,7 +33,7 @@
       target="_blank"
       rel="noopener noreferrer"
       title="GitHub.com/GitPaulo/FFXIV-Journey"
-      class="text-sm text-gray-500 flex items-center space-x-2 mt-2 flex items-center justify-center"
+      class="text-sm text-gray-500 flex items-center space-x-2 mt-2 justify-center"
     >
       <svg
         viewBox="0 0 98 96"
