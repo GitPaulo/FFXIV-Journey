@@ -308,6 +308,9 @@
                   <p class="text-sm text-gray-500 mt-1 hidden sm:block">
                     ID: {quest.Id}
                   </p>
+                  <p class="text-sm text-gray-400 mt-1 hidden sm:block">
+                    <i>"{quest.Description}"</i>
+                  </p>
                   <!-- Hide on mobile -->
                   <img
                     src={getImageUrl(quest.Image)}

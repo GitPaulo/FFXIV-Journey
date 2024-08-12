@@ -8,7 +8,8 @@ from io import StringIO
 
 # Constants
 RAW_QUESTS_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/Quest.csv'
-EXVERSION_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/ExVersion.csv'
+RAW_EXVERSION_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/ExVersion.csv'
+RAW_JOURNAL_BASE_CSV_URL = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/quest' # + expansion_number_to_three_digits + quest_id + '.csv'
 XIV_API_SEARCH_BASE_URL = "https://beta.xivapi.com/api/1/search"
 OUTPUT_JSON_PATH = 'static/Quests.json'
 
@@ -28,8 +29,59 @@ ENVOY_TO_QUEST_GROUP = {
 
 STARTING_QUEST_IDS = [65621, 66104, 65644] # IDs for the "Close to Home" quests in Gridania, Ul'dah, and Limsa Lominsa
 
+# Variable to keep track of the last successful expansion number
+last_successful_folder_index = 0
+def fetch_first_journal_entry(quest_id, max_folder_number=100, max_retries=5, delay=2, start_from_last_success=True):
+    global last_successful_folder_index
+    start_index = last_successful_folder_index if start_from_last_success else 0
+    for folder_index in range(start_index, max_folder_number + 1):
+        csv_url = f"{RAW_JOURNAL_BASE_CSV_URL}/{str(folder_index).zfill(3)}/{quest_id}.csv"
+        # print(f"Trying URL: {csv_url}")
+        # Attempt to fetch the CSV file with retries
+        for attempt in range(max_retries):
+            try:
+                response = requests.get(csv_url)
+                if response.status_code == 200:
+                    csv_content = response.content.decode('utf-8')
+                    # Load the CSV data into a DataFrame
+                    # Skip the first 3 rows (header and metadata)
+                    journal_data = pd.read_csv(StringIO(csv_content), skiprows=3)
+                    if not journal_data.empty and journal_data.shape[1] >= 3:
+                        last_successful_folder_index = folder_index
+                        return journal_data.iloc[0, 2] # Accessing the third column (index 2)
+                    else:
+                        break  # Break the retry loop if data format is incorrect
+                elif response.status_code == 404:
+                    # If a 404 error is received, continue to the next expansion number
+                    break
+            except requests.exceptions.RequestException as e:
+                print(f"Request failed (attempt {attempt + 1}/{max_retries}): {e}")
+                # Wait before retrying
+                time.sleep(delay)
+    return None
+
+def fetch_image_path(quest_name):
+    image_path = None
+    response = requests.get(
+        XIV_API_SEARCH_BASE_URL, 
+        params={
+            "sheets": "Quest",
+            "query": f"Name~\"{quest_name}\"",
+            "fields": "Icon,Name"
+        }
+    )
+    if response.status_code == 200:
+        data = response.json()
+        if data["results"]:
+            image_path = data["results"][0]["fields"]["Icon"]["path_hr1"]
+    
+    # To avoid hitting the API rate limit
+    time.sleep(0.100)
+    
+    return image_path
+
 def load_expansion_mapping():
-    response = requests.get(EXVERSION_CSV)
+    response = requests.get(RAW_EXVERSION_CSV)
     if response.status_code == 200:
         csv_content = response.content.decode('utf-8')
         exversion_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2])
@@ -75,47 +127,46 @@ filtered_data = filtered_data[filtered_data.iloc[:, -2] == False]
 # Prompt user if they want to fetch images
 fetch_images = input("Do you want to fetch images? (yes/no): ").strip().lower() == 'yes'
 
+# Prompt user if they want to fetch journal entries
+fetch_journal_entries = input("Do you want to fetch journal entries? (yes/no): ").strip().lower() == 'yes'
+
 # # -> Quest (formatted) mapping
 quests_by_number = {}
 with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar:
     for _, row in filtered_data.iterrows():
         quest_name = row["Name"]
+        quest_id = row["Id"]
+        quest_number = row["#"]
+        quest_icon_type = row["EventIconType"]
         quest_group = None
         expansion_name = get_expansion_name(row["Expansion"], expansion_mapping)
 
         # Optionally fetch the Image path
         image_path = None
         if fetch_images:
-            response = requests.get(
-                XIV_API_SEARCH_BASE_URL, 
-                params={
-                    "sheets": "Quest",
-                    "query": f"Name~\"{quest_name}\"",
-                    "fields": "Icon,Name"
-                }
-            )
-            if response.status_code == 200:
-                data = response.json()
-                if data["results"]:
-                    image_path = data["results"][0]["fields"]["Icon"]["path_hr1"]
-
+            image_path = fetch_image_path(quest_name) or None
             # To avoid hitting the API rate limit
-            time.sleep(0.100)
+            time.sleep(0.050)
+        
+        journal_entry = None
+        if fetch_journal_entries:
+            journal_entry = fetch_first_journal_entry(quest_id) or None
+            time.sleep(0.050)
         
         # Create the quest entry
         quest = {
-            "#": row["#"],
-            "Id": row["Id"],
-            "Name": row["Name"],
+            "#": quest_number,
+            "Id": quest_id,
+            "Name": quest_name,
+            "Description": journal_entry,
             "ExpansionName": expansion_name,
-            "EventIconType": row["EventIconType"],
-            "PreviousQuests": get_previous_quests(row),  # Now returns a list of integers
+            "EventIconType": quest_icon_type,
+            "PreviousQuests": get_previous_quests(row),
             "NextMSQ": None,  # Initialize as None, to be filled later
             "QuestGroup": quest_group,
             "Image": image_path
         }
-        quests_by_number[row["#"]] = quest
-        print(quest["PreviousQuests"])
+        quests_by_number[quest_number] = quest
 
         pbar.update(1)
 
@@ -135,23 +186,17 @@ for _, envoy_quest in envoy_quests.iterrows():
         # Move to the first available previous quest that is also an MSQ (EventIconType == 3)
         current_quest = None
         for prev_id in previous_quest_ids:
-            potential_quest = filtered_data.loc[(filtered_data['#'].astype(str).str.strip() == prev_id) & (filtered_data['EventIconType'] == 3)]
-            
+            potential_quest = filtered_data.loc[(filtered_data['#'] == prev_id) & (filtered_data['EventIconType'] == 3)]
             if not potential_quest.empty:
                 current_quest = potential_quest.iloc[0]
                 break
 
-for quest in quests_by_number.values():
-    print(f"Quest: {quest['#']}, PreviousQuests: {quest['PreviousQuests']}")
-
 # Build a linked list of quests based on the NextMSQ field
 for quest in quests_by_number.values():
     for previous_quest_number in quest["PreviousQuests"]:
-        # TODO: keys are integers for some reason atm
-        previous_quest_number = int(previous_quest_number)
         if quests_by_number.get(previous_quest_number):
             quests_by_number[previous_quest_number]["NextMSQ"] = quest["#"]
-            print(f"Quest {previous_quest_number} -> NextMSQ: {quest['#']}")
+            # print(f"Quest {previous_quest_number} -> NextMSQ: {quest['#']}")
 
 # Remove quests that do not have a NextMSQ but are not final quests,
 # but keep the quest with the highest # number.
