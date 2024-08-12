@@ -6,9 +6,53 @@ import time
 from tqdm import tqdm
 from io import StringIO
 
+# Constants
+RAW_QUESTS_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/Quest.csv'
+EXVERSION_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/ExVersion.csv'
+XIV_API_SEARCH_BASE_URL = "https://beta.xivapi.com/api/1/search"
+OUTPUT_JSON_PATH = 'static/Quests.json'
+
+# Quest Group Constants
+# Necessary hardcoded data to figure out ARR forking quest lines
+QUEST_GROUP_GRIDANIA = "Gridania"
+QUEST_GROUP_ULDAH = "Ul'dah"
+QUEST_GROUP_LIMSA_LOMINSA = "Limsa Lominsa"
+QUEST_GROUP_MAIN_QUEST_LINE = "Main Quest Line"
+QUEST_GROUPS = [QUEST_GROUP_GRIDANIA, QUEST_GROUP_ULDAH, QUEST_GROUP_LIMSA_LOMINSA, QUEST_GROUP_MAIN_QUEST_LINE]
+
+ENVOY_TO_QUEST_GROUP = {
+    "The Ul'dahn Envoy": QUEST_GROUP_ULDAH,
+    "The Lominsan Envoy": QUEST_GROUP_LIMSA_LOMINSA,
+    "The Gridanian Envoy": QUEST_GROUP_GRIDANIA
+}
+
+STARTING_QUEST_IDS = [65621, 66104, 65644] # IDs for the "Close to Home" quests in Gridania, Ul'dah, and Limsa Lominsa
+
+def load_expansion_mapping():
+    response = requests.get(EXVERSION_CSV)
+    if response.status_code == 200:
+        csv_content = response.content.decode('utf-8')
+        exversion_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2])
+        # Create a mapping of index to expansion name
+        return {row['#']: row['Name'] for _, row in exversion_data.iterrows()}
+    else:
+        print(f"Failed to download ExVersion.csv. Status code: {response.status_code}")
+        exit()
+
+def envoy_quests_from_data(data):
+    return data[data['Name'].isin(ENVOY_TO_QUEST_GROUP.keys())]
+
+def get_expansion_name(expansion_index, expansion_mapping):
+    return expansion_mapping.get(expansion_index, "Unknown")
+
+def get_previous_quests(row):
+    return [int(row[f'PreviousQuest[{i}]']) for i in range(4) if not pd.isna(row[f'PreviousQuest[{i}]']) and str(row[f'PreviousQuest[{i}]']).strip() != '0']
+
+# Index -> Expansion Name mapping
+expansion_mapping = load_expansion_mapping()
+
 # Raw CSV URL for the Quest data
-csv_url = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/Quest.csv'
-response = requests.get(csv_url)
+response = requests.get(RAW_QUESTS_CSV)
 if response.status_code == 200:
     csv_content = response.content.decode('utf-8')
     print("Quest.csv downloaded successfully.")
@@ -28,41 +72,22 @@ filtered_data = quest_data[quest_data['EventIconType'] == 3]
 # Access the penultimate column by its index (-2) and filter out obsolete quests
 filtered_data = filtered_data[filtered_data.iloc[:, -2] == False]
 
-# Convert expansion number to expansion name
-def convert_expansion_number_to_name(expansion_number):
-    if expansion_number == 0:
-        return "A Realm Reborn"
-    elif expansion_number == 1:
-        return "Heavensward"
-    elif expansion_number == 2:
-        return "Stormblood"
-    elif expansion_number == 3:
-        return "Shadowbringers"
-    elif expansion_number == 4:
-        return "Endwalker"
-    elif expansion_number == 5:
-        return "Dawntrail"
-    else:
-        return "Unknown"
-
-# Fetch the Image path for each quest (this part can be skipped if necessary)
-api_base_url = "https://beta.xivapi.com/api/1/search"
-quests_by_number = {}
-
 # Prompt user if they want to fetch images
 fetch_images = input("Do you want to fetch images? (yes/no): ").strip().lower() == 'yes'
 
+# # -> Quest (formatted) mapping
+quests_by_number = {}
 with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar:
     for _, row in filtered_data.iterrows():
         quest_name = row["Name"]
-        starting_location = None
-        expansion_name = convert_expansion_number_to_name(row["Expansion"])
+        quest_group = None
+        expansion_name = get_expansion_name(row["Expansion"], expansion_mapping)
 
         # Optionally fetch the Image path
         image_path = None
         if fetch_images:
             response = requests.get(
-                api_base_url, 
+                XIV_API_SEARCH_BASE_URL, 
                 params={
                     "sheets": "Quest",
                     "query": f"Name~\"{quest_name}\"",
@@ -84,55 +109,49 @@ with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar
             "Name": row["Name"],
             "ExpansionName": expansion_name,
             "EventIconType": row["EventIconType"],
-            "PreviousQuests": [row[col] for col in ["PreviousQuest[0]", "PreviousQuest[1]", "PreviousQuest[2]", "PreviousQuest[3]"] if not pd.isna(row[col])],
+            "PreviousQuests": get_previous_quests(row),  # Now returns a list of integers
             "NextMSQ": None,  # Initialize as None, to be filled later
-            "StartingLocation": starting_location,
+            "QuestGroup": quest_group,
             "Image": image_path
         }
         quests_by_number[row["#"]] = quest
+        print(quest["PreviousQuests"])
 
         pbar.update(1)
 
-# Define the quests to start from and their corresponding locations
-envoy_quests = {
-    "The Ul'dahn Envoy": "Ul'dah",
-    "The Lominsan Envoy": "Limsa Lominsa",
-    "The Gridanian Envoy": "Gridania"
-}
-envoy_quests_data = filtered_data[filtered_data['Name'].isin(envoy_quests.keys())]
-
-# Traverse backwards from each envoy quest and assign starting locations
-if not envoy_quests_data.empty:
-    for _, envoy_quest in envoy_quests_data.iterrows():
-        location = envoy_quests[envoy_quest['Name']]
-        print(f"\nAssigning starting location '{location}' by traversing backwards from '{envoy_quest['Name']}' with ID: {envoy_quest['#']}")
-        
-        current_quest = envoy_quest
-        while current_quest is not None:
-            print(f"Assigning '{location}' to quest: {current_quest['Name']}, ID: {current_quest['#']}")
-            quests_by_number[current_quest['#']]['StartingLocation'] = location
+# Calculate ARR quest groups based on quests that lead to the envoy quests
+envoy_quests = envoy_quests_from_data(filtered_data)
+if envoy_quests.empty:
+    raise ValueError("No envoy quests found in the filtered data.")
+for _, envoy_quest in envoy_quests.iterrows():
+    group = ENVOY_TO_QUEST_GROUP[envoy_quest['Name']]
+    print(f"\nAssigning quest group '{group}' by traversing backwards from '{envoy_quest['Name']}' with ID: {envoy_quest['#']}")
+    current_quest = envoy_quest
+    while current_quest is not None:
+        print(f"Assigning '{group}' to quest: {current_quest['Name']}, ID: {current_quest['#']}")
+        quests_by_number[current_quest['#']]['QuestGroup'] = group
+        # Find the previous quest(s)
+        previous_quest_ids = get_previous_quests(current_quest)
+        # Move to the first available previous quest that is also an MSQ (EventIconType == 3)
+        current_quest = None
+        for prev_id in previous_quest_ids:
+            potential_quest = filtered_data.loc[(filtered_data['#'].astype(str).str.strip() == prev_id) & (filtered_data['EventIconType'] == 3)]
             
-            # Find the previous quest(s)
-            previous_quest_ids = [str(current_quest[f'PreviousQuest[{i}]']).strip() for i in range(4) if not pd.isna(current_quest[f'PreviousQuest[{i}]'])]
+            if not potential_quest.empty:
+                current_quest = potential_quest.iloc[0]
+                break
 
-            # Move to the first available previous quest that is also an MSQ (EventIconType == 3)
-            current_quest = None
-            for prev_id in previous_quest_ids:
-                potential_quest = filtered_data.loc[(filtered_data['#'].astype(str).str.strip() == prev_id) & (filtered_data['EventIconType'] == 3)]
-                
-                if not potential_quest.empty:
-                    current_quest = potential_quest.iloc[0]
-                    break
-else:
-    print("No envoy quests were found in the data.")
+for quest in quests_by_number.values():
+    print(f"Quest: {quest['#']}, PreviousQuests: {quest['PreviousQuests']}")
 
-# Calculate the next MSQ for each quest
+# Build a linked list of quests based on the NextMSQ field
 for quest in quests_by_number.values():
     for previous_quest_number in quest["PreviousQuests"]:
-        if previous_quest_number in quests_by_number:
+        # TODO: keys are integers for some reason atm
+        previous_quest_number = int(previous_quest_number)
+        if quests_by_number.get(previous_quest_number):
             quests_by_number[previous_quest_number]["NextMSQ"] = quest["#"]
-
-print(f"NextMSQ calculated to {len(quests_by_number)} quests.")
+            print(f"Quest {previous_quest_number} -> NextMSQ: {quest['#']}")
 
 # Remove quests that do not have a NextMSQ but are not final quests,
 # but keep the quest with the highest # number.
@@ -144,40 +163,25 @@ quests_by_number = {
 
 print(f"After filtering no NextMSQ, {len(quests_by_number)} quests remain.")
 
-# Filter out duplicate quests with the same Name, NextMSQ, and StartingLocation
-seen_quests = {}
-filtered_quests_by_number = {}
-for quest_id, quest in quests_by_number.items():
-    key = (quest["Name"], quest["NextMSQ"], quest["StartingLocation"])
-    if key not in seen_quests:
-        seen_quests[key] = quest_id
-        filtered_quests_by_number[quest_id] = quest
-
-# Update quests_by_number to only include filtered quests
-quests_by_number = filtered_quests_by_number
-
-print(f"After removing duplicates, {len(quests_by_number)} quests remain.")
-
 # Organize the data into the desired structure with correct MSQ order
 quests_by_expansion = {}
-
 for quest in quests_by_number.values():
     expansion = quest["ExpansionName"]
-    starting_location = quest["StartingLocation"] if quest["StartingLocation"] else "Main Quest Line"
+    quest_group = quest["QuestGroup"] if quest["QuestGroup"] else QUEST_GROUP_MAIN_QUEST_LINE
     
     if expansion not in quests_by_expansion:
         quests_by_expansion[expansion] = {}
     
-    if starting_location not in quests_by_expansion[expansion]:
-        quests_by_expansion[expansion][starting_location] = []
+    if quest_group not in quests_by_expansion[expansion]:
+        quests_by_expansion[expansion][quest_group] = []
     
-    quests_by_expansion[expansion][starting_location].append(quest)
+    quests_by_expansion[expansion][quest_group].append(quest)
 
 # Extract A Realm Reborn quests
-arr_quests = [quest for quest in quests_by_number.values() if quest["ExpansionName"] == "A Realm Reborn"]
+arr_quests = [quest for quest in quests_by_number.values() if quest["ExpansionName"] == expansion_mapping[0]]
 
-# Function to order quests based on the NextMSQ path, considering StartingLocation
-def order_quests_by_next_msq(quests, location=None):
+# Function to order quests based on the NextMSQ path, considering QuestGroup
+def order_quests_by_next_msq(quests, group=None):
     # Create a mapping from quest ID to quest
     quest_map = {quest["#"]: quest for quest in quests}
     
@@ -185,7 +189,7 @@ def order_quests_by_next_msq(quests, location=None):
     start_quests = {quest["#"] for quest in quests} - {quest["NextMSQ"] for quest in quests if quest["NextMSQ"]}
 
     if not start_quests:
-        print(f"No starting quest found in the A Realm Reborn category for {location if location else 'Main Quest Line'}. Skipping...")
+        print(f"No starting quest found in the {expansion_mapping[0]} category for {group if group else QUEST_GROUP_MAIN_QUEST_LINE}. Skipping...")
         return []
 
     # Track processed quests to avoid duplicates
@@ -217,54 +221,88 @@ def order_quests_by_next_msq(quests, location=None):
 
     return sorted_quests
 
-# Sort the A Realm Reborn quests by location
-sorted_quests_by_location = {}
-locations = ["Gridania", "Ul'dah", "Limsa Lominsa"]
+# Sort the A Realm Reborn quests by group
+sorted_quests_by_group = {}
 
-# Process each starting location
-for location in locations:
-    location_quests = [quest for quest in quests_by_expansion["A Realm Reborn"].get(location, [])]
-    if location_quests:  # Only process if there are quests for this location
-        sorted_quests_by_location[location] = order_quests_by_next_msq(location_quests, location)
+# Function to validate the order of quests based on the NextMSQ field
+def validate_quest_order(sorted_quests, quests_by_number):
+    for i in range(len(sorted_quests) - 1):
+        current_quest = sorted_quests[i]
+        next_quest = sorted_quests[i + 1]
 
-len_gridania = len(sorted_quests_by_location.get("Gridania", []))
-len_uldah = len(sorted_quests_by_location.get("Ul'dah", []))
-len_limsa_lominsa = len(sorted_quests_by_location.get("Limsa Lominsa", []))
-print(f"Sorted ARR location quests length: Gridania: {len_gridania}, Ul'dah: {len_uldah}, Limsa Lominsa: {len_limsa_lominsa}")
+        # Validate that the current quest's NextMSQ is the next quest in the sorted list
+        if current_quest["NextMSQ"] != next_quest["#"]:
+            expected_next = quests_by_number.get(current_quest["NextMSQ"], {}).get("Name", "Unknown")
+            print(f"❌ Order issue: '{current_quest['Name']}' (ID: {current_quest['#']}) should link to "
+                  f"'{next_quest['Name']}' (ID: {next_quest['#']}), but links to '{expected_next}' instead.")
+
+# Process each quest group
+for group in QUEST_GROUPS:
+    group_quests = [quest for quest in quests_by_expansion[expansion_mapping[0]].get(group, [])]
+    if group_quests:  # Only process if there are quests for this group
+        sorted_quests_by_group[group] = order_quests_by_next_msq(group_quests, group)
+        validate_quest_order(sorted_quests_by_group[group], quests_by_number)
+
+len_gridania = len(sorted_quests_by_group.get(QUEST_GROUP_GRIDANIA, []))
+len_uldah = len(sorted_quests_by_group.get(QUEST_GROUP_ULDAH, []))
+len_limsa_lominsa = len(sorted_quests_by_group.get(QUEST_GROUP_LIMSA_LOMINSA, []))
+print(f"Sorted ARR quest group lengths: {QUEST_GROUP_GRIDANIA}: {len_gridania}, {QUEST_GROUP_ULDAH}: {len_uldah}, {QUEST_GROUP_LIMSA_LOMINSA}: {len_limsa_lominsa}")
 
 # Handle the Main Quest Line
-main_quest_line_quests = [quest for quest in quests_by_expansion["A Realm Reborn"].get("Main Quest Line", [])]
+main_quest_line_quests = [quest for quest in quests_by_expansion[expansion_mapping[0]].get(QUEST_GROUP_MAIN_QUEST_LINE, [])]
 if main_quest_line_quests:
-    sorted_quests_by_location["Main Quest Line"] = order_quests_by_next_msq(main_quest_line_quests, "Main Quest Line")
+    sorted_quests_by_group[QUEST_GROUP_MAIN_QUEST_LINE] = order_quests_by_next_msq(main_quest_line_quests, QUEST_GROUP_MAIN_QUEST_LINE)
+    validate_quest_order(sorted_quests_by_group[QUEST_GROUP_MAIN_QUEST_LINE], quests_by_number)
 
-print(f"Sorted ARR Main Quest Line quests length: {len(sorted_quests_by_location['Main Quest Line'])}")
-
-# Combine all sorted quests back into the quests_by_expansion structure
-quests_by_expansion["A Realm Reborn"] = sorted_quests_by_location
+print(f"Sorted ARR {QUEST_GROUP_MAIN_QUEST_LINE} quests length: {len(sorted_quests_by_group[QUEST_GROUP_MAIN_QUEST_LINE])}")
 
 # Validation function to check the integrity of the NextMSQ chain
-def validate_next_msq_chain(sorted_quests):
-    for quest_list in sorted_quests.values():
-        for i in range(len(quest_list) - 1):
-            current_quest = quest_list[i]
-            next_quest = quest_list[i + 1]
-            if current_quest["NextMSQ"] != next_quest["#"]:
-                print(f"Validation error: Quest '{current_quest['Name']}' (ID: {current_quest['#']}) does not correctly link to '{next_quest['Name']}' (ID: {next_quest['#']}).")
+def validate_linked_list(starting_quests, quests_by_number):
+    for start_quest_id in starting_quests:
+        current_quest = quests_by_number.get(start_quest_id, None)
+        
+        if not current_quest:
+            print(f"=> Starting quest with ID '{start_quest_id}' not found.")
+            continue
+        
+        print(f"[Validating linked list starting from '{current_quest['Name']}' (ID: {current_quest['#']})]")
+        
+        while current_quest:
+            next_quest_id = current_quest["NextMSQ"]
+            if next_quest_id is None:
+                print(f"✓ Reached the final quest in the chain: '{current_quest['Name']}' (ID: {current_quest['#']})")
+                break
+            
+            if next_quest_id not in quests_by_number:
+                print(f"❌ Validation error: '{current_quest['Name']}' (ID: {current_quest['#']}) points to non-existent NextMSQ ID: {next_quest_id}")
+                break
+            
+            current_quest = quests_by_number[next_quest_id]
 
-# Validate the NextMSQ chain for each location and Main Quest Line
-validate_next_msq_chain(sorted_quests_by_location)
+# Validate the linked list for starting quests
+validate_linked_list(STARTING_QUEST_IDS, quests_by_number)
+
+# Combine all sorted quests back into the quests_by_expansion structure
+quests_by_expansion[expansion_mapping[0]] = sorted_quests_by_group
+
+# Important: CSV uses int32 for quest IDs, but for reasons the dump makes strings so we just convert them here
+def convert_quest_fields_to_numbers(quest):
+    quest["#"] = int(quest["#"])
+    if quest["NextMSQ"] is not None:
+        quest["NextMSQ"] = int(quest["NextMSQ"])
+    quest["PreviousQuests"] = [int(q) for q in quest["PreviousQuests"]]
+# Convert #, NextMSQ, and PreviousQuests to numbers
+for quest in quests_by_number.values():
+    convert_quest_fields_to_numbers(quest)
 
 # Convert the dictionary into the desired array format
 quests_array = []
-for expansion, locations in quests_by_expansion.items():
+for expansion, groups in quests_by_expansion.items():
     quests_array.append({
         "name": expansion,
-        "quests": locations
+        "quests": groups
     })
 
 # Save the structured data to a JSON file
-output_json_path = 'static/Quests.json'  # svelte app expects the file to be in the static folder
-with open(output_json_path, 'w') as json_file:
+with open(OUTPUT_JSON_PATH, 'w') as json_file:
     json.dump(quests_array, json_file, indent=4)
-
-print(f'Filtered data saved to {output_json_path}')

@@ -13,6 +13,8 @@ The goal is to provide a **simple but well designed** way to track your progress
 - [x] Local storage current checkbox data
 - [x] Fancy loading!
 - [x] Quest id link to quest lodestone/garland tools?
+- [ ] Manual/auto mode for checking off quests
+- [ ] Hide to show background/preview quest image
 - [ ] Post expansion quest separation & improvements to ARR quests separation (confusing atm)
 - [ ] Quest descriptions?
 - [ ] Quest graph viewer!
