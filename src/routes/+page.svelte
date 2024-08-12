@@ -230,9 +230,11 @@
 
 <!-- Content -->
 {#if $loading}
-  <p class="text-center text-gray-600">
-    Preparing your quests... <b>K-kupo!</b>
-  </p>
+  <div class="bg-white p-4 rounded-lg shadow-md max-w-max mx-auto">
+    <p class="text-center text-gray-600">
+      Preparing your quests... <b>K-kupo!</b>
+    </p>
+  </div>
   <img src="loading.gif" alt="Loading" class="mx-auto mt-4" />
 {:else}
   <div class="mb-6 flex relative">
