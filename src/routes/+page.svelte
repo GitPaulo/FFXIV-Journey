@@ -139,17 +139,28 @@
   };
   window.addEventListener("keydown", handleKeydown);
 
+  import Footer from "$lib/components/Footer.svelte";
+
   // Initialize the quests data and state
   $: {
     data.quests.then((loadedQuests: ExpansionsQuests) => {
       quests.set(loadedQuests);
       filteredQuests.set(loadedQuests);
 
+      // Init state
       resetOpenStates();
       calculateAllProgress();
       updateCurrentExpansion();
       updateBackground();
-      setTimeout(() => loading.set(false), 350);
+      setTimeout(() => {
+        loading.set(false);
+        // Append the footer after the page is loaded
+        document?.body?.appendChild(
+          new Footer({
+            target: document.body,
+          }).$$.root.firstChild
+        );
+      }, 350);
     });
   }
 
