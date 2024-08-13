@@ -8,14 +8,11 @@ The goal is to provide a **simple but well designed** way to track your progress
 
 ## TODO
 
-- [x] Finish post processing quest data into the right format
-- [x] Correct checkbox system and progress bar updating
-- [x] Local storage current checkbox data
-- [x] Fancy loading!
-- [x] Quest id link to quest lodestone/garland tools?
+- [ ] Bug: Footer in laptop screens margins
+- [ ] Bug: MSQ ARR quests are not ordered and likely incorrect
+- [ ] Bug: "null" quest descriptions
+- [ ] Parse or remove quest description tags `<Emphasis>` etc
 - [ ] Manual/auto mode for checking off quests
-- [ ] Hide to show background/preview quest image
-- [ ] Post expansion quest separation & improvements to ARR quests separation (confusing atm)
-- [ ] Quest descriptions?
-- [ ] Quest graph viewer!
+- [ ] Post-expansion quest separation
+- [ ] Quest graph viewer?
 - [ ] Music?
