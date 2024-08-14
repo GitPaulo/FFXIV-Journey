@@ -36,19 +36,19 @@ def fetch_first_journal_entry(quest_id, max_folder_number=100, max_retries=5, de
     start_index = last_successful_folder_index if start_from_last_success else 0
     for folder_index in range(start_index, max_folder_number + 1):
         csv_url = f"{RAW_JOURNAL_BASE_CSV_URL}/{str(folder_index).zfill(3)}/{quest_id}.csv"
-        # print(f"Trying URL: {csv_url}")
+        print(f"Trying URL: {csv_url}")
         # Attempt to fetch the CSV file with retries
         for attempt in range(max_retries):
             try:
                 response = requests.get(csv_url)
                 if response.status_code == 200:
                     csv_content = response.content.decode('utf-8')
-                    # Load the CSV data into a DataFrame
-                    # Skip the first 3 rows (header and metadata)
-                    journal_data = pd.read_csv(StringIO(csv_content), skiprows=3)
-                    if not journal_data.empty and journal_data.shape[1] >= 3:
+                    # Skip the meta rows (header and metadata)
+                    journal_data = pd.read_csv(StringIO(csv_content), skiprows=[0,1])
+                    print(journal_data.iloc[0, 2])
+                    if not journal_data.empty:
                         last_successful_folder_index = folder_index
-                        return journal_data.iloc[0, 2] # Accessing the third column (index 2)
+                        return journal_data.iloc[0, 2] # Accessing the description field
                     else:
                         break  # Break the retry loop if data format is incorrect
                 elif response.status_code == 404:

@@ -1,5 +1,6 @@
 <script lang="ts">
   import "../app.css";
+  import { debounce } from "lodash";
   import { base } from "$app/paths";
   import { get } from "svelte/store";
   import { slide } from "svelte/transition";
@@ -14,7 +15,9 @@
     toggleQuestCompletion,
     updateCurrentExpansion,
   } from "$lib/stores/questsStore";
+  import Footer from "$lib/components/Footer.svelte";
   import type { Quest, ExpansionsQuests, Quests } from "$lib/model";
+  import { onMount, onDestroy } from "svelte";
 
   export let data: { quests: Promise<ExpansionsQuests>; loading: boolean };
 
@@ -99,8 +102,8 @@
 
   // Update the background image based on the current expansion
   function updateBackground() {
-    const bgImage = $currentExpansion
-      ? `${base}/background_${$currentExpansion.replace(/\s/g, "").toLowerCase()}.webp`
+    const bgImage = get(currentExpansion)
+      ? `${base}/background_${get(currentExpansion).replace(/\s/g, "").toLowerCase()}.webp`
       : ""; // No background is default
 
     const bgElement = document.getElementById("background");
@@ -123,6 +126,13 @@
     tooltipVisible = false;
   }
 
+  // Santize FFXIV markup for quest descriptions
+  function santizeFFXIVMarkUp(description: string | null): string {
+    return description
+      ? description.replace(/<[^>]*>/g, "")
+      : "This quest has no description.";
+  }
+
   // Handle checkbox changes and update quest completion state
   function handleCheckboxChange(event: Event, quest: Quest) {
     const input = event.target as HTMLInputElement;
@@ -131,18 +141,15 @@
   }
 
   // Handle keyboard shortcut to focus on the search bar
-  const handleKeydown = (event: KeyboardEvent) => {
+  function handleKeydown(event: KeyboardEvent) {
     if (event.key === "/") {
       event.preventDefault(); // Prevent the default '/' action
       searchInput?.focus();
     }
-  };
-  window.addEventListener("keydown", handleKeydown);
+  }
 
-  import Footer from "$lib/components/Footer.svelte";
-
-  // Initialize the quests data and state
-  $: {
+  onMount(() => {
+    // Initialize the quests data and state
     data.quests.then((loadedQuests: ExpansionsQuests) => {
       quests.set(loadedQuests);
       filteredQuests.set(loadedQuests);
@@ -152,6 +159,7 @@
       calculateAllProgress();
       updateCurrentExpansion();
       updateBackground();
+
       setTimeout(() => {
         loading.set(false);
         // Append the footer after the page is loaded
@@ -162,7 +170,14 @@
         );
       }, 350);
     });
-  }
+
+    // Add event listener for keydown
+    window.addEventListener("keydown", handleKeydown);
+  });
+
+  onDestroy(() => {
+    window.removeEventListener("keydown", handleKeydown);
+  });
 
   // Reactively update the background whenever the current expansion changes
   $: updateBackground();
@@ -250,7 +265,7 @@
       class="p-3 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
       bind:value={searchQuery}
       bind:this={searchInput}
-      on:input={filterQuests}
+      on:input={debounce(filterQuests, 150)}
     />
     <!-- Search Focus Icon -->
     <svg
@@ -296,7 +311,7 @@
             </summary>
           {/if}
           <ul class="space-y-4">
-            {#each expansion.quests[location] as quest}
+            {#each expansion.quests[location] as quest (quest.Id)}
               <li
                 class="flex items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
               >
@@ -317,7 +332,7 @@
                     ID: {quest.Id}
                   </p>
                   <p class="text-sm text-gray-400 mt-1 hidden sm:block">
-                    <i>"{quest.Description}"</i>
+                    <i>"{santizeFFXIVMarkUp(quest.Description)}"</i>
                   </p>
                   <img
                     src={getImageUrl(quest.Image)}
@@ -359,7 +374,7 @@
     </details>
   {/each}
 
-  {#if $filteredQuests && $filteredQuests.length === 0}
+  {#if $filteredQuests?.length <= 0}
     <p class="text-center text-gray-600">No quests found.</p>
   {/if}
 {/if}
