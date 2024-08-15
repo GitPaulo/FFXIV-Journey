@@ -95,6 +95,18 @@ export function toggleQuestCompletion(quest: Quest, isChecked: boolean) {
   updateCurrentExpansion();
 }
 
+export function toggleSingleQuestCompletion(quest: Quest, isChecked: boolean) {
+  completedQuests.update((current) => {
+    const newCompletedQuests = { ...current };
+    newCompletedQuests[quest["#"]] = isChecked;
+    return newCompletedQuests;
+  });
+
+  storeCompletedQuests();
+  calculateAllProgress();
+  updateCurrentExpansion();
+}
+
 export function updateCurrentExpansion() {
   const $quests = get(quests);
   let lastCompletedQuestId: number | null = null;
