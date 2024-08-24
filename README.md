@@ -9,6 +9,7 @@ The goal is to provide a **simple but well designed** way to track your progress
 ## TODO
 
 - [ ] Bug: MSQ ARR quests are not ordered and likely incorrect
-- [ ] Post-expansion quest separation
+- [ ] Trials a sub category of some MSQ quests would be cool
+- [ ] Post-expansion quest separation (labels?)
 - [ ] Quest graph viewer?
-- [ ] Music?
+- [ ] Music/Rewards?
