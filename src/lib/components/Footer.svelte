@@ -1,4 +1,3 @@
-<!-- src/lib/Footer.svelte -->
 <div id="footer" class="text-sm mt-1 md:mt-4 text-gray-400">
   <div id="copyright" class="hidden md:block">
     FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.

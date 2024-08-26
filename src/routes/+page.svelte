@@ -190,7 +190,7 @@
             target: document.body,
           }).$$.root.firstChild
         );
-      }, 350);
+      }, 750);
     });
 
     // Events

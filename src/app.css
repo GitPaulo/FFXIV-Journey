@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 /* Defaults */
+
 html {
   font-size: 16px;
 }
@@ -13,7 +14,6 @@ html {
   box-sizing: border-box;
 }
 
-/* Body and HTML full height */
 html,
 body {
   margin: 0;
@@ -29,39 +29,36 @@ body {
   background-color: #f0f0f0;
 }
 
+/* Container for the main background */
 .background-container {
   position: relative;
-  background-color: white;
+  background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  box-sizing: border-box;
   max-width: 88%;
   width: 100%;
   height: auto;
 }
 
+/* Overlay for the background image */
 .background-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('') no-repeat center center;
-  /* Background is rogramatically set */
+  inset: 0;
+  background: url('') no-repeat center center; /* background is dynamic */
   background-size: cover;
   opacity: 0.9;
   z-index: 1;
-  border-radius: 8px;
-  transition: all 0.5s ease-in-out;
+  border-radius: inherit;
+  transition: opacity 0.5s ease-in-out;
 }
 
+/* Container for the main content */
 .content-container {
   position: relative;
   z-index: 2;
   padding: 20px;
-  box-sizing: border-box;
   height: 84vh;
   overflow: auto;
   background-color: rgba(244, 246, 244, 0.7);
-  border-radius: 8px;
+  border-radius: inherit;
 }
