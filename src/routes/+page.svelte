@@ -140,8 +140,8 @@
     toggleTooltipVisible = false;
   }
 
-  // Santize FFXIV markup for quest descriptions
-  function santizeFFXIVMarkUp(description: string | null): string {
+  // Sanitize FFXIV markup for quest descriptions
+  function sanitizeFFXIVMarkUp(description: string | null): string {
     return description
       ? description.replace(/<[^>]*>/g, "")
       : "This quest has no description.";
@@ -274,12 +274,12 @@
       on:mouseover={() => (hideTooltipVisible = true)}
       on:mouseleave={() => (hideTooltipVisible = false)}
       class={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
-        autoMode ? "bg-blue-500" : "bg-gray-300"
+        autoMode ? "bg-gray-300" : "bg-blue-500"
       }`}
     >
       <div
         class={`h-4 w-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
-          autoMode ? "translate-x-6" : "translate-x-0"
+          autoMode ? "translate-x-0" : "translate-x-6"
         }`}
       ></div>
     </button>
@@ -289,7 +289,7 @@
       <div
         class="ml-2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
       >
-        {autoMode ? "Auto-Check Quests" : "Manual Quest Checking"}
+        {autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
       </div>
     {/if}
   </div>
