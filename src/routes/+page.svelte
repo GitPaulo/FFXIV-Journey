@@ -405,7 +405,7 @@
                     ID: {quest.Id}
                   </p>
                   <p class="text-sm text-gray-400 mt-1 hidden sm:block">
-                    <i>"{santizeFFXIVMarkUp(quest.Description)}"</i>
+                    <i>"{sanitizeFFXIVMarkUp(quest.Description)}"</i>
                   </p>
                   <img
                     src={getImageUrl(quest.Image)}
