@@ -394,9 +394,9 @@
           <ul class="space-y-4">
             {#each expansion.quests[location] as quest (quest.Id)}
               <li
-                class="flex items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
+                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
               >
-                <div class="flex-none w-10 sm:w-16">
+                <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                   <input
                     type="checkbox"
                     class="form-checkbox h-6 w-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
@@ -405,7 +405,7 @@
                   />
                 </div>
 
-                <div class="flex-grow ml-4">
+                <div class="flex-grow sm:ml-4 text-center sm:text-left">
                   <p class="font-bold text-lg sm:text-xl text-gray-800">
                     {quest.Name}
                   </p>
@@ -422,7 +422,7 @@
                     class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm hidden sm:block"
                   />
                 </div>
-                <div class="ml-auto flex items-center">
+                <div class="ml-auto flex items-center hidden sm:block">
                   <a
                     href={`https://www.garlandtools.org/db/#quest/${quest["#"]}`}
                     target="_blank"
