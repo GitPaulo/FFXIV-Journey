@@ -6,15 +6,20 @@ import time
 from tqdm import tqdm
 from io import StringIO
 
-# Constants
+'''
+    Constants
+'''
+
 RAW_QUESTS_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/Quest.csv'
 RAW_EXVERSION_CSV = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/ExVersion.csv'
 RAW_JOURNAL_BASE_CSV_URL = 'https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/quest' # + expansion_number_to_three_digits + quest_id + '.csv'
-XIV_API_SEARCH_BASE_URL = "https://beta.xivapi.com/api/1/search"
+
+# TODO: Ideally, never use XIVAPI for anything other than asset fetching (images)
+XIV_BETA_API_SEARCH_BASE_URL = "https://beta.xivapi.com/api/1/search"
+XIV_API_INSTANCE_CONTENT_BASE_URL = "https://xivapi.com/InstanceContent" # 1. use BETA when working, 2. Use use datamine data when I figure out how to instance id -> instance data
+
 OUTPUT_JSON_PATH = 'static/Quests.json'
 
-# Quest Group Constants
-# Necessary hardcoded data to figure out ARR forking quest lines
 QUEST_GROUP_GRIDANIA = "Gridania"
 QUEST_GROUP_ULDAH = "Ul'dah"
 QUEST_GROUP_LIMSA_LOMINSA = "Limsa Lominsa"
@@ -29,7 +34,10 @@ ENVOY_TO_QUEST_GROUP = {
 
 STARTING_QUEST_IDS = [65621, 66104, 65644] # IDs for the "Close to Home" quests in Gridania, Ul'dah, and Limsa Lominsa
 
-# Variable to keep track of the last successful expansion number
+''' 
+    Functions
+'''
+
 last_successful_folder_index = 0
 def fetch_first_journal_entry(quest_id, max_folder_number=100, max_retries=5, delay=2, start_from_last_success=True):
     global last_successful_folder_index
@@ -60,10 +68,27 @@ def fetch_first_journal_entry(quest_id, max_folder_number=100, max_retries=5, de
                 time.sleep(delay)
     return None
 
+def fetch_instance_content(instance_id):
+    instance_url = f"{XIV_API_INSTANCE_CONTENT_BASE_URL}/{instance_id}?columns=ContentType.ID,ContentType.Name,Name,ContentFinderCondition.Image"
+    response = requests.get(instance_url)
+    # To avoid hitting the API rate limit
+    time.sleep(0.100) 
+    if response.status_code == 200:
+        instance_data = response.json()
+        return {
+            "Name": instance_data.get("Name"),
+            "Image": instance_data.get("ContentFinderCondition", {}).get("Image"),
+            "ContentTypeID": instance_data.get("ContentType", {}).get("ID"),
+            "ContentTypeName": instance_data.get("ContentType", {}).get("Name"),
+        }
+    else:
+        print(f"Failed to fetch instance content for ID {instance_id}. Status code: {response.status_code}")
+        return None
+
 def fetch_image_path(quest_name):
     image_path = None
     response = requests.get(
-        XIV_API_SEARCH_BASE_URL, 
+        XIV_BETA_API_SEARCH_BASE_URL, 
         params={
             "sheets": "Quest",
             "query": f"Name~\"{quest_name}\"",
@@ -100,6 +125,57 @@ def get_expansion_name(expansion_index, expansion_mapping):
 def get_previous_quests(row):
     return [int(row[f'PreviousQuest[{i}]']) for i in range(4) if not pd.isna(row[f'PreviousQuest[{i}]']) and str(row[f'PreviousQuest[{i}]']).strip() != '0']
 
+def order_quests_by_next_msq(quests, group=None):
+    # Create a mapping from quest ID to quest
+    quest_map = {quest["#"]: quest for quest in quests}
+    
+    # Find the starting quests (which do not appear in any NextMSQ)
+    start_quests = {quest["#"] for quest in quests} - {quest["NextMSQ"] for quest in quests if quest["NextMSQ"]}
+
+    if not start_quests:
+        print(f"No starting quest found in the {expansion_mapping[0]} category for {group if group else QUEST_GROUP_MAIN_QUEST_LINE}. Skipping...")
+        return []
+
+    # Track processed quests to avoid duplicates
+    processed_quests = set()
+    
+    # There might be multiple starting quests, so we handle each path separately
+    sorted_quests = []
+    for start_quest_id in start_quests:
+        current_quest_id = start_quest_id
+        while current_quest_id:
+            if current_quest_id not in quest_map:
+                print(f"Warning: Quest ID {current_quest_id} not found in quest_map. Skipping.")
+                break
+
+            if current_quest_id in processed_quests:
+                print(f"Skipping duplicate quest ID {current_quest_id}.")
+                break
+            
+            current_quest = quest_map[current_quest_id]
+            sorted_quests.append(current_quest)
+            processed_quests.add(current_quest_id)  # Mark this quest as processed
+            
+            next_msq_id = current_quest["NextMSQ"]
+
+            if next_msq_id and next_msq_id in quest_map:
+                current_quest_id = next_msq_id
+            else:
+                current_quest_id = None  # End of chain
+
+    return sorted_quests
+
+def convert_quest_fields_to_numbers(quest):
+    # Important: CSV uses int32 for quest IDs, but for reasons the dump makes strings so we just convert them here
+    quest["#"] = int(quest["#"])
+    if quest["NextMSQ"] is not None:
+        quest["NextMSQ"] = int(quest["NextMSQ"])
+    quest["PreviousQuests"] = [int(q) for q in quest["PreviousQuests"]]
+
+'''
+    Main Script
+'''
+
 # Index -> Expansion Name mapping
 expansion_mapping = load_expansion_mapping()
 
@@ -130,6 +206,9 @@ fetch_images = input("Do you want to fetch images? (yes/no): ").strip().lower() 
 # Prompt user if they want to fetch journal entries
 fetch_journal_entries = input("Do you want to fetch journal entries? (yes/no): ").strip().lower() == 'yes'
 
+# Prompt user if they want to fetch unlocks
+fetch_unlocks = input("Do you want to fetch unlocks? (yes/no): ").strip().lower() == 'yes'
+
 # # -> Quest (formatted) mapping
 quests_by_number = {}
 with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar:
@@ -140,6 +219,23 @@ with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar
         quest_icon_type = row["EventIconType"]
         quest_group = None
         expansion_name = get_expansion_name(row["Expansion"], expansion_mapping)
+
+        # Initialize the Unlocks array
+        unlocks = []
+
+        if fetch_unlocks:
+            # Search for instance dungeons unlocked by this quest
+            for col_idx in range(len(row)):
+                instruction_column = f"Script{{Instruction}}[{col_idx}]"
+                arg_column = f"Script{{Arg}}[{col_idx}]"
+                if instruction_column in row and arg_column in row:
+                    if "INSTANCEDUNGEON" in str(row[instruction_column]):
+                        instance_id = row[arg_column]
+                        if pd.notna(instance_id) and str(instance_id).strip() != '0':
+                            # Fetch instance dungeon details
+                            instance_details = fetch_instance_content(instance_id)
+                            if instance_details:
+                                unlocks.append(instance_details)
 
         # Optionally fetch the Image path
         image_path = None
@@ -164,7 +260,8 @@ with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar
             "PreviousQuests": get_previous_quests(row),
             "NextMSQ": None,  # Initialize as None, to be filled later
             "QuestGroup": quest_group,
-            "Image": image_path
+            "Image": image_path,
+            "Unlocks": unlocks  # Add the Unlocks property
         }
         quests_by_number[quest_number] = quest
 
@@ -224,47 +321,6 @@ for quest in quests_by_number.values():
 
 # Extract A Realm Reborn quests
 arr_quests = [quest for quest in quests_by_number.values() if quest["ExpansionName"] == expansion_mapping[0]]
-
-# Function to order quests based on the NextMSQ path, considering QuestGroup
-def order_quests_by_next_msq(quests, group=None):
-    # Create a mapping from quest ID to quest
-    quest_map = {quest["#"]: quest for quest in quests}
-    
-    # Find the starting quests (which do not appear in any NextMSQ)
-    start_quests = {quest["#"] for quest in quests} - {quest["NextMSQ"] for quest in quests if quest["NextMSQ"]}
-
-    if not start_quests:
-        print(f"No starting quest found in the {expansion_mapping[0]} category for {group if group else QUEST_GROUP_MAIN_QUEST_LINE}. Skipping...")
-        return []
-
-    # Track processed quests to avoid duplicates
-    processed_quests = set()
-    
-    # There might be multiple starting quests, so we handle each path separately
-    sorted_quests = []
-    for start_quest_id in start_quests:
-        current_quest_id = start_quest_id
-        while current_quest_id:
-            if current_quest_id not in quest_map:
-                print(f"Warning: Quest ID {current_quest_id} not found in quest_map. Skipping.")
-                break
-
-            if current_quest_id in processed_quests:
-                print(f"Skipping duplicate quest ID {current_quest_id}.")
-                break
-            
-            current_quest = quest_map[current_quest_id]
-            sorted_quests.append(current_quest)
-            processed_quests.add(current_quest_id)  # Mark this quest as processed
-            
-            next_msq_id = current_quest["NextMSQ"]
-
-            if next_msq_id and next_msq_id in quest_map:
-                current_quest_id = next_msq_id
-            else:
-                current_quest_id = None  # End of chain
-
-    return sorted_quests
 
 # Sort the A Realm Reborn quests by group
 sorted_quests_by_group = {}
@@ -330,12 +386,6 @@ validate_linked_list(STARTING_QUEST_IDS, quests_by_number)
 # Combine all sorted quests back into the quests_by_expansion structure
 quests_by_expansion[expansion_mapping[0]] = sorted_quests_by_group
 
-# Important: CSV uses int32 for quest IDs, but for reasons the dump makes strings so we just convert them here
-def convert_quest_fields_to_numbers(quest):
-    quest["#"] = int(quest["#"])
-    if quest["NextMSQ"] is not None:
-        quest["NextMSQ"] = int(quest["NextMSQ"])
-    quest["PreviousQuests"] = [int(q) for q in quest["PreviousQuests"]]
 # Convert #, NextMSQ, and PreviousQuests to numbers
 for quest in quests_by_number.values():
     convert_quest_fields_to_numbers(quest)

@@ -102,6 +102,14 @@
     }
   }
 
+  // TODO: Remove
+  function getOldImageUrl(imagePath: string | null): string {
+    if (!imagePath) {
+      return "https://fakeimg.pl/300x160/2e2e2e/ab4444?text=Unknown"; // Placeholder unknown
+    }
+    return `https://xivapi.com/${imagePath}`;
+  }
+
   // Update the background image based on the current expansion
   function updateBackground() {
     const bgImage = get(currentExpansion)
@@ -440,6 +448,29 @@
                   </a>
                 </div>
               </li>
+              {#if quest.Unlocks && quest.Unlocks.length > 0}
+                <div
+                  class="mt-4 ml-10 flex flex-col sm:flex-row sm:flex-wrap sm:justify-start gap-4"
+                >
+                  {#each quest.Unlocks as unlock}
+                    <div
+                      class="flex flex-col items-center p-4 bg-white rounded-lg shadow border border-gray-200"
+                    >
+                      <img
+                        src={getOldImageUrl(unlock.Image)}
+                        alt="{unlock.Name} thumbnail"
+                        class="w-44 h-16 rounded-md border border-gray-300 shadow-sm mb-4 hidden sm:block"
+                      />
+                      <p class="font-bold text-gray-800 text-center">
+                        {unlock.Name}
+                      </p>
+                      <p class="text-xs text-gray-500 text-center">
+                        {unlock.ContentTypeName}
+                      </p>
+                    </div>
+                  {/each}
+                </div>
+              {/if}
             {/each}
           </ul>
         </details>

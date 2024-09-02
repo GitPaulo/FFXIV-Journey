@@ -8,8 +8,11 @@ The goal is to provide a **simple but well designed** way to track your progress
 
 ## TODO
 
-- [ ] Bug: MSQ ARR quests are not ordered and likely incorrect
-- [ ] Trials a sub category of some MSQ quests would be cool
+- [ ] Bug: Some MSQ ARR quests are missing.
+- [ ] Must do: Replace the usage of old XIVAPI with the new one for unlocks
+- [ ] Nice to do: Remove XIVAPI, entirely. Use the datamined data directly. (we use it for unlocks and assets)
+
+Extra:
+
 - [ ] Post-expansion quest separation (labels?)
 - [ ] Quest graph viewer?
-- [ ] Music/Rewards?

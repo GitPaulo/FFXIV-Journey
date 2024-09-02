@@ -2,6 +2,13 @@
  * Quest model
  */
 
+export interface Unlock {
+  Name: string;             // Name of the unlock
+  Image: string;            // Path to the unlock image
+  ContentTypeID: number;    // Content type ID
+  ContentTypeName: string;  // Content type name
+}
+
 export type Quest = {
   "#": number;                // Unique identifier for the quest
   Id: string;                 // Quest identifier string
@@ -13,6 +20,7 @@ export type Quest = {
   NextMSQ: number | null;     // ID of the next MSQ quest or null if the last MSQ quest
   QuestGroup: string | null;  // Starting location or null if not applicable
   Image: string | null;       // Path to the quest image or null if not available
+  Unlocks: Unlock[];          // Array of unlocks
 };
 
 export type Quests = {
