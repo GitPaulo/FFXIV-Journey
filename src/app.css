@@ -24,6 +24,7 @@ body {
 
 body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
@@ -38,13 +39,15 @@ body {
   max-width: 88%;
   width: 100%;
   height: auto;
+  margin-top: 20px;
 }
 
 /* Overlay for the background image */
 .background-overlay {
   position: absolute;
   inset: 0;
-  background: url('') no-repeat center center; /* background is dynamic */
+  background: url('') no-repeat center center;
+  /* background is dynamic */
   background-size: cover;
   opacity: 0.9;
   z-index: 1;

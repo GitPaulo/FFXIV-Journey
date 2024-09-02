@@ -273,7 +273,7 @@
 <!-- Action Bar -->
 <div
   id="action-bar"
-  class="fixed md:absolute top-2 mt-2 bg-white rounded-lg p-2 shadow"
+  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow"
 >
   <!-- Toggle Button -->
   <div class="flex items-center">
@@ -281,13 +281,13 @@
       on:click={toggleAutoMode}
       on:mouseover={() => (hideTooltipVisible = true)}
       on:mouseleave={() => (hideTooltipVisible = false)}
-      class={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
+      class={`w-10 h-5 sm:w-12 sm:h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
         autoMode ? "bg-gray-300" : "bg-blue-500"
       }`}
     >
       <div
-        class={`h-4 w-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
-          autoMode ? "translate-x-0" : "translate-x-6"
+        class={`h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+          autoMode ? "translate-x-0" : "translate-x-5 sm:translate-x-6"
         }`}
       ></div>
     </button>

@@ -3,10 +3,10 @@
  */
 
 export interface Unlock {
-  Name: string;             // Name of the unlock
-  Image: string;            // Path to the unlock image
-  ContentTypeID: number;    // Content type ID
-  ContentTypeName: string;  // Content type name
+  Name: string;            // Name of the unlock
+  Image: string;           // Path to the unlock image
+  ContentTypeID: number;   // Content type ID
+  ContentTypeName: string; // Content type name
 }
 
 export type Quest = {
