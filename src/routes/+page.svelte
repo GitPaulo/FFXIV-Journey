@@ -1,8 +1,11 @@
 <script lang="ts">
-  import "../app.css";
-  import { base } from "$app/paths";
   import { get } from "svelte/store";
   import { slide } from "svelte/transition";
+  import { onMount, onDestroy } from "svelte";
+  import { debounce } from "lodash";
+
+  import "../app.css";
+  import { base } from "$app/paths";
   import {
     quests,
     loading,
@@ -16,18 +19,21 @@
     updateCurrentExpansion,
   } from "$lib/stores/questsStore";
   import Footer from "$lib/components/Footer.svelte";
-  import type { Quest, ExpansionsQuests, Quests } from "$lib/model";
-  import { onMount, onDestroy } from "svelte";
+  import { getImageUrl, getOldImageUrl } from "$lib/services/xivapi";
+  import { getGarlandToolsQuestURLByID, sanitizeFFXIVMarkUp } from "$lib/utils";
 
-  export let data: { quests: Promise<ExpansionsQuests>; loading: boolean };
+  import type { QuestsState } from "./+page";
+  import type { Quest, ExpansionsQuests, Expansion } from "$lib/model";
+
+  export let data: QuestsState;
 
   let searchQuery = "";
   let openExpansions: Record<string, boolean> = {};
   let openLocations: Record<string, Record<string, boolean>> = {};
   let autoMode = true;
   let showTitle = true;
-  let hideTooltipVisible = false;
-  let toggleTooltipVisible = false;
+  let showHideTooltip = false;
+  let showToggleTooltip = false;
   let searchInput: HTMLInputElement;
 
   // Reset the state of expansions and locations to be closed initially
@@ -47,68 +53,53 @@
   }
 
   // Filter quests based on search query
-  function filterQuests() {
+  function filterQuests(): void {
     const $quests = get(quests);
     resetOpenStates();
 
-    if (!searchQuery.trim()) {
+    const trimmedQuery = searchQuery.trim().toLowerCase();
+    if (!trimmedQuery) {
       filteredQuests.set($quests);
       return;
     }
 
-    const result: ExpansionsQuests = $quests.reduce((acc, expansion) => {
-      const filteredExpansion = {
-        name: expansion.name,
-        quests: {} as Quests,
-      };
+    const filteredExpansions: ExpansionsQuests =
+      $quests.reduce<ExpansionsQuests>((acc, expansion) => {
+        const filteredExpansion: Expansion = {
+          name: expansion.name,
+          quests: {},
+        };
 
-      for (const location in expansion.quests) {
-        const locationQuests = expansion.quests[location].filter((quest) =>
-          quest.Name.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        for (const location in expansion.quests) {
+          const locationQuests = expansion.quests[location].filter((quest) => {
+            const nameMatches = quest.Name.toLowerCase().includes(trimmedQuery);
+            const descriptionMatches = quest.Description
+              ? quest.Description.toLowerCase().includes(trimmedQuery)
+              : false;
+            const unlockMatches = quest.Unlocks.some((unlock) =>
+              unlock.Name.toLowerCase().includes(trimmedQuery)
+            );
 
-        if (locationQuests.length) {
-          filteredExpansion.quests[location] = locationQuests;
-          openExpansions[expansion.name] = true;
-          openLocations[expansion.name][location] = true;
+            return nameMatches || descriptionMatches || unlockMatches;
+          });
+
+          if (locationQuests.length > 0) {
+            filteredExpansion.quests[location] = locationQuests;
+            openExpansions[expansion.name] = true;
+            openLocations[expansion.name][location] = true;
+          }
         }
-      }
 
-      if (Object.keys(filteredExpansion.quests).length) {
-        acc.push(filteredExpansion);
-      }
-      return acc;
-    }, [] as ExpansionsQuests);
+        if (Object.keys(filteredExpansion.quests).length > 0) {
+          acc.push(filteredExpansion);
+        }
 
-    filteredQuests.set(result);
+        return acc;
+      }, []);
+
+    filteredQuests.set(filteredExpansions);
   }
-
-  // Get the correct image URL or fallback to placeholder
-  function getImageUrl(imagePath: string | null): string {
-    const placeholderImage = `${base}/default_quest_image.png`;
-    if (
-      !imagePath ||
-      imagePath.trim() === "" ||
-      imagePath.includes("000000_hr1") // Returned by XIVAPI for missing images
-    ) {
-      return placeholderImage;
-    }
-    try {
-      const assetPath = `https://beta.xivapi.com/api/1/asset/${imagePath}?format=png`;
-      new URL(assetPath);
-      return assetPath;
-    } catch {
-      return placeholderImage;
-    }
-  }
-
-  // TODO: Remove
-  function getOldImageUrl(imagePath: string | null): string {
-    if (!imagePath) {
-      return "https://fakeimg.pl/300x160/2e2e2e/ab4444?text=Unknown"; // Placeholder unknown
-    }
-    return `https://xivapi.com/${imagePath}`;
-  }
+  const debouncedFilterQuests = debounce(filterQuests, 250);
 
   // Update the background image based on the current expansion
   function updateBackground() {
@@ -122,7 +113,6 @@
     }
   }
 
-  // Toggle the visibility of the title section
   function toggleTitleVisibility() {
     showTitle = !showTitle;
 
@@ -134,25 +124,28 @@
     }
   }
 
-  // Handle checkbox auto mode toggle
+  function isQuestCompleted(completedQuest: any): boolean {
+    return Boolean(completedQuest);
+  }
+
   function toggleAutoMode() {
-    autoMode = !autoMode; // Toggle the autoMode flag
+    autoMode = !autoMode;
   }
 
-  // Show and hide the tooltips
-  function showTooltip() {
-    toggleTooltipVisible = true;
+  function enableToggleTooltip() {
+    showToggleTooltip = true;
   }
 
-  function hideTooltip() {
-    toggleTooltipVisible = false;
+  function disableToggleTooltip() {
+    showToggleTooltip = false;
   }
 
-  // Sanitize FFXIV markup for quest descriptions
-  function sanitizeFFXIVMarkUp(description: string | null): string {
-    return description
-      ? description.replace(/<[^>]*>/g, "")
-      : "This quest has no description.";
+  function enableHideTooltip() {
+    showHideTooltip = true;
+  }
+
+  function disableHideTooltip() {
+    showHideTooltip = false;
   }
 
   // Handle checkbox changes and update quest completion state
@@ -179,8 +172,8 @@
   }
 
   onMount(() => {
-    // Initialize the quests data and state
     data.quests.then((loadedQuests: ExpansionsQuests) => {
+      // Init quests
       quests.set(loadedQuests);
       filteredQuests.set(loadedQuests);
 
@@ -190,6 +183,7 @@
       updateCurrentExpansion();
       updateBackground();
 
+      // TODO: This is a hack, find a better way.
       setTimeout(() => {
         loading.set(false);
         // Append the footer after the page is loaded
@@ -223,8 +217,10 @@
       <!-- Hide Button -->
       <button
         on:click={toggleTitleVisibility}
-        on:mouseover={showTooltip}
-        on:mouseleave={hideTooltip}
+        on:mouseover={enableHideTooltip}
+        on:focus={enableHideTooltip}
+        on:mouseleave={disableHideTooltip}
+        on:blur={disableHideTooltip}
         class="absolute top-2 right-2 p-3 group"
       >
         <svg
@@ -246,7 +242,7 @@
       c9.651-12.303,29.652-35.658,55.574-54.47l124.99,124.99C198.884,243.084,182.236,248.023,165.003,248.023z"
           />
         </svg>
-        {#if toggleTooltipVisible}
+        {#if showHideTooltip}
           <!-- Tooltip for Hide Button -->
           <div
             class="absolute top-full mt-1 right-0 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
@@ -279,8 +275,10 @@
   <div class="flex items-center">
     <button
       on:click={toggleAutoMode}
-      on:mouseover={() => (hideTooltipVisible = true)}
-      on:mouseleave={() => (hideTooltipVisible = false)}
+      on:mouseover={enableToggleTooltip}
+      on:mouseleave={disableToggleTooltip}
+      on:focus={enableToggleTooltip}
+      on:blur={disableToggleTooltip}
       class={`w-10 h-5 sm:w-12 sm:h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
         autoMode ? "bg-gray-300" : "bg-blue-500"
       }`}
@@ -293,7 +291,7 @@
     </button>
 
     <!-- Tooltip for Auto/Manual Mode -->
-    {#if hideTooltipVisible}
+    {#if showToggleTooltip}
       <div
         class="ml-2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
       >
@@ -342,12 +340,12 @@
   <div class="mb-6 flex relative">
     <input
       type="text"
-      placeholder="Search quests..."
+      placeholder="Search quest name, description and unlocks..."
       autofocus
       class="p-3 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
       bind:value={searchQuery}
       bind:this={searchInput}
-      on:input={filterQuests}
+      on:input={debouncedFilterQuests}
     />
     <svg
       class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-300 pointer-events-none"
@@ -400,7 +398,7 @@
                   <input
                     type="checkbox"
                     class="form-checkbox h-6 w-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
-                    checked={$completedQuests[quest["#"]] || false}
+                    checked={isQuestCompleted($completedQuests[quest["#"]])}
                     on:change={(e) => handleCheckboxChange(e, quest)}
                   />
                 </div>
@@ -424,13 +422,12 @@
                 </div>
                 <div class="ml-auto flex items-center hidden sm:block">
                   <a
-                    href={`https://www.garlandtools.org/db/#quest/${quest["#"]}`}
+                    href={getGarlandToolsQuestURLByID(quest["#"])}
                     target="_blank"
                     class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-300 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 whitespace-nowrap"
                   >
                     <svg
                       class="mr-1"
-                      xmlns="http://www.w3.org/2000/svg"
                       width="24px"
                       height="24px"
                       viewBox="0 0 24 24"
