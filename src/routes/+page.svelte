@@ -1,7 +1,7 @@
 <script lang="ts">
   import { get } from "svelte/store";
   import { slide } from "svelte/transition";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount, onDestroy, tick } from "svelte";
   import { debounce } from "lodash";
 
   import "../app.css";
@@ -27,7 +27,6 @@
 
   export let data: QuestsState;
 
-  let searchQuery = "";
   let openExpansions: Record<string, boolean> = {};
   let openLocations: Record<string, Record<string, boolean>> = {};
   let autoMode = true;
@@ -35,6 +34,9 @@
   let showHideTooltip = false;
   let showToggleTooltip = false;
   let searchInput: HTMLInputElement;
+  let searchQuery = "";
+  let lastCheckedQuestId: number | null = null;
+  let highlightedQuestId: number | null = null;
 
   // Reset the state of expansions and locations to be closed initially
   function resetOpenStates() {
@@ -101,6 +103,37 @@
   }
   const debouncedFilterQuests = debounce(filterQuests, 250);
 
+  // Find the last checked quest based on the order of expansions in the quests store
+  function findLastCheckedQuest(): void {
+    const $completedQuests = get(completedQuests);
+    const $quests = get(quests);
+
+    let lastCheckedQuest = null;
+
+    // Iterate through each expansion in the order it appears in $quests
+    for (const expansion of $quests) {
+      for (const location in expansion.quests) {
+        const questsInLocation = expansion.quests[location];
+
+        for (const quest of questsInLocation) {
+          if ($completedQuests[quest["#"]]) {
+            lastCheckedQuest = quest;
+          }
+        }
+      }
+
+      // If we found a checked quest, store its ID
+      if (lastCheckedQuest) {
+        lastCheckedQuestId = lastCheckedQuest["#"];
+      }
+    }
+
+    // If no quest is found, set lastCheckedQuestId to null
+    if (!lastCheckedQuest) {
+      lastCheckedQuestId = null;
+    }
+  }
+
   // Update the background image based on the current expansion
   function updateBackground() {
     const bgImage = get(currentExpansion)
@@ -148,16 +181,57 @@
     showHideTooltip = false;
   }
 
+  function scrollToLastCheckedQuest() {
+    if (lastCheckedQuestId === null) return;
+
+    searchQuery = "";
+    debouncedFilterQuests(); // Trigger the filtering to reset the list
+
+    // Wait for the DOM to update after clearing the search
+    tick().then(() => {
+      const questElement = document.getElementById(
+        `quest-${lastCheckedQuestId}`
+      );
+
+      if (questElement) {
+        // Open all parent collapsibles (details elements)
+        let parentElement = questElement.parentElement as HTMLElement | null;
+        while (parentElement) {
+          if (
+            parentElement.tagName === "DETAILS" &&
+            parentElement instanceof HTMLDetailsElement
+          ) {
+            parentElement.open = true;
+          }
+          parentElement = parentElement.parentElement; // Traverse up the DOM
+        }
+
+        // Wait for the collapsibles to be fully opened
+        tick().then(() => {
+          questElement.scrollIntoView({ behavior: "smooth", block: "center" });
+
+          // Highlight the quest for 3 seconds
+          highlightedQuestId = lastCheckedQuestId;
+          setTimeout(() => {
+            highlightedQuestId = null;
+          }, 3000);
+        });
+      }
+    });
+  }
+
   // Handle checkbox changes and update quest completion state
   function handleCheckboxChange(event: Event, quest: Quest) {
     const input = event.target as HTMLInputElement;
 
     if (autoMode) {
-      // Auto mode: existing logic that may check/uncheck multiple quests
       toggleQuestCompletion(quest, input.checked);
     } else {
-      // Manual mode: only toggle the state of the clicked checkbox
       toggleSingleQuestCompletion(quest, input.checked);
+    }
+
+    if (input.checked) {
+      lastCheckedQuestId = quest["#"];
     }
 
     updateBackground();
@@ -182,6 +256,7 @@
       calculateAllProgress();
       updateCurrentExpansion();
       updateBackground();
+      findLastCheckedQuest();
 
       // TODO: This is a hack, find a better way.
       setTimeout(() => {
@@ -269,7 +344,7 @@
 <!-- Action Bar -->
 <div
   id="action-bar"
-  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow"
+  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow flex items-center justify-between"
 >
   <!-- Toggle Button -->
   <div class="flex items-center">
@@ -299,6 +374,14 @@
       </div>
     {/if}
   </div>
+
+  <!-- Last Quest Button -->
+  <button
+    on:click={scrollToLastCheckedQuest}
+    class="ml-4 bg-white text-gray-700 border border-gray-300 rounded-lg p-1 sm:p-2 shadow hover:bg-gray-100 transition-colors duration-300"
+  >
+    Scroll to Currrent Quest
+  </button>
 </div>
 
 <!--- Progress --->
@@ -392,7 +475,11 @@
           <ul class="space-y-4">
             {#each expansion.quests[location] as quest (quest.Id)}
               <li
+                id={`quest-${quest["#"]}`}
                 class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
+                class:border-2={highlightedQuestId === quest["#"]}
+                class:border-blue-600={highlightedQuestId === quest["#"]}
+                class:animate-flicker={highlightedQuestId === quest["#"]}
               >
                 <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                   <input
