@@ -183,9 +183,11 @@
 
   function scrollToLastCheckedQuest() {
     if (lastCheckedQuestId === null) return;
-
-    searchQuery = "";
-    debouncedFilterQuests(); // Trigger the filtering to reset the list
+    if (searchQuery) {
+      searchQuery = "";
+      searchInput.value = "";
+      filterQuests(); // Clear the search
+    }
 
     // Wait for the DOM to update after clearing the search
     tick().then(() => {
