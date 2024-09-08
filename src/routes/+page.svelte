@@ -380,9 +380,13 @@
   <!-- Last Quest Button -->
   <button
     on:click={scrollToLastCheckedQuest}
-    class="ml-4 bg-white text-gray-700 border border-gray-300 rounded-lg p-1 sm:p-2 shadow hover:bg-gray-100 transition-colors duration-300"
+    class="ml-4 p-1 sm:p-2 rounded-lg shadow transition-colors duration-300
+      {lastCheckedQuestId === null
+      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'}"
+    disabled={lastCheckedQuestId === null}
   >
-    Scroll to Currrent Quest
+    Scroll to Current Quest
   </button>
 </div>
 
