@@ -33,6 +33,7 @@
   let showTitle = true;
   let showHideTooltip = false;
   let showToggleTooltip = false;
+  let showCurrentTooltip = false;
   let searchInput: HTMLInputElement;
   let searchQuery = "";
   let lastCheckedQuestId: number | null = null;
@@ -121,17 +122,10 @@
           }
         }
       }
-
-      // If we found a checked quest, store its ID
-      if (lastCheckedQuest) {
-        lastCheckedQuestId = lastCheckedQuest["#"];
-      }
     }
 
-    // If no quest is found, set lastCheckedQuestId to null
-    if (!lastCheckedQuest) {
-      lastCheckedQuestId = null;
-    }
+    // Update the last checked quest ID
+    lastCheckedQuestId = lastCheckedQuest ? lastCheckedQuest["#"] : null;
   }
 
   // Update the background image based on the current expansion
@@ -165,6 +159,8 @@
     autoMode = !autoMode;
   }
 
+  // TODO: Move this into a tooltip component
+
   function enableToggleTooltip() {
     showToggleTooltip = true;
   }
@@ -179,6 +175,14 @@
 
   function disableHideTooltip() {
     showHideTooltip = false;
+  }
+
+  function enableCurrentTooltip() {
+    showCurrentTooltip = true;
+  }
+
+  function disableCurrentTooltip() {
+    showCurrentTooltip = false;
   }
 
   function scrollToLastCheckedQuest() {
@@ -232,10 +236,7 @@
       toggleSingleQuestCompletion(quest, input.checked);
     }
 
-    if (input.checked) {
-      lastCheckedQuestId = quest["#"];
-    }
-
+    findLastCheckedQuest();
     updateBackground();
   }
 
@@ -497,9 +498,30 @@
                 </div>
 
                 <div class="flex-grow sm:ml-4 text-center sm:text-left">
-                  <p class="font-bold text-lg sm:text-xl text-gray-800">
-                    {quest.Name}
-                  </p>
+                  <div class="flex items-center">
+                    <p class="font-bold text-lg sm:text-xl text-gray-800">
+                      {quest.Name}
+                    </p>
+                    {#if quest["#"] === lastCheckedQuestId}
+                      <img
+                        src="moogle_current_quest.png"
+                        alt="Current Quest"
+                        class="ml-2 h-8 w-8"
+                        on:mouseover={enableCurrentTooltip}
+                        on:mouseleave={disableCurrentTooltip}
+                        on:focus={enableCurrentTooltip}
+                        on:blur={disableCurrentTooltip}
+                      />
+                      <!-- Tooltip for Current Quest Icon -->
+                      {#if showCurrentTooltip}
+                        <div
+                          class="ml-2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
+                        >
+                          Current MSQ Quest!
+                        </div>
+                      {/if}
+                    {/if}
+                  </div>
                   <p class="text-sm text-gray-500 mt-1 hidden sm:block">
                     ID: {quest.Id}
                   </p>
