@@ -8,6 +8,7 @@ The goal is to provide a **simple but well enough designed** way to track your p
 
 ## TODO
 
+- [ ] Convert to new format: `https://beta.xivapi.com/api/1/asset?path=ui%2Ficon%2F100000%2F100064_hr1.tex&format=png`
 - [ ] Bug: Some MSQ ARR quests are missing.
 - [ ] Must do: Replace the usage of old XIVAPI with the new one for unlocks
 - [ ] Nice to do: Remove XIVAPI, entirely. Use the datamined data directly. (we use it for unlocks and assets)
