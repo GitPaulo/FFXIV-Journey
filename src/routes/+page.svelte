@@ -248,9 +248,10 @@
     const contentContainer =
       document.getElementsByClassName("content-container")[0];
     if (!contentContainer) return;
-    if (!showTitle) return;
 
     showScrollToTop = contentContainer.scrollTop > 140;
+
+    if (!showTitle) return;
     if (showScrollToTop) {
       detachActionBar();
     } else {
