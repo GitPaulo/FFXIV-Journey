@@ -65,3 +65,42 @@ body {
   background-color: rgba(244, 246, 244, 0.7);
   border-radius: inherit;
 }
+
+/* Checkbox click effect */
+@keyframes magicBurst {
+  0% {
+    opacity: 1;
+    transform: scale(0.8) translate(0, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2) translate(var(--x), var(--y));
+  }
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: magicBurst 0.8s ease-out forwards;
+  pointer-events: none;
+}
+
+.particle:nth-child(odd) {
+  background-color: #FF69B4;
+}
+
+.particle:nth-child(even) {
+  background-color: #FFD700;
+}
+
+.particle:nth-child(3n) {
+  background-color: #87CEFA;
+}
+
+.particle:nth-child(5n) {
+  background-color: #FF4500;
+}

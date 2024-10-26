@@ -226,9 +226,30 @@
     });
   }
 
+  function createMagicParticles(inputElement: HTMLInputElement) {
+    const container = inputElement.closest("li");
+    if (!container) return;
+
+    for (let i = 0; i < 8; i++) {
+      // Adjust the number of particles as desired
+      const particle = document.createElement("span");
+      particle.classList.add("particle");
+
+      // Randomize direction
+      particle.style.setProperty("--x", `${Math.random() * 35 - 20}px`);
+      particle.style.setProperty("--y", `${Math.random() * 38 - 20}px`);
+
+      container.appendChild(particle);
+
+      // Remove particle after animation
+      setTimeout(() => particle.remove(), 750);
+    }
+  }
+
   // Handle checkbox changes and update quest completion state
   function handleCheckboxChange(event: Event, quest: Quest) {
     const input = event.target as HTMLInputElement;
+    createMagicParticles(input);
 
     if (autoMode) {
       toggleQuestCompletion(quest, input.checked);
@@ -337,7 +358,9 @@
         </h1>
       </div>
 
-      <h3 class="font-bold text-center text-gray-600 mt-4 text-lg">
+      <h3
+        class="hidden sm:block font-bold text-center text-gray-600 mt-4 text-lg"
+      >
         Track your main story quest journey with the utmost ease.
       </h3>
     </div>
@@ -381,13 +404,14 @@
   <!-- Last Quest Button -->
   <button
     on:click={scrollToLastCheckedQuest}
-    class="ml-4 p-1 sm:p-2 rounded-lg shadow transition-colors duration-300
-      {lastCheckedQuestId === null
+    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base
+    {lastCheckedQuestId === null
       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
       : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'}"
     disabled={lastCheckedQuestId === null}
   >
-    Scroll to Current Quest
+    <span class="block sm:hidden">Goto Quest</span>
+    <span class="hidden sm:block">Scroll to Current Quest</span>
   </button>
 </div>
 
@@ -398,9 +422,14 @@
   >
     {#each $quests as expansion}
       <div class="flex flex-col items-center">
-        <p class="font-semibold text-gray-700">{expansion.name}</p>
+        <p class="font-semibold text-gray-700">
+          {expansion.name}<span class="inline sm:hidden ml-1"
+            >({$progress[expansion.name]?.completed}/{$progress[expansion.name]
+              ?.total})</span
+          >
+        </p>
         <div
-          class="w-full bg-gray-200 rounded-full h-4 relative overflow-hidden shadow-inner"
+          class="hidden sm:block w-full bg-gray-200 rounded-full h-4 relative overflow-hidden shadow-inner"
         >
           <div
             class="h-full rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 transition-all duration-700 ease-in-out"
@@ -483,7 +512,7 @@
             {#each expansion.quests[location] as quest (quest.Id)}
               <li
                 id={`quest-${quest["#"]}`}
-                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow border border-gray-200"
+                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-300"
                 class:border-2={highlightedQuestId === quest["#"]}
                 class:border-blue-600={highlightedQuestId === quest["#"]}
                 class:animate-flicker={highlightedQuestId === quest["#"]}
@@ -491,7 +520,7 @@
                 <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                   <input
                     type="checkbox"
-                    class="form-checkbox h-6 w-6 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                    class="form-checkbox h-6 w-6 text-green-500 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-300 focus:bg-blue-50 checked:bg-blue-100 transition-color"
                     checked={isQuestCompleted($completedQuests[quest["#"]])}
                     on:change={(e) => handleCheckboxChange(e, quest)}
                   />
