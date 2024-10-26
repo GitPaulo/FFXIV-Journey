@@ -144,10 +144,21 @@
     showTitle = !showTitle;
 
     if (!showTitle) {
-      const actionBar = document.getElementById("action-bar");
-      if (actionBar) {
-        actionBar.style.position = "fixed";
-      }
+      detachActionBar();
+    }
+  }
+
+  function detachActionBar() {
+    const actionBar = document.getElementById("action-bar");
+    if (actionBar) {
+      actionBar.style.position = "fixed";
+    }
+  }
+
+  function attachActionBar() {
+    const actionBar = document.getElementById("action-bar");
+    if (actionBar) {
+      actionBar.style.position = "absolute";
     }
   }
 
@@ -160,7 +171,6 @@
   }
 
   // TODO: Move this into a tooltip component
-
   function enableToggleTooltip() {
     showToggleTooltip = true;
   }
@@ -183,6 +193,13 @@
 
   function disableCurrentTooltip() {
     showCurrentTooltip = false;
+  }
+
+  function scrollToTop() {
+    const contentContainer =
+      document.getElementsByClassName("content-container")[0];
+    if (!contentContainer) return;
+    contentContainer.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function scrollToLastCheckedQuest() {
@@ -224,6 +241,21 @@
         });
       }
     });
+  }
+
+  let showScrollToTop = false;
+  function handleScroll() {
+    const contentContainer =
+      document.getElementsByClassName("content-container")[0];
+    if (!contentContainer) return;
+    if (!showTitle) return;
+
+    showScrollToTop = contentContainer.scrollTop > 140;
+    if (showScrollToTop) {
+      detachActionBar();
+    } else {
+      attachActionBar();
+    }
   }
 
   function createMagicParticles(inputElement: HTMLInputElement) {
@@ -296,10 +328,16 @@
 
     // Events
     window.addEventListener("keydown", handleKeydown);
+    document
+      .getElementsByClassName("content-container")[0]
+      .addEventListener("scroll", handleScroll);
   });
 
   onDestroy(() => {
     window.removeEventListener("keydown", handleKeydown);
+    document
+      .getElementsByClassName("content-container")[0]
+      .removeEventListener("scroll", handleScroll);
   });
 
   // Reactively update the background whenever the current expansion changes
@@ -413,6 +451,16 @@
     <span class="block sm:hidden">Goto Quest</span>
     <span class="hidden sm:block">Scroll to Current Quest</span>
   </button>
+
+  <!-- Scroll Top -->
+  {#if showScrollToTop}
+    <button
+      on:click={scrollToTop}
+      class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+    >
+      ↑
+    </button>
+  {/if}
 </div>
 
 <!--- Progress --->
