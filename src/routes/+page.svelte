@@ -409,7 +409,7 @@
 <!-- Action Bar -->
 <div
   id="action-bar"
-  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow flex items-center justify-between"
+  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow flex items-center justify-between z-50"
 >
   <!-- Toggle Button -->
   <div class="flex items-center">
