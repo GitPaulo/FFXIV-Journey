@@ -10517,7 +10517,7 @@
                 {
                     "#": 69156,
                     "Id": "LucKmd115_03620",
-                    "Name": "Crossroads",
+                    "Name": "Crossing Paths",
                     "Description": "The look in Minfilia's eyes is equal parts trepidation and determination.",
                     "ExpansionName": "Shadowbringers",
                     "EventIconType": 3,
@@ -15781,7 +15781,7 @@
                     "PreviousQuests": [
                         70494
                     ],
-                    "NextMSQ": null,
+                    "NextMSQ": 70780,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101342_hr1.tex",
                     "Unlocks": [
@@ -15798,6 +15798,118 @@
                             "ContentTypeName": "Trials"
                         }
                     ]
+                },
+                {
+                    "#": 70780,
+                    "Id": "KinGmg101_05244",
+                    "Name": "A Royal Invitation",
+                    "Description": "Bol Wuruq is eager to hear how you have been getting on.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70495
+                    ],
+                    "NextMSQ": 70781,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101385_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70781,
+                    "Id": "KinGmg102_05245",
+                    "Name": "Alexandria Mourns",
+                    "Description": "Gulool Ja wishes to go and collect his flower for the funeral.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70780
+                    ],
+                    "NextMSQ": 70782,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70782,
+                    "Id": "KinGmg103_05246",
+                    "Name": "In Search of the Past",
+                    "Description": "G'raha Tia has an idea on how you may proceed with your investigation.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70781
+                    ],
+                    "NextMSQ": 70783,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/112000/112584_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": null,
+                            "Image": null,
+                            "ContentTypeID": null,
+                            "ContentTypeName": null
+                        }
+                    ]
+                },
+                {
+                    "#": 70783,
+                    "Id": "KinGmg104_05247",
+                    "Name": "Among the Abandoned",
+                    "Description": "Krile is eager to begin searching the research facility.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70782
+                    ],
+                    "NextMSQ": 70784,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70784,
+                    "Id": "KinGmg105_05248",
+                    "Name": "Guidance of the Hhetso",
+                    "Description": "Geode's concern is writ plain upon his face.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70783
+                    ],
+                    "NextMSQ": 70785,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70785,
+                    "Id": "KinGmg106_05249",
+                    "Name": "The Warmth of Family",
+                    "Description": "Koana appears loath to part from his rroneek companion...",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70784
+                    ],
+                    "NextMSQ": 70786,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101386_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70786,
+                    "Id": "KinGmg107_05250",
+                    "Name": "Crossroads",
+                    "Description": "Never one to stand still, Wuk Lamat is ready to race back to Alexandria.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70785
+                    ],
+                    "NextMSQ": null,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101387_hr1.tex",
+                    "Unlocks": []
                 }
             ]
         }
