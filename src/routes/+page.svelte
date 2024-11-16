@@ -80,7 +80,7 @@
               ? quest.Description.toLowerCase().includes(trimmedQuery)
               : false;
             const unlockMatches = quest.Unlocks.some((unlock) =>
-              unlock.Name.toLowerCase().includes(trimmedQuery)
+              unlock?.Name?.toLowerCase()?.includes(trimmedQuery)
             );
 
             return nameMatches || descriptionMatches || unlockMatches;
