@@ -2,7 +2,12 @@
   import { get } from "svelte/store";
   import { slide } from "svelte/transition";
   import { onMount, onDestroy, tick } from "svelte";
+
   import { debounce } from "lodash";
+  import {
+    compressToEncodedURIComponent,
+    decompressFromEncodedURIComponent,
+  } from "lz-string";
 
   import "../app.css";
   import { base } from "$app/paths";
@@ -302,7 +307,58 @@
     }
   }
 
+  // Generate a compact shareable link
+  function generateShareableLink() {
+    const completed = get(completedQuests);
+    const completedIds = Object.keys(completed).filter(
+      (id) => completed[Number(id)]
+    );
+
+    const state = {
+      completedQuests: completedIds, // Store completed quest IDs only
+      currentExpansion: get(currentExpansion), // Store current expansion
+    };
+
+    const compressedState = compressToEncodedURIComponent(
+      JSON.stringify(state)
+    );
+    const shareableLink = `${window.location.origin}?progress=${compressedState}`;
+
+    navigator.clipboard
+      .writeText(shareableLink)
+      .then(() => alert("Progress link copied to clipboard! Share it with your friends!"))
+      .catch(() => alert("Failed to copy link. Please try again."));
+  }
+
+  // Load shared progress from a compact link
+  function loadSharedProgress() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const compressedState = urlParams.get("progress");
+
+    if (compressedState) {
+      try {
+        const state = JSON.parse(
+          decompressFromEncodedURIComponent(compressedState) || "{}"
+        );
+
+        // Reconstruct the state
+        const completed: Record<number, boolean> = {};
+        state.completedQuests.forEach((id: string) => {
+          completed[Number(id)] = true;
+        });
+
+        completedQuests.set(completed);
+        currentExpansion.set(state.currentExpansion);
+      } catch (error) {
+        console.error("Failed to decode shared progress:", error);
+      }
+    }
+  }
+
   onMount(() => {
+    // Load shared progress if available
+    loadSharedProgress();
+
     data.quests.then((loadedQuests: ExpansionsQuests) => {
       // Init quests
       quests.set(loadedQuests);
@@ -439,6 +495,14 @@
       </div>
     {/if}
   </div>
+
+  <!-- Share progress generate -->
+  <button
+    on:click={generateShareableLink}
+    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+  >
+    🔗
+  </button>
 
   <!-- Last Quest Button -->
   <button
