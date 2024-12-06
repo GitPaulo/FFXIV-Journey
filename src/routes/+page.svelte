@@ -326,7 +326,9 @@
 
     navigator.clipboard
       .writeText(shareableLink)
-      .then(() => alert("Progress link copied to clipboard! Share it with your friends!"))
+      .then(() =>
+        alert("Progress link copied to clipboard! Share it with your friends!")
+      )
       .catch(() => alert("Failed to copy link. Please try again."));
   }
 
@@ -355,9 +357,24 @@
     }
   }
 
+  let metaTitle = "FFXIV MSQ Progress Tracker";
+  let metaDescription =
+    "Track and share your Main Story Quest progress in FFXIV with ease!";
+  let metaImage = "/logo.png";
+  function setupDynamicMetaTags() {
+    const completed = Object.keys(get(completedQuests)).length;
+    const expansion = get(currentExpansion) || "All Expansions";
+
+    metaTitle = `FFXIV Progress (${expansion})`;
+    metaDescription = `Completed ${completed} quests in ${expansion}! Share your progress with friends!`;
+  }
+
   onMount(() => {
     // Load shared progress if available
     loadSharedProgress();
+
+    // setup meta tags
+    setupDynamicMetaTags();
 
     data.quests.then((loadedQuests: ExpansionsQuests) => {
       // Init quests
@@ -400,6 +417,16 @@
   // Reactively update the background whenever the current expansion changes
   $: updateBackground();
 </script>
+
+<!-- Dynamic head -->
+<svelte:head>
+  <title>{metaTitle}</title>
+  <meta property="og:title" content={metaTitle} />
+  <meta property="og:description" content={metaDescription} />
+  <meta property="og:image" content={metaImage} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image:alt" content="FFXIV MSQ Progress Tracker preview" />
+</svelte:head>
 
 <!-- Title -->
 {#if showTitle}
