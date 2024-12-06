@@ -315,14 +315,15 @@
     );
 
     const state = {
-      completedQuests: completedIds, // Store completed quest IDs only
+      completedQuests: completedIds,           // Store completed quest IDs only
       currentExpansion: get(currentExpansion), // Store current expansion
     };
 
     const compressedState = compressToEncodedURIComponent(
       JSON.stringify(state)
     );
-    const shareableLink = `${window.location.origin}?progress=${compressedState}`;
+    const basePath = window.location.origin + window.location.pathname.replace(/\/$/, ''); // Remove trailing slash
+    const shareableLink = `${basePath}?progress=${compressedState}`;
 
     navigator.clipboard
       .writeText(shareableLink)
@@ -357,15 +358,13 @@
     }
   }
 
-  let metaTitle = "FFXIV MSQ Progress Tracker";
+  let metaTitle = "FFXIV Journey Tracker";
   let metaDescription =
     "Track and share your Main Story Quest progress in FFXIV with ease!";
   let metaImage = "/logo.png";
   function setupDynamicMetaTags() {
     const completed = Object.keys(get(completedQuests)).length;
     const expansion = get(currentExpansion) || "All Expansions";
-
-    metaTitle = `FFXIV Progress (${expansion})`;
     metaDescription = `Completed ${completed} quests in ${expansion}! Share your progress with friends!`;
   }
 
