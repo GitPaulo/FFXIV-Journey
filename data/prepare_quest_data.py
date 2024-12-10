@@ -28,7 +28,7 @@ RAW_JOURNAL_BASE_CSV_URL = 'https://raw.githubusercontent.com/xivapi/ffxiv-datam
 
 # TODO: Ideally, never use XIVAPI for anything other than asset fetching (images)
 XIV_BETA_API_SEARCH_BASE_URL = "https://beta.xivapi.com/api/1/search"
-XIV_API_INSTANCE_CONTENT_BASE_URL = "https://xivapi.com/InstanceContent" # 1. use BETA when working, 2. Use use datamine data when I figure out how to instance id -> instance data
+XIV_BETA_API_INSTANCE_CONTENT_BASE_URL = "https://beta.xivapi.com/api/1/sheet/ContentFinderCondition"
 
 OUTPUT_JSON_PATH = 'static/Quests.json'
 
@@ -81,17 +81,17 @@ def fetch_first_journal_entry(quest_id, max_folder_number=100, max_retries=5, de
     return None
 
 def fetch_instance_content(instance_id):
-    instance_url = f"{XIV_API_INSTANCE_CONTENT_BASE_URL}/{instance_id}?columns=ContentType.ID,ContentType.Name,Name,ContentFinderCondition.Image"
+    instance_url = f"{XIV_BETA_API_INSTANCE_CONTENT_BASE_URL}/{instance_id}"
     response = requests.get(instance_url)
     # To avoid hitting the API rate limit
     time.sleep(0.100) 
     if response.status_code == 200:
         instance_data = response.json()
+        fields = instance_data.get("fields", {})
         return {
-            "Name": instance_data.get("Name"),
-            "Image": instance_data.get("ContentFinderCondition", {}).get("Image"),
-            "ContentTypeID": instance_data.get("ContentType", {}).get("ID"),
-            "ContentTypeName": instance_data.get("ContentType", {}).get("Name"),
+            "Name": fields.get("Name", "Unknown"),
+            "Image": fields.get("Image", {}).get("path_hr1", ""),
+            "ContentTypeName": fields.get("ContentType", {}).get("fields", {}).get("Name", "Unknown"),
         }
     else:
         print(f"Failed to fetch instance content for ID {instance_id}. Status code: {response.status_code}")
@@ -246,6 +246,7 @@ with tqdm(total=len(filtered_data), desc="Processing Quests", ncols=100) as pbar
                         if pd.notna(instance_id) and str(instance_id).strip() != '0':
                             # Fetch instance dungeon details
                             instance_details = fetch_instance_content(instance_id)
+                            print(instance_details)
                             if instance_details:
                                 unlocks.append(instance_details)
 
