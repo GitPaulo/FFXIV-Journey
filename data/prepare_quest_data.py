@@ -2,9 +2,21 @@ import pandas as pd
 import json
 import requests
 import time
+import argparse
 
 from tqdm import tqdm
 from io import StringIO
+
+'''
+    Arguments
+'''
+
+parser = argparse.ArgumentParser(description="Process quest data.")
+parser.add_argument('--auto-yes', action='store_true', help="Automatically assume 'yes' for all prompts.")
+args = parser.parse_args()
+
+# Check if auto-yes is enabled for GA
+auto_yes = args.auto_yes
 
 '''
     Constants
@@ -201,13 +213,13 @@ filtered_data = quest_data[quest_data['EventIconType'] == 3]
 filtered_data = filtered_data[filtered_data.iloc[:, -2] == False]
 
 # Prompt user if they want to fetch images
-fetch_images = input("Do you want to fetch images? (yes/no): ").strip().lower() == 'yes'
+fetch_images = True if auto_yes else input("Do you want to fetch images? (yes/no): ").strip().lower() == 'yes'
 
 # Prompt user if they want to fetch journal entries
-fetch_journal_entries = input("Do you want to fetch journal entries? (yes/no): ").strip().lower() == 'yes'
+fetch_journal_entries = True if auto_yes else input("Do you want to fetch journal entries? (yes/no): ").strip().lower() == 'yes'
 
 # Prompt user if they want to fetch unlocks
-fetch_unlocks = input("Do you want to fetch unlocks? (yes/no): ").strip().lower() == 'yes'
+fetch_unlocks = True if auto_yes else input("Do you want to fetch unlocks? (yes/no): ").strip().lower() == 'yes'
 
 # # -> Quest (formatted) mapping
 quests_by_number = {}

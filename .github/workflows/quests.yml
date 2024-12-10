@@ -32,8 +32,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas requests tqdm
 
-      - name: Run Quest Data Scraper
-        run: npm run quests
+      - name: Run prepare_quest_data.py
+        run: npm run quests -- --auto-yes
 
       - name: Commit Updated Quests.json
         run: |
