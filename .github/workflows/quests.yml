@@ -1,0 +1,44 @@
+name: Update Quests.json
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-quest-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.9.0'
+
+      - name: Install Node.js dependencies
+        run: npm install
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas requests tqdm
+
+      - name: Run Quest Data Scraper
+        run: npm run quests
+
+      - name: Commit Updated Quests.json
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "actions@github.com"
+          git add static/Quests.json
+          git commit -m "[GA] Update Quests.json" || echo "[GA] No changes to commit"
+          git push
