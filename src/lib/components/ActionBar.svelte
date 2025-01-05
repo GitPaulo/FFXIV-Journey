@@ -1,13 +1,12 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
+  import { slide } from "svelte/transition";
   import {
     autoMode,
     toggleAutoMode,
-    showToggleTooltip,
-    enableToggleTooltip,
-    disableToggleTooltip,
     showScrollToTop,
   } from "$lib/stores/actionBarStore";
+  import Tooltip from "./Tooltip.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -23,21 +22,20 @@
     dispatch("scrollToLastQuest");
   }
 
+  let tooltipTarget: HTMLElement | null = null;
+
   export let lastCheckedQuestId: number | null = null;
 </script>
 
 <div
+  transition:slide
   id="action-bar"
   class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow flex items-center justify-between z-50"
 >
   <!-- Toggle Button -->
-  <div class="flex items-center">
+  <div bind:this={tooltipTarget} class="flex items-center">
     <button
       on:click={toggleAutoMode}
-      on:mouseover={enableToggleTooltip}
-      on:mouseleave={disableToggleTooltip}
-      on:focus={enableToggleTooltip}
-      on:blur={disableToggleTooltip}
       class={`w-10 h-5 sm:w-12 sm:h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
         $autoMode ? "bg-gray-300" : "bg-blue-500"
       }`}
@@ -50,13 +48,12 @@
     </button>
 
     <!-- Tooltip for Auto/Manual Mode -->
-    {#if $showToggleTooltip}
-      <div
-        class="ml-2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
-      >
-        {$autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
-      </div>
-    {/if}
+    <Tooltip
+      targetElement={tooltipTarget}
+      text={$autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
+      inlineMode={true}
+      offsetX={5}
+    ></Tooltip>
   </div>
 
   <!-- Share progress generate -->

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher, onMount, onDestroy } from "svelte";
+  import { fade } from "svelte/transition";
 
   export let placeholder: string = "Search...";
   export let value: string = ""; // Bound to the parent component
@@ -40,7 +41,7 @@
   });
 </script>
 
-<div class="mb-6 flex relative">
+<div transition:fade class="mb-6 flex relative">
   <input
     type="text"
     bind:value={inputValue}

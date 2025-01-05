@@ -1,15 +1,20 @@
 <script lang="ts">
-  import { get } from "svelte/store";
+  // Dependencies imports
   import { onMount, onDestroy, tick } from "svelte";
-
+  import { fade } from "svelte/transition";
+  import { get } from "svelte/store";
   import { debounce } from "lodash";
   import {
     compressToEncodedURIComponent,
     decompressFromEncodedURIComponent,
   } from "lz-string";
 
+  // Application imports
   import "../app.css";
   import { base } from "$app/paths";
+  import type { QuestsState } from "./+page";
+
+  // Lib imports
   import {
     quests,
     loading,
@@ -21,43 +26,37 @@
     updateCurrentExpansion,
   } from "$lib/stores/questsStore";
   import { calculateAllProgress } from "$lib/stores/progressStore";
-  import { showTitle } from "$lib/stores/titleStore";
-  import Title from "$lib/components/Title.svelte";
-  import ActionBar from "$lib/components/ActionBar.svelte";
-  import Progress from "$lib/components/Progress.svelte";
-  import Footer from "$lib/components/Footer.svelte";
   import { getImageUrl, getOldImageUrl } from "$lib/services/xivapi";
   import {
     getGarlandToolsQuestURLByID,
     sanitizeFFXIVMarkUp,
     createMagicParticles,
   } from "$lib/utils";
-
-  import type { QuestsState } from "./+page";
   import type { Quest, ExpansionsQuests, Expansion } from "$lib/model";
+
+  // Component imports
+  import Title from "$lib/components/Title.svelte";
+  import ActionBar from "$lib/components/ActionBar.svelte";
+  import Progress from "$lib/components/Progress.svelte";
+  import Footer from "$lib/components/Footer.svelte";
   import Loading from "$lib/components/Loading.svelte";
   import Search from "$lib/components/Search.svelte";
+  import Tooltip from "$lib/components/Tooltip.svelte";
 
+  // Exports
   export let data: QuestsState;
 
+  // Properties
   let openExpansions: Record<string, boolean> = {};
   let openLocations: Record<string, Record<string, boolean>> = {};
-  let autoMode = true;
-  let showCurrentTooltip = false;
-  let searchInput: HTMLInputElement;
   let searchQuery = "";
+  let autoMode = true;
+  let showScrollToTop = false;
   let lastCheckedQuestId: number | null = null;
   let highlightedQuestId: number | null = null;
+  let tooltipTarget: HTMLElement | null = null;
+  let searchInput: HTMLInputElement;
 
-  function enableCurrentTooltip() {
-    showCurrentTooltip = true;
-  }
-
-  function disableCurrentTooltip() {
-    showCurrentTooltip = false;
-  }
-
-  // Reset the state of expansions and locations to be closed initially
   function resetOpenStates() {
     const $quests = get(quests);
     openExpansions = {};
@@ -73,7 +72,6 @@
     }
   }
 
-  // Filter quests based on search query
   function filterQuests(): void {
     const $quests = get(quests);
     resetOpenStates();
@@ -122,7 +120,6 @@
   }
   const debouncedFilterQuests = debounce(filterQuests, 250);
 
-  // Find the last checked quest based on the order of expansions in the quests store
   function findLastCheckedQuest(): void {
     const $completedQuests = get(completedQuests);
     const $quests = get(quests);
@@ -146,7 +143,6 @@
     lastCheckedQuestId = lastCheckedQuest ? lastCheckedQuest["#"] : null;
   }
 
-  // Update the background image based on the current expansion
   function updateBackground() {
     const bgImage = get(currentExpansion)
       ? `${base}/background_${get(currentExpansion).replace(/\s/g, "").toLowerCase()}.webp`
@@ -224,7 +220,6 @@
     });
   }
 
-  // Generate a compact shareable link
   function generateShareableLink() {
     const completed = get(completedQuests);
     const completedIds = Object.keys(completed).filter(
@@ -251,7 +246,6 @@
       .catch(() => alert("Failed to copy link. Please try again."));
   }
 
-  let showScrollToTop = false;
   function handleScroll() {
     const contentContainer =
       document.getElementsByClassName("content-container")[0];
@@ -259,7 +253,6 @@
 
     showScrollToTop = contentContainer.scrollTop > 140;
 
-    if (!showTitle) return;
     if (showScrollToTop) {
       detachActionBar();
     } else {
@@ -267,7 +260,6 @@
     }
   }
 
-  // Handle checkbox changes and update quest completion state
   function handleCheckboxChange(event: Event, quest: Quest) {
     const input = event.target as HTMLInputElement;
     createMagicParticles(input);
@@ -287,7 +279,6 @@
     debouncedFilterQuests(); // Trigger the debounced filter
   }
 
-  // Load shared progress from a compact link
   function loadSharedProgress() {
     const urlParams = new URLSearchParams(window.location.search);
     const compressedState = urlParams.get("progress");
@@ -312,22 +303,9 @@
     }
   }
 
-  let metaTitle = "FFXIV Journey Tracker";
-  let metaDescription =
-    "Track and share your Main Story Quest progress in FFXIV with ease!";
-  let metaImage = "/logo.png";
-  function setupDynamicMetaTags() {
-    const completed = Object.keys(get(completedQuests)).length;
-    const expansion = get(currentExpansion) || "All Expansions";
-    metaDescription = `Completed ${completed} quests in ${expansion}! Share your progress with friends!`;
-  }
-
   onMount(() => {
     // Load shared progress if available
     loadSharedProgress();
-
-    // setup meta tags
-    setupDynamicMetaTags();
 
     data.quests.then((loadedQuests: ExpansionsQuests) => {
       // Init quests
@@ -369,23 +347,23 @@
   $: updateBackground();
 </script>
 
-<!-- Dynamic head -->
 <svelte:head>
-  <title>{metaTitle}</title>
-  <meta property="og:title" content={metaTitle} />
-  <meta property="og:description" content={metaDescription} />
-  <meta property="og:image" content={metaImage} />
+  <!-- OG Tags -->
+  <title>FFXIV Journey</title>
   <meta property="og:type" content="website" />
   <meta property="og:image:alt" content="FFXIV MSQ Progress Tracker preview" />
+  <!-- Preload backgrounds -->
+  <link rel="prefetch" href="background_arealmreborn.webp" as="image" />
+  <link rel="prefetch" href="background_heavensward.webp" as="image" />
+  <link rel="prefetch" href="background_stormblood.webp" as="image" />
+  <link rel="prefetch" href="background_shadowbringers.webp" as="image" />
+  <link rel="prefetch" href="background_endwalker.webp" as="image" />
+  <link rel="prefetch" href="background_dawntrail.webp" as="image" />
 </svelte:head>
 
-<!-- Title -->
-{#if showTitle}
-  <Title />
-{/if}
+<Title />
 
 {#if !$loading}
-  <!-- Action Bar -->
   <ActionBar
     {lastCheckedQuestId}
     on:generateLink={generateShareableLink}
@@ -393,11 +371,9 @@
     on:scrollToTop={scrollToTop}
   />
 
-  <!--- Progress --->
   <Progress />
 {/if}
 
-<!-- Content -->
 {#if $loading}
   <Loading />
 {:else}
@@ -408,7 +384,7 @@
   />
 
   {#each $filteredQuests as expansion}
-    <details class="mb-8" open={openExpansions[expansion.name]}>
+    <details transition:fade class="mb-8" open={openExpansions[expansion.name]}>
       <summary
         class="text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow"
       >
@@ -451,22 +427,16 @@
                     </p>
                     {#if quest["#"] === lastCheckedQuestId}
                       <img
+                        bind:this={tooltipTarget}
                         src="moogle_current_quest.png"
                         alt="Current Quest"
                         class="ml-2 h-8 w-8"
-                        on:mouseover={enableCurrentTooltip}
-                        on:mouseleave={disableCurrentTooltip}
-                        on:focus={enableCurrentTooltip}
-                        on:blur={disableCurrentTooltip}
                       />
-                      <!-- Tooltip for Current Quest Icon -->
-                      {#if showCurrentTooltip}
-                        <div
-                          class="ml-2 bg-gray-800 text-white text-xs rounded py-1 px-2 shadow-lg"
-                        >
-                          Current MSQ Quest!
-                        </div>
-                      {/if}
+                      <Tooltip
+                        text="Current MSQ Quest!"
+                        targetElement={tooltipTarget}
+                        orientation="right"
+                      />
                     {/if}
                   </div>
                   <p class="text-sm text-gray-500 mt-1 hidden sm:block">

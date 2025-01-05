@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
+
   import { progress } from "$lib/stores/progressStore";
   import type { ExpansionProgress } from "$lib/stores/questsStore";
-  import { onMount } from "svelte";
 
   let progressData: Record<string, ExpansionProgress> = {};
 
@@ -14,11 +16,12 @@
 </script>
 
 <div
+  transition:fade
   class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4 bg-white rounded-lg p-4 shadow"
 >
   {#each Object.entries(progressData) as [name, { completed, total, percent }] (name)}
     <div class="flex flex-col items-center">
-      <!-- Expansion Name with Progress Stats -->
+      <!-- Expansion Name -->
       <p class="font-semibold text-gray-700">
         {name}
         <span class="inline sm:hidden ml-1">({completed}/{total})</span>
