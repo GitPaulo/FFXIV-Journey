@@ -13,15 +13,14 @@
   import {
     quests,
     loading,
-    progress,
     filteredQuests,
     completedQuests,
     currentExpansion,
-    calculateAllProgress,
     toggleQuestCompletion,
     toggleSingleQuestCompletion,
     updateCurrentExpansion,
   } from "$lib/stores/questsStore";
+  import { calculateAllProgress } from "$lib/stores/progressStore";
   import { showTitle } from "$lib/stores/titleStore";
   import Title from "$lib/components/Title.svelte";
   import ActionBar from "$lib/components/ActionBar.svelte";
@@ -36,6 +35,7 @@
 
   import type { QuestsState } from "./+page";
   import type { Quest, ExpansionsQuests, Expansion } from "$lib/model";
+  import Loading from "$lib/components/Loading.svelte";
 
   export let data: QuestsState;
 
@@ -398,17 +398,12 @@
   />
 
   <!--- Progress --->
-  <Progress {quests} {progress} />
+  <Progress />
 {/if}
 
 <!-- Content -->
 {#if $loading}
-  <div class="bg-white p-4 rounded-lg shadow-md max-w-max mx-auto">
-    <p class="text-center text-gray-600">
-      Preparing your quests... <b>K-kupo!</b>
-    </p>
-  </div>
-  <img src="loading.gif" alt="Loading" class="mx-auto mt-4" />
+  <Loading />
 {:else}
   <div class="mb-6 flex relative">
     <input

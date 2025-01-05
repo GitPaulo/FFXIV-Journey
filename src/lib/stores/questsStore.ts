@@ -1,10 +1,16 @@
 import { writable, get } from "svelte/store";
 import type { ExpansionsQuests, Quest } from "$lib/model";
 
+import { calculateAllProgress } from "./progressStore";
+
 const LOCAL_STORAGE_KEY = "ffxiv-journey:completed";
 
 // Types
-export type ExpansionProgress = { percent: number; completed: number; total: number }
+export type ExpansionProgress = {
+  percent: number;
+  completed: number;
+  total: number;
+};
 
 // Store for quests
 export const quests = writable<ExpansionsQuests>([]);
@@ -18,40 +24,6 @@ export const currentExpansion = writable<string>("");
 
 export function storeCompletedQuests() {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(get(completedQuests)));
-}
-
-export function CalculateExpansionProgress(expansionName: string) {
-  const $quests = get(quests);
-  const expansion = $quests.find((exp) => exp.name === expansionName);
-  if (!expansion) return { percent: 0, completed: 0, total: 0 };
-
-  const questsArray: Quest[] = Object.values(expansion.quests).flat();
-  const totalQuests = questsArray.length;
-  const completedQuestsCount = questsArray.filter(
-    (quest) => get(completedQuests)[quest["#"]]
-  ).length;
-
-  const percent =
-    totalQuests > 0
-      ? Math.floor((completedQuestsCount / totalQuests) * 100)
-      : 0;
-
-  return {
-    percent,
-    completed: completedQuestsCount,
-    total: totalQuests,
-  };
-}
-
-export function calculateAllProgress() {
-  const $quests = get(quests);
-  const newProgress: Record<string, ExpansionProgress> = {};
-
-  for (const expansion of $quests) {
-    newProgress[expansion.name] = CalculateExpansionProgress(expansion.name);
-  }
-
-  progress.set(newProgress);
 }
 
 export function toggleQuestCompletion(quest: Quest, isChecked: boolean) {
