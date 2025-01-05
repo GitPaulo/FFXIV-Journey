@@ -4,9 +4,7 @@
  * @returns string
  */
 export function sanitizeFFXIVMarkUp(str: string | null): string {
-  return str
-    ? str.replace(/<[^>]*>/g, "")
-    : "This quest has no description.";
+  return str ? str.replace(/<[^>]*>/g, "") : "This quest has no description.";
 }
 
 /**
@@ -16,4 +14,28 @@ export function sanitizeFFXIVMarkUp(str: string | null): string {
  */
 export function getGarlandToolsQuestURLByID(questId: number): string {
   return `https://www.garlandtools.org/db/#quest/${questId}`;
+}
+
+/**
+ * Creates a set of particles to simulate magic.
+ * @param inputElement The input element to attach the particles to.
+ */
+export function createMagicParticles(inputElement: HTMLInputElement) {
+  const container = inputElement.closest("li");
+  if (!container) return;
+
+  for (let i = 0; i < 8; i++) {
+    // Adjust the number of particles as desired
+    const particle = document.createElement("span");
+    particle.classList.add("particle");
+
+    // Randomize direction
+    particle.style.setProperty("--x", `${Math.random() * 35 - 20}px`);
+    particle.style.setProperty("--y", `${Math.random() * 38 - 20}px`);
+
+    container.appendChild(particle);
+
+    // Remove particle after animation
+    setTimeout(() => particle.remove(), 750);
+  }
 }
