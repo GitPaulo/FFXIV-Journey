@@ -3,7 +3,7 @@
   import { onMount, onDestroy, tick } from "svelte";
   import { fade } from "svelte/transition";
   import { get } from "svelte/store";
-  import { debounce } from "lodash";
+  import { debounce, has } from "lodash";
   import {
     compressToEncodedURIComponent,
     decompressFromEncodedURIComponent,
@@ -43,10 +43,14 @@
   import Loading from "$lib/components/Loading.svelte";
   import Search from "$lib/components/Search.svelte";
   import Tooltip from "$lib/components/Tooltip.svelte";
+  import Modal from "$lib/components/Modal.svelte";
+
+  // Stores imports
   import {
     disableScrollToTop,
     enableScrollToTop,
   } from "$lib/stores/actionBarStore";
+  import { openModal } from "$lib/stores/modalManager";
 
   // Exports
   export let data: QuestsState;
@@ -62,19 +66,91 @@
   let tooltipTarget: HTMLElement | null = null;
   let searchInput: HTMLInputElement;
 
-  function resetOpenStates() {
-    const $quests = get(quests);
-    openExpansions = {};
-    openLocations = {};
+  function getSharedProgress(): string {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("progress") || "";
+  }
 
-    for (const expansion of $quests) {
-      openExpansions[expansion.name] = false;
-      openLocations[expansion.name] = {};
+  function loadSharedProgress() {
+    const compressedState = getSharedProgress();
 
-      for (const location of Object.keys(expansion.quests)) {
-        openLocations[expansion.name][location] = false;
+    if (compressedState) {
+      // Warn the user that they are viewing a shared link
+      openModal(
+        "Shared Progress",
+        "You are viewing a shared progress link. Your progress won't be overwritten without prompt.",
+        () => {},
+        () => {
+          // refresh the page
+          window.location.href =
+            window.location.origin + window.location.pathname;
+        },
+        "Understood",
+        "",
+        false
+      );
+
+      try {
+        const state = JSON.parse(
+          decompressFromEncodedURIComponent(compressedState) || "{}"
+        );
+
+        // Reconstruct the state
+        const completed: Record<number, boolean> = {};
+        state.completedQuests.forEach((id: string) => {
+          completed[Number(id)] = true;
+        });
+
+        completedQuests.set(completed);
+        currentExpansion.set(state.currentExpansion);
+      } catch (error) {
+        console.error("Failed to decode shared progress:", error);
       }
     }
+  }
+
+  function generateShareableLink() {
+    const completed = get(completedQuests);
+    const completedIds = Object.keys(completed).filter(
+      (id) => completed[Number(id)]
+    );
+
+    const state = {
+      completedQuests: completedIds, // Store completed quest IDs only
+      currentExpansion: get(currentExpansion), // Store current expansion
+    };
+
+    const compressedState = compressToEncodedURIComponent(
+      JSON.stringify(state)
+    );
+    const basePath =
+      window.location.origin + window.location.pathname.replace(/\/$/, ""); // Remove trailing slash
+    const shareableLink = `${basePath}?progress=${compressedState}`;
+
+    navigator.clipboard
+      .writeText(shareableLink)
+      .then(() =>
+        openModal(
+          "Shareable Link",
+          "The progress link has been copied to your clipboard. Share it with your friends!",
+          () => {},
+          () => {},
+          "Understood",
+          "",
+          false
+        )
+      )
+      .catch(() =>
+        openModal(
+          "Shareable Link",
+          "Failed to copy the progress link to your clipboard. Please try again.",
+          () => {},
+          () => {},
+          "Understood",
+          "",
+          false
+        )
+      );
   }
 
   function filterQuests(): void {
@@ -146,6 +222,32 @@
 
     // Update the last checked quest ID
     lastCheckedQuestId = lastCheckedQuest ? lastCheckedQuest["#"] : null;
+  }
+
+  function updateQuest(quest: Quest, checked: boolean) {
+    if (autoMode) {
+      toggleQuestCompletion(quest, checked);
+    } else {
+      toggleSingleQuestCompletion(quest, checked);
+    }
+
+    findLastCheckedQuest();
+    updateBackground();
+  }
+
+  function resetOpenStates() {
+    const $quests = get(quests);
+    openExpansions = {};
+    openLocations = {};
+
+    for (const expansion of $quests) {
+      openExpansions[expansion.name] = false;
+      openLocations[expansion.name] = {};
+
+      for (const location of Object.keys(expansion.quests)) {
+        openLocations[expansion.name][location] = false;
+      }
+    }
   }
 
   function updateBackground() {
@@ -225,32 +327,6 @@
     });
   }
 
-  function generateShareableLink() {
-    const completed = get(completedQuests);
-    const completedIds = Object.keys(completed).filter(
-      (id) => completed[Number(id)]
-    );
-
-    const state = {
-      completedQuests: completedIds, // Store completed quest IDs only
-      currentExpansion: get(currentExpansion), // Store current expansion
-    };
-
-    const compressedState = compressToEncodedURIComponent(
-      JSON.stringify(state)
-    );
-    const basePath =
-      window.location.origin + window.location.pathname.replace(/\/$/, ""); // Remove trailing slash
-    const shareableLink = `${basePath}?progress=${compressedState}`;
-
-    navigator.clipboard
-      .writeText(shareableLink)
-      .then(() =>
-        alert("Progress link copied to clipboard! Share it with your friends!")
-      )
-      .catch(() => alert("Failed to copy link. Please try again."));
-  }
-
   function handleScroll() {
     const contentContainer =
       document.getElementsByClassName("content-container")[0];
@@ -273,45 +349,34 @@
 
   function handleCheckboxChange(event: Event, quest: Quest) {
     const input = event.target as HTMLInputElement;
+    const hasSharedProgress = Boolean(getSharedProgress());
+
     createMagicParticles(input);
 
-    if (autoMode) {
-      toggleQuestCompletion(quest, input.checked);
-    } else {
-      toggleSingleQuestCompletion(quest, input.checked);
+    if (hasSharedProgress) {
+      openModal(
+        "Shared Progress Warning",
+        "You are viewing a shared progress link. Changing progress will alter yours, continue?",
+        () => {
+          updateQuest(quest, input.checked);
+        },
+        () => {
+          // undo the checkbox change
+          input.checked = !input.checked;
+        },
+        "Yes",
+        "Cancel"
+      );
+
+      return;
     }
 
-    findLastCheckedQuest();
-    updateBackground();
+    updateQuest(quest, input.checked);
   }
 
   function handleSearchInput(event: CustomEvent) {
     searchQuery = event.detail; // Update the search query
     debouncedFilterQuests(); // Trigger the debounced filter
-  }
-
-  function loadSharedProgress() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const compressedState = urlParams.get("progress");
-
-    if (compressedState) {
-      try {
-        const state = JSON.parse(
-          decompressFromEncodedURIComponent(compressedState) || "{}"
-        );
-
-        // Reconstruct the state
-        const completed: Record<number, boolean> = {};
-        state.completedQuests.forEach((id: string) => {
-          completed[Number(id)] = true;
-        });
-
-        completedQuests.set(completed);
-        currentExpansion.set(state.currentExpansion);
-      } catch (error) {
-        console.error("Failed to decode shared progress:", error);
-      }
-    }
   }
 
   onMount(() => {
@@ -379,6 +444,8 @@
   <link rel="prefetch" href="background_endwalker.webp" as="image" />
   <link rel="prefetch" href="background_dawntrail.webp" as="image" />
 </svelte:head>
+
+<Modal />
 
 <Title />
 
