@@ -31,7 +31,7 @@
 <div
   transition:slide
   id="action-bar"
-  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow flex items-center justify-between z-50"
+  class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-3 sm:p-2 shadow flex items-center justify-between z-50 overflow-auto"
 >
   <!-- Toggle Button -->
   <div bind:this={tooltipTargetToggle} class="flex items-center">
@@ -60,7 +60,7 @@
   <!-- Share progress generate -->
   <button
     on:click={onShareProgressClicked}
-    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
   >
     🔗 Share
   </button>
@@ -68,7 +68,7 @@
   <!-- Last Quest Button -->
   <button
     on:click={onScrollToLastQuestClicked}
-    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base
+    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal
     {lastCheckedQuestId === null
       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
       : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'}"
@@ -84,7 +84,7 @@
     <button
       bind:this={tooltipTargetButton}
       on:click={onScrollToTopClicked}
-      class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+      class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
     >
       ↑
     </button>

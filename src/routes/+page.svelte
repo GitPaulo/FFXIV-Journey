@@ -510,6 +510,15 @@
                   <div class="flex items-center">
                     <p class="font-bold text-lg sm:text-xl text-gray-800">
                       {quest.Name}
+                      {#if isMobile()}
+                        <a
+                          href={getGarlandToolsQuestURLByID(quest["#"])}
+                          target="_blank"
+                          class="text-blue-500 underline hover:text-blue-600"
+                        >
+                          (View on Garland Tools)
+                        </a>
+                      {/if}
                     </p>
                     {#if quest["#"] === lastCheckedQuestId}
                       <img
