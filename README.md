@@ -1,6 +1,6 @@
 # FFXIV Journey Tracker
 
-Sveltekit static site for tracking FFXIV MSQ quest progress.
+Sveltekit static site app for tracking FFXIV MSQ quest progress.
 
 The goal is to provide a **simple but well enough designed** way to track your progress whilst being **easy to update through datamined** sources.
 
