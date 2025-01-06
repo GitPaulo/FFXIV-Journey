@@ -4,11 +4,8 @@
 </script>
 
 {#if $loading}
-  <div
-    transition:slide
-    class="relative flex flex-col mb-8 justify-center items-center"
-  >
-    <div class="bg-white rounded-lg p-2 shadow max-w-xl w-full relative">
+  <div class="relative flex flex-col mb-8 justify-center items-center">
+    <div class="bg-white rounded-lg p-6 shadow w-full relative max-w-fit">
       <div class="text-center">
         <img src="logo.png" alt="FFXIV Journey" class="h-16 mx-auto" />
         <h1 class="text-2xl sm:text-3xl font-bold text-blue-600 mt-2">
@@ -24,9 +21,10 @@
     </div>
   </div>
 {:else}
-  <div class="hidden sm:flex justify-end my-2" transition:slide>
+  <div class="hidden sm:flex justify-end my-2">
     <div
       class="group flex items-center p-3 bg-white rounded-lg shadow relative transition-all duration-300"
+      transition:slide
     >
       <h1
         class="text-blue-600 text-lg font-bold opacity-0 transform scale-95 hidden group-hover:block group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"

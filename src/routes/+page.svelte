@@ -435,7 +435,10 @@
   <!-- OG Tags -->
   <title>FFXIV Journey</title>
   <meta property="og:type" content="website" />
-  <meta property="og:image:alt" content="FFXIV MSQ Progress Tracker preview" />
+  <meta
+    property="og:image:alt"
+    content="Track and share your FFXIV MSQ progress easily!"
+  />
   <!-- Preload backgrounds -->
   <link rel="prefetch" href="background_arealmreborn.webp" as="image" />
   <link rel="prefetch" href="background_heavensward.webp" as="image" />
@@ -448,27 +451,21 @@
 <Modal />
 
 <Title />
-
-{#if !$loading}
+{#if $loading}
+  <Loading />
+{:else}
   <ActionBar
     {lastCheckedQuestId}
     on:generateLink={generateShareableLink}
     on:scrollToLastQuest={scrollToLastCheckedQuest}
     on:scrollToTop={scrollToTop}
   />
-
   <Progress />
-{/if}
-
-{#if $loading}
-  <Loading />
-{:else}
   <Search
     placeholder="Search quest name, description and unlocks..."
     bind:value={searchQuery}
     on:input={handleSearchInput}
   />
-
   {#each $filteredQuests as expansion}
     <details transition:fade class="mb-8" open={openExpansions[expansion.name]}>
       <summary
@@ -602,20 +599,22 @@
     </details>
   {/each}
 
-  {#if $filteredQuests && $filteredQuests.length === 0}
+  <!-- No results container (fade hack) -->
+  <div class="relative">
     {#if $filteredQuests && $filteredQuests.length === 0}
-      <div class="flex justify-center">
-        <div class="inline-block p-4 bg-white rounded-lg shadow">
-          <p class="text-center text-gray-600">No quests found.</p>
+      <div transition:fade class="absolute inset-0">
+        <div class="flex justify-center">
+          <div class="inline-block p-4 bg-white rounded-lg shadow">
+            <p class="text-center text-gray-600">No quests found.</p>
+          </div>
         </div>
+        <img
+          src="moogle_no_results.png"
+          alt="A moogle displaying no results found"
+          loading="lazy"
+          class="mx-auto mt-2 w-3/12 max-w-max min-w-20 object-contain"
+        />
       </div>
-      <img
-        transition:fade
-        src="moogle_no_results.png"
-        alt="A moogle displaying no results found"
-        loading="lazy"
-        class="mx-auto mt-2 w-3/12 max-w-max min-w-20 object-contain"
-      />
     {/if}
-  {/if}
+  </div>
 {/if}
