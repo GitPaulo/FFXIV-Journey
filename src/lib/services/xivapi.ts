@@ -1,6 +1,5 @@
 import { base } from "$app/paths";
 
-export const XIVAPI_BASE_URL = "https://xivapi.com";
 export const XIVAPI_BETA_BASE_URL = "https://beta.xivapi.com/api/1";
 
 /**
@@ -22,7 +21,7 @@ export function getImageUrl(imagePath: string | null): string {
   try {
     // Encode the imagePath for the new API query parameter
     const encodedPath = encodeURIComponent(imagePath);
-    const assetPath = `${XIVAPI_BETA_BASE_URL}/api/1/asset?path=${encodedPath}&format=png`;
+    const assetPath = `${XIVAPI_BETA_BASE_URL}/asset?path=${encodedPath}&format=png`;
 
     // Validate the URL
     new URL(assetPath);
