@@ -13,6 +13,7 @@
 
   // Debounce helper
   import { debounce } from "lodash";
+  import { isMobile } from "$lib/utils";
   const debouncedInput = debounce(
     () => dispatch("input", inputValue),
     debounceDelay
@@ -44,10 +45,10 @@
 <div transition:fade class="mb-6 flex relative">
   <input
     type="text"
+    placeholder={isMobile() ? "Search quests..." : placeholder}
+    class="p-3 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
     bind:value={inputValue}
     bind:this={searchInput}
-    {placeholder}
-    class="p-3 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
     on:input={handleInput}
   />
   <svg

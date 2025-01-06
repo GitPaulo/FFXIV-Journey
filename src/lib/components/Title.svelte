@@ -11,7 +11,7 @@
     <div class="bg-white rounded-lg p-2 shadow max-w-xl w-full relative">
       <div class="text-center">
         <img src="logo.png" alt="FFXIV Journey" class="h-16 mx-auto" />
-        <h1 class="text-3xl font-bold text-blue-600 mt-2">
+        <h1 class="text-2xl sm:text-3xl font-bold text-blue-600 mt-2">
           FFXIV Journey Tracker
         </h1>
       </div>
@@ -24,7 +24,7 @@
     </div>
   </div>
 {:else}
-  <div transition:slide class="flex justify-end my-2">
+  <div class="hidden sm:flex justify-end my-2" transition:slide>
     <div
       class="group flex items-center p-3 bg-white rounded-lg shadow relative transition-all duration-300"
     >

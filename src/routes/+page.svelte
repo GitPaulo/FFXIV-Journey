@@ -31,6 +31,7 @@
     getGarlandToolsQuestURLByID,
     sanitizeFFXIVMarkUp,
     createMagicParticles,
+    isMobile,
   } from "$lib/utils";
   import type { Quest, ExpansionsQuests, Expansion } from "$lib/model";
 
@@ -42,6 +43,10 @@
   import Loading from "$lib/components/Loading.svelte";
   import Search from "$lib/components/Search.svelte";
   import Tooltip from "$lib/components/Tooltip.svelte";
+  import {
+    disableScrollToTop,
+    enableScrollToTop,
+  } from "$lib/stores/actionBarStore";
 
   // Exports
   export let data: QuestsState;
@@ -254,8 +259,14 @@
     showScrollToTop = contentContainer.scrollTop > 140;
 
     if (showScrollToTop) {
+      enableScrollToTop();
+
+      if (isMobile()) return;
       detachActionBar();
     } else {
+      disableScrollToTop();
+
+      if (isMobile()) return;
       attachActionBar();
     }
   }
@@ -322,12 +333,20 @@
       // TODO: This is a hack, find a better way.
       setTimeout(() => {
         loading.set(false);
+
+        // Mobile check
+        if (isMobile()) {
+          attachActionBar();
+        }
+
         // Append the footer after the page is loaded
-        document?.body?.appendChild(
-          new Footer({
-            target: document.body,
-          }).$$.root.firstChild
-        );
+        if (!document.getElementById("footer")) {
+          document?.body?.appendChild(
+            new Footer({
+              target: document.body,
+            }).$$.root.firstChild
+          );
+        }
       }, 750);
     });
 
@@ -386,7 +405,7 @@
   {#each $filteredQuests as expansion}
     <details transition:fade class="mb-8" open={openExpansions[expansion.name]}>
       <summary
-        class="text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow"
+        class="text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow"
       >
         {expansion.name}
       </summary>
@@ -508,6 +527,19 @@
   {/each}
 
   {#if $filteredQuests && $filteredQuests.length === 0}
-    <p class="text-center text-gray-600">No quests found.</p>
+    {#if $filteredQuests && $filteredQuests.length === 0}
+      <div class="flex justify-center">
+        <div class="inline-block p-4 bg-white rounded-lg shadow">
+          <p class="text-center text-gray-600">No quests found.</p>
+        </div>
+      </div>
+      <img
+        transition:fade
+        src="moogle_no_results.png"
+        alt="A moogle displaying no results found"
+        loading="lazy"
+        class="mx-auto mt-2 w-4/12 object-contain"
+      />
+    {/if}
   {/if}
 {/if}

@@ -39,3 +39,11 @@ export function createMagicParticles(inputElement: HTMLInputElement) {
     setTimeout(() => particle.remove(), 750);
   }
 }
+
+/**
+ * Is the current device a mobile device
+ * @returns boolean
+ */
+export function isMobile() {
+  return window.matchMedia("(max-width: 639px)").matches; // Tailwind's 'sm' breakpoint
+}

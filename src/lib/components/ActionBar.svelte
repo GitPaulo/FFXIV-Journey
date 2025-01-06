@@ -22,7 +22,8 @@
     dispatch("scrollToLastQuest");
   }
 
-  let tooltipTarget: HTMLElement | null = null;
+  let tooltipTargetToggle: HTMLElement | null = null;
+  let tooltipTargetButton: HTMLElement | null = null;
 
   export let lastCheckedQuestId: number | null = null;
 </script>
@@ -33,7 +34,7 @@
   class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-1 sm:p-2 shadow flex items-center justify-between z-50"
 >
   <!-- Toggle Button -->
-  <div bind:this={tooltipTarget} class="flex items-center">
+  <div bind:this={tooltipTargetToggle} class="flex items-center">
     <button
       on:click={toggleAutoMode}
       class={`w-10 h-5 sm:w-12 sm:h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
@@ -49,7 +50,7 @@
 
     <!-- Tooltip for Auto/Manual Mode -->
     <Tooltip
-      targetElement={tooltipTarget}
+      targetElement={tooltipTargetToggle}
       text={$autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
       inlineMode={true}
       offsetX={5}
@@ -81,10 +82,18 @@
   <!-- Scroll Top -->
   {#if $showScrollToTop}
     <button
+      bind:this={tooltipTargetButton}
       on:click={onScrollToTopClicked}
       class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
     >
       ↑
     </button>
+    <!-- Tooltip for Scroll to Top -->
+    <Tooltip
+      targetElement={tooltipTargetButton}
+      text="Scroll to Top"
+      inlineMode={true}
+      offsetX={5}
+    ></Tooltip>
   {/if}
 </div>
