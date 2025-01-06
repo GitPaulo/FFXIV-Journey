@@ -11,7 +11,7 @@ The goal is to provide a **simple but well enough designed** way to track your p
 
 ## Dev
 
-Build frontent sveletekit app:
+Build and serve app:
 
 ```sh
 npm run dev
@@ -25,15 +25,14 @@ npm run quests
 
 ## TODO
 
-- [ ] Convert to new format: `https://beta.xivapi.com/api/1/asset?path=ui%2Ficon%2F100000%2F100064_hr1.tex&format=png`
-- [ ] Bug: Some MSQ ARR quests are missing.
-- [ ] Must do: Replace the usage of old XIVAPI with the new one for unlocks
-- [ ] Nice to do: Remove XIVAPI, entirely. Use the datamined data directly. (we use it for unlocks and assets)
+- [ ] Bug: Very very few MSQ ARR quests are missing and there are duplicate quests.
+- [ ] Improve the 'tree/separator' layout to be more intuitive or add more actions.
+- [ ] Improve performance, the app, really, should be lightning fast. Currently: acceptable!
 
 Extra:
 
 - [ ] Post-expansion quest separation (labels?)
-- [ ] Quest graph viewer?
+- [ ] Quest graph viewer? (nah)
 
 ## Development & Deploy
 
