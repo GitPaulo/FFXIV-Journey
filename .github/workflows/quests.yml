@@ -1,9 +1,6 @@
 name: Update Quests.json
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
