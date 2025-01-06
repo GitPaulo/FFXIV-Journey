@@ -3,8 +3,8 @@
   import { fade } from "svelte/transition";
 
   export let placeholder: string = "Search...";
-  export let value: string = ""; // Bound to the parent component
-  export let debounceDelay: number = 250; // Customizable debounce delay
+  export let value: string = "";
+  export let debounceDelay: number = 150;
 
   const dispatch = createEventDispatcher();
 

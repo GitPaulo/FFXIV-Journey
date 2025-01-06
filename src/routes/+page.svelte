@@ -26,7 +26,7 @@
     updateCurrentExpansion,
   } from "$lib/stores/questsStore";
   import { calculateAllProgress } from "$lib/stores/progressStore";
-  import { getImageUrl, getOldImageUrl } from "$lib/services/xivapi";
+  import { getImageUrl } from "$lib/services/xivapi";
   import {
     getGarlandToolsQuestURLByID,
     sanitizeFFXIVMarkUp,
@@ -505,7 +505,7 @@
                       class="flex flex-col items-center p-4 bg-white rounded-lg shadow border border-gray-200"
                     >
                       <img
-                        src={getOldImageUrl(unlock.Image)}
+                        src={getImageUrl(unlock.Image)}
                         alt="{unlock.Name} thumbnail"
                         class="w-44 h-16 rounded-md border border-gray-300 shadow-sm mb-4 hidden sm:block"
                       />
@@ -538,7 +538,7 @@
         src="moogle_no_results.png"
         alt="A moogle displaying no results found"
         loading="lazy"
-        class="mx-auto mt-2 w-4/12 object-contain"
+        class="mx-auto mt-2 w-3/12 max-w-max min-w-20 object-contain"
       />
     {/if}
   {/if}

@@ -1276,7 +1276,13 @@
                     "NextMSQ": 66047,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100076_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Bowl of Embers",
+                            "Image": "ui/icon/112000/112008_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 66047,
@@ -2272,7 +2278,13 @@
                     "NextMSQ": 66053,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100133_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Navel",
+                            "Image": "ui/icon/112000/112018_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 66053,
@@ -2818,7 +2830,13 @@
                     "NextMSQ": 66056,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100161_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Howling Eye",
+                            "Image": "ui/icon/112000/112019_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 66056,
@@ -3112,8 +3130,13 @@
                     "Image": "ui/icon/112000/112017_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Thok ast Thok (Hard)",
-                            "Image": "ui/icon/112000/112103_hr1.tex",
+                            "Name": "the Praetorium",
+                            "Image": "ui/icon/112000/112017_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Porta Decumana",
+                            "Image": "ui/icon/112000/112468_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
                     ]
@@ -3221,7 +3244,13 @@
                     "NextMSQ": 66727,
                     "QuestGroup": null,
                     "Image": "ui/icon/000000/000000_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Thornmarch (Hard)",
+                            "Image": "ui/icon/112000/112031_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 66727,
@@ -3446,7 +3475,13 @@
                     "NextMSQ": 66898,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100226_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Whorleater (Hard)",
+                            "Image": "ui/icon/112000/112051_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 66898,
@@ -3596,7 +3631,13 @@
                     "NextMSQ": 66989,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100253_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Striking Tree (Hard)",
+                            "Image": "ui/icon/112000/112062_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 66989,
@@ -3902,7 +3943,13 @@
                     "NextMSQ": 65622,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100321_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Akh Afah Amphitheatre (Hard)",
+                            "Image": "ui/icon/112000/112073_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 65622,
@@ -4073,7 +4120,13 @@
                     "NextMSQ": 65965,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100368_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Chrysalis",
+                            "Image": "ui/icon/112000/112081_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 65965,
@@ -5073,7 +5126,13 @@
                     "NextMSQ": 67153,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100408_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Thok ast Thok (Hard)",
+                            "Image": "ui/icon/112000/112103_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 67153,
@@ -5558,7 +5617,13 @@
                     "NextMSQ": 67184,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100423_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Limitless Blue (Hard)",
+                            "Image": "ui/icon/112000/112104_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 67184,
@@ -5899,6 +5964,11 @@
                             "Name": "the Aetherochemical Research Facility",
                             "Image": "ui/icon/112000/112092_hr1.tex",
                             "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Singularity Reactor",
+                            "Image": "ui/icon/112000/112106_hr1.tex",
+                            "ContentTypeName": "Trials"
                         }
                     ]
                 },
@@ -6112,9 +6182,9 @@
                     "Image": "ui/icon/100000/100526_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Under the Armor",
-                            "Image": "ui/icon/111000/111001_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "the Antitower",
+                            "Image": "ui/icon/112000/112125_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -6298,9 +6368,9 @@
                     "Image": "ui/icon/100000/100559_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Basic Training: Enemy Strongholds",
-                            "Image": "ui/icon/111000/111007_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Sohr Khai",
+                            "Image": "ui/icon/112000/112163_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -6317,7 +6387,13 @@
                     "NextMSQ": 67782,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100560_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Final Steps of Faith",
+                            "Image": "ui/icon/112000/112160_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 67782,
@@ -6379,9 +6455,9 @@
                     "Image": "ui/icon/100000/100582_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Pulling Poison Posies",
-                            "Image": "ui/icon/111000/111002_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Xelphatol",
+                            "Image": "ui/icon/112000/112186_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -6428,7 +6504,13 @@
                     "NextMSQ": 67882,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100583_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Navel (Hard)",
+                            "Image": "ui/icon/112000/112022_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 67882,
@@ -6565,9 +6647,9 @@
                     "Image": "ui/icon/100000/100613_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "All's Well that Ends in the Well",
-                            "Image": "ui/icon/111000/111005_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Baelsar's Wall",
+                            "Image": "ui/icon/112000/112214_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -7015,9 +7097,9 @@
                     "Image": "ui/icon/100000/100644_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Shadow and Claw",
-                            "Image": "ui/icon/111000/111011_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "the Sirensong Sea",
+                            "Image": "ui/icon/112000/112226_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -7321,7 +7403,18 @@
                     "NextMSQ": 68026,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100649_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Bowl of Embers (Hard)",
+                            "Image": "ui/icon/112000/112021_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        },
+                        {
+                            "Name": "the Pool of Tribute",
+                            "Image": "ui/icon/112000/112242_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 68026,
@@ -7593,9 +7686,9 @@
                     "Image": "ui/icon/112000/112228_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Long Live the Queen",
-                            "Image": "ui/icon/111000/111012_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Bardam's Mettle",
+                            "Image": "ui/icon/112000/112228_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -7854,9 +7947,9 @@
                     "Image": "ui/icon/100000/100659_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Ward Up",
-                            "Image": "ui/icon/111000/111013_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Doma Castle",
+                            "Image": "ui/icon/112000/112229_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -7978,7 +8071,18 @@
                     "NextMSQ": 68069,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100661_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Emanation",
+                            "Image": "ui/icon/112000/112243_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        },
+                        {
+                            "Name": "the Pool of Tribute",
+                            "Image": "ui/icon/112000/112242_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 68069,
@@ -8160,9 +8264,9 @@
                     "Image": "ui/icon/100000/100663_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Solemn Trinity",
-                            "Image": "ui/icon/111000/111014_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Castrum Abania",
+                            "Image": "ui/icon/112000/112230_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -8301,14 +8405,19 @@
                     "Image": "ui/icon/100000/100667_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Bowl of Embers",
-                            "Image": "ui/icon/112000/112008_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Ala Mhigo",
+                            "Image": "ui/icon/112000/112231_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         },
                         {
-                            "Name": "Solemn Trinity",
-                            "Image": "ui/icon/111000/111014_hr1.tex",
-                            "ContentTypeName": "Guildhests"
+                            "Name": "Castrum Abania",
+                            "Image": "ui/icon/112000/112230_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Royal Menagerie",
+                            "Image": "ui/icon/112000/112244_hr1.tex",
+                            "ContentTypeName": "Trials"
                         }
                     ]
                 },
@@ -8569,9 +8678,9 @@
                     "Image": "ui/icon/100000/100741_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Howling Eye",
-                            "Image": "ui/icon/112000/112019_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Drowned City of Skalla",
+                            "Image": "ui/icon/112000/112255_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -8888,7 +8997,13 @@
                     "NextMSQ": 68611,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100780_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Castrum Fluminis",
+                            "Image": "ui/icon/112000/112291_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 68611,
@@ -8950,9 +9065,9 @@
                     "Image": "ui/icon/112000/112311_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Bowl of Embers (Extreme)",
-                            "Image": "ui/icon/112000/112028_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Burn",
+                            "Image": "ui/icon/112000/112311_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -9106,9 +9221,9 @@
                     "Image": "ui/icon/100000/100821_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Navel (Extreme)",
-                            "Image": "ui/icon/112000/112029_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Ghimlyt Dark",
+                            "Image": "ui/icon/112000/112333_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -9480,9 +9595,9 @@
                     "Image": "ui/icon/100000/100898_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Whorleater (Hard)",
-                            "Image": "ui/icon/112000/112051_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Holminster Switch",
+                            "Image": "ui/icon/112000/112342_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -9668,9 +9783,9 @@
                     "Image": "ui/icon/112000/112343_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Howling Eye (Extreme)",
-                            "Image": "ui/icon/112000/112030_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Dohn Mheg",
+                            "Image": "ui/icon/112000/112343_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -9792,7 +9907,13 @@
                     "NextMSQ": 68857,
                     "QuestGroup": null,
                     "Image": "ui/icon/100000/100905_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Dancing Plague",
+                            "Image": "ui/icon/112000/112358_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 68857,
@@ -10094,9 +10215,9 @@
                     "Image": "ui/icon/100000/100912_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Thornmarch (Hard)",
-                            "Image": "ui/icon/112000/112031_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Qitana Ravel",
+                            "Image": "ui/icon/112000/112344_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -10370,9 +10491,9 @@
                     "Image": "ui/icon/100000/100918_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "The Gilded Araya",
-                            "Image": "ui/icon/112000/112536_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Malikah's Well",
+                            "Image": "ui/icon/112000/112345_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -10601,8 +10722,13 @@
                     "Image": "ui/icon/100000/100924_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Special Event I",
-                            "Image": "ui/icon/112000/112320_hr1.tex",
+                            "Name": "Mt. Gulg",
+                            "Image": "ui/icon/112000/112346_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Crown of the Immaculate",
+                            "Image": "ui/icon/112000/112360_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
                     ]
@@ -10772,8 +10898,13 @@
                     "Image": "ui/icon/100000/100928_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Thornmarch (Extreme)",
-                            "Image": "ui/icon/112000/112050_hr1.tex",
+                            "Name": "Amaurot",
+                            "Image": "ui/icon/112000/112347_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Dying Gasp",
+                            "Image": "ui/icon/112000/112362_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
                     ]
@@ -10808,9 +10939,9 @@
                     "Image": "ui/icon/112000/112373_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Whorleater (Extreme)",
-                            "Image": "ui/icon/112000/112052_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Grand Cosmos",
+                            "Image": "ui/icon/112000/112373_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -11069,9 +11200,9 @@
                     "Image": "ui/icon/112000/112378_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "A Relic Reborn: the Chimera",
-                            "Image": "ui/icon/112000/112053_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Anamnesis Anyder",
+                            "Image": "ui/icon/112000/112378_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -11195,9 +11326,9 @@
                     "Image": "ui/icon/101000/101009_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "A Relic Reborn: the Hydra",
-                            "Image": "ui/icon/112000/112055_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Heroes' Gauntlet",
+                            "Image": "ui/icon/112000/112399_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -11214,7 +11345,13 @@
                     "NextMSQ": 69315,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101010_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Seat of Sacrifice",
+                            "Image": "ui/icon/112000/112402_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 69315,
@@ -11351,9 +11488,9 @@
                     "Image": "ui/icon/112000/112406_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Battle on the Big Bridge",
-                            "Image": "ui/icon/112000/112054_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Matoya's Relict",
+                            "Image": "ui/icon/112000/112406_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -11507,9 +11644,9 @@
                     "Image": "ui/icon/112000/112428_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Striking Tree (Hard)",
-                            "Image": "ui/icon/112000/112062_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Paglth'an",
+                            "Image": "ui/icon/112000/112428_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -11896,9 +12033,9 @@
                     "Image": "ui/icon/101000/101105_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Striking Tree (Extreme)",
-                            "Image": "ui/icon/112000/112063_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Tower of Zot",
+                            "Image": "ui/icon/112000/112435_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -12172,9 +12309,9 @@
                     "Image": "ui/icon/101000/101111_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Akh Afah Amphitheatre (Extreme)",
-                            "Image": "ui/icon/112000/112074_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Tower of Babil",
+                            "Image": "ui/icon/112000/112436_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -12221,7 +12358,13 @@
                     "NextMSQ": 69935,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101113_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Dark Inside",
+                            "Image": "ui/icon/112000/112443_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 69935,
@@ -12388,9 +12531,9 @@
                     "Image": "ui/icon/101000/101117_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "",
-                            "Image": "ui/icon/000000/000000_hr1.tex",
-                            "ContentTypeName": ""
+                            "Name": "Vanaspati",
+                            "Image": "ui/icon/112000/112437_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -12814,9 +12957,9 @@
                     "Image": "ui/icon/101000/101126_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Urth's Fount",
-                            "Image": "ui/icon/112000/112065_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Ktisis Hyperboreia",
+                            "Image": "ui/icon/112000/112438_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -13000,8 +13143,13 @@
                     "Image": "ui/icon/100000/100045_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Dragon's Neck",
-                            "Image": "ui/icon/112000/112075_hr1.tex",
+                            "Name": "the Aitiascope",
+                            "Image": "ui/icon/112000/112439_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Mothercrystal",
+                            "Image": "ui/icon/112000/112445_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
                     ]
@@ -13231,8 +13379,13 @@
                     "Image": "ui/icon/101000/101135_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Chrysalis",
-                            "Image": "ui/icon/112000/112081_hr1.tex",
+                            "Name": "the Dead Ends",
+                            "Image": "ui/icon/112000/112440_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Final Day",
+                            "Image": "ui/icon/112000/112447_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
                     ]
@@ -13297,9 +13450,9 @@
                     "Image": "ui/icon/112000/112465_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "Thok ast Thok (Extreme)",
-                            "Image": "ui/icon/112000/112107_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Alzadaal's Legacy",
+                            "Image": "ui/icon/112000/112465_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -13408,9 +13561,9 @@
                     "Image": "ui/icon/112000/112481_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Limitless Blue (Hard)",
-                            "Image": "ui/icon/112000/112104_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Fell Court of Troia",
+                            "Image": "ui/icon/112000/112481_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -13487,7 +13640,13 @@
                     "NextMSQ": 70134,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101198_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Storm's Crown",
+                            "Image": "ui/icon/112000/112482_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 70134,
@@ -13609,9 +13768,9 @@
                     "Image": "ui/icon/112000/112502_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Limitless Blue (Extreme)",
-                            "Image": "ui/icon/112000/112105_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "Lapis Manalis",
+                            "Image": "ui/icon/112000/112502_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -13658,7 +13817,13 @@
                     "NextMSQ": 70214,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101229_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Mount Ordeals",
+                            "Image": "ui/icon/112000/112503_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 70214,
@@ -13705,9 +13870,9 @@
                     "Image": "ui/icon/112000/112521_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Singularity Reactor",
-                            "Image": "ui/icon/112000/112106_hr1.tex",
-                            "ContentTypeName": "Trials"
+                            "Name": "the Aetherfont",
+                            "Image": "ui/icon/112000/112521_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -13799,7 +13964,13 @@
                     "NextMSQ": 70279,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101250_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "the Voidcast Dais",
+                            "Image": "ui/icon/112000/112522_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 70279,
@@ -13891,8 +14062,13 @@
                     "Image": "ui/icon/112000/112543_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Minstrel's Ballad: Thordan's Reign",
-                            "Image": "ui/icon/112000/112122_hr1.tex",
+                            "Name": "the Lunar Subterrane",
+                            "Image": "ui/icon/112000/112543_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Abyssal Fracture",
+                            "Image": "ui/icon/112000/112544_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
                     ]
@@ -14280,9 +14456,9 @@
                     "Image": "ui/icon/101000/101314_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Binding Coil of Bahamut - Turn 2",
-                            "Image": "ui/icon/112000/112044_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "Ihuykatumu",
+                            "Image": "ui/icon/112000/112554_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -14466,9 +14642,9 @@
                     "Image": "ui/icon/101000/101318_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Labyrinth of the Ancients",
-                            "Image": "ui/icon/112000/112033_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "Worqor Zormor",
+                            "Image": "ui/icon/112000/112555_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -14515,7 +14691,13 @@
                     "NextMSQ": 70431,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101319_hr1.tex",
-                    "Unlocks": []
+                    "Unlocks": [
+                        {
+                            "Name": "Worqor Lar Dor",
+                            "Image": "ui/icon/112000/112562_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
                 },
                 {
                     "#": 70431,
@@ -14742,9 +14924,9 @@
                     "Image": "ui/icon/101000/101323_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Binding Coil of Bahamut - Turn 4",
-                            "Image": "ui/icon/112000/112046_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "The Skydeep Cenote",
+                            "Image": "ui/icon/112000/112556_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -15003,9 +15185,9 @@
                     "Image": "ui/icon/101000/101329_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Binding Coil of Bahamut - Turn 5",
-                            "Image": "ui/icon/112000/112047_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "Vanguard",
+                            "Image": "ui/icon/112000/112557_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },
@@ -15294,9 +15476,14 @@
                     "Image": "ui/icon/101000/101336_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Binding Coil of Bahamut - Turn 1",
-                            "Image": "ui/icon/112000/112043_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "Origenics",
+                            "Image": "ui/icon/112000/112558_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "Everkeep",
+                            "Image": "ui/icon/112000/112564_hr1.tex",
+                            "ContentTypeName": "Trials"
                         }
                     ]
                 },
@@ -15510,9 +15697,14 @@
                     "Image": "ui/icon/101000/101342_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Binding Coil of Bahamut - Turn 3",
-                            "Image": "ui/icon/112000/112045_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "Alexandria",
+                            "Image": "ui/icon/112000/112559_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "The Interphos",
+                            "Image": "ui/icon/112000/112566_hr1.tex",
+                            "ContentTypeName": "Trials"
                         }
                     ]
                 },
@@ -15561,9 +15753,9 @@
                     "Image": "ui/icon/112000/112584_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "the Second Coil of Bahamut - Turn 3",
-                            "Image": "ui/icon/112000/112040_hr1.tex",
-                            "ContentTypeName": "Raids"
+                            "Name": "Yuweyawata Field Station",
+                            "Image": "ui/icon/112000/112584_hr1.tex",
+                            "ContentTypeName": "Dungeons"
                         }
                     ]
                 },

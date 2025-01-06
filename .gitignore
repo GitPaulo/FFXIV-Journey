@@ -21,3 +21,4 @@ symlink-from
 .idea/
 build/
 .vscode/settings.json
+.venv/
