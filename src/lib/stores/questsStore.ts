@@ -1,101 +1,118 @@
 import { writable, get } from "svelte/store";
 import type { ExpansionsQuests, Quest } from "$lib/model";
-
-import { calculateAllProgress } from "./progressStore";
+import { initAllExpansionProgress } from "./progressStore";
 
 const LOCAL_STORAGE_KEY = "ffxiv-journey:completed";
 
-// Types
-export type ExpansionProgress = {
-  percent: number;
-  completed: number;
-  total: number;
-};
-
-// Store for quests
+// Store definitions
 export const quests = writable<ExpansionsQuests>([]);
 export const filteredQuests = writable<ExpansionsQuests>([]);
 export const completedQuests = writable<Record<number, boolean>>(
-  JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "{}")
+  (() => {
+    try {
+      return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || "{}") || {};
+    } catch {
+      console.warn(`Invalid data in localStorage for key ${LOCAL_STORAGE_KEY}`);
+      return {};
+    }
+  })()
 );
-export const progress = writable<Record<string, ExpansionProgress>>({});
-export const loading = writable<boolean>(true);
+export const isLoadingQuests = writable<boolean>(true);
 export const currentExpansion = writable<string>("");
 
+// Utility to persist completed quests to localStorage
 export function storeCompletedQuests() {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(get(completedQuests)));
+  try {
+    localStorage.setItem(
+      LOCAL_STORAGE_KEY,
+      JSON.stringify(get(completedQuests))
+    );
+  } catch (error) {
+    console.error("Failed to store completed quests in localStorage:", error);
+  }
 }
 
-export function toggleQuestCompletion(quest: Quest, isChecked: boolean) {
-  const $quests = get(quests);
+// Helper to get a flat list of all quests
+function getAllQuests(): Quest[] {
+  return get(quests).flatMap((expansion) =>
+    Object.values(expansion.quests).flat()
+  );
+}
 
-  let questFound = false;
+// Update completion status for a quest and subsequent quests
+export function setQuestCompletion(quest: Quest, isChecked: boolean) {
+  const questId = quest["#"];
+  let reachedTarget = false;
 
-  for (const expansion of $quests) {
-    const questIds = Object.values(expansion.quests)
-      .flat()
-      .map((q: Quest) => q["#"]);
+  completedQuests.update((current) => {
+    const updatedQuests = { ...current };
 
-    completedQuests.update((current) => {
-      const newCompletedQuests = { ...current };
-
-      for (let i = 0; i < questIds.length; i++) {
-        if (questFound) {
-          // Uncheck all quests after the found quest
-          newCompletedQuests[questIds[i]] = false;
-        } else {
-          // Check all quests leading up to and including the found quest
-          newCompletedQuests[questIds[i]] = true;
-        }
-
-        if (questIds[i] === quest["#"]) {
-          questFound = true;
-
-          // If the current quest is unchecked, uncheck it and uncheck all following quests
-          if (!isChecked) {
-            newCompletedQuests[questIds[i]] = false;
-          }
-        }
+    getAllQuests().forEach((q) => {
+      if (!reachedTarget) {
+        // For checking: check all quests up to the target quest
+        // For unchecking: leave previous quests unchanged
+        updatedQuests[q["#"]] = isChecked || updatedQuests[q["#"]];
       }
 
-      return newCompletedQuests; // Return a new object to trigger reactivity
+      if (q["#"] === questId) {
+        reachedTarget = true;
+        // Explicitly set the target quest based on the current action
+        updatedQuests[q["#"]] = isChecked;
+      }
+
+      if (reachedTarget && !isChecked) {
+        // Only uncheck quests from the target onward
+        updatedQuests[q["#"]] = false;
+      }
     });
-  }
 
-  storeCompletedQuests();
-  calculateAllProgress();
-  updateCurrentExpansion();
-}
-
-export function toggleSingleQuestCompletion(quest: Quest, isChecked: boolean) {
-  completedQuests.update((current) => {
-    const newCompletedQuests = { ...current };
-    newCompletedQuests[quest["#"]] = isChecked;
-    return newCompletedQuests;
+    return updatedQuests;
   });
 
   storeCompletedQuests();
-  calculateAllProgress();
+  initAllExpansionProgress();
   updateCurrentExpansion();
 }
 
-export function updateCurrentExpansion() {
-  const $quests = get(quests);
-  let lastCompletedQuestId: number | null = null;
-  let lastCompletedExpansion: string | null = null;
+// Update completion status for a single quest
+export function setSingleQuestCompletion(quest: Quest, isChecked: boolean) {
+  const questId = quest["#"];
 
-  for (const expansion of $quests) {
-    for (const location in expansion.quests) {
-      for (const quest of expansion.quests[location]) {
-        if (get(completedQuests)[quest["#"]]) {
-          lastCompletedQuestId = quest["#"];
-          lastCompletedExpansion = expansion.name;
-        }
-      }
-    }
-  }
+  completedQuests.update((current) => ({
+    ...current,
+    [questId]: isChecked,
+  }));
+
+  storeCompletedQuests();
+  initAllExpansionProgress();
+  updateCurrentExpansion();
+}
+
+// Update the current expansion based on the last completed quest
+export function updateCurrentExpansion() {
+  const completed = get(completedQuests);
+
+  const lastCompletedExpansion = get(quests).reduce<string | null>(
+    (last, expansion) => {
+      const hasCompletedQuest = Object.values(expansion.quests)
+        .flat()
+        .some((quest) => completed[quest["#"]]);
+      return hasCompletedQuest ? expansion.name : last;
+    },
+    null
+  );
 
   if (lastCompletedExpansion) {
     currentExpansion.set(lastCompletedExpansion);
   }
+}
+
+// Get the last checked quest
+export function getLastCheckedQuest(): Quest | null {
+  const completed = get(completedQuests);
+
+  return getAllQuests().reduce<Quest | null>(
+    (lastChecked, quest) => (completed[quest["#"]] ? quest : lastChecked),
+    null
+  );
 }

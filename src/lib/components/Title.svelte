@@ -1,9 +1,9 @@
 <script>
   import { slide } from "svelte/transition";
-  import { loading } from "../stores/questsStore";
+  import { isLoadingQuests } from "../stores/questsStore";
 </script>
 
-{#if $loading}
+{#if $isLoadingQuests}
   <div class="relative flex flex-col mb-8 justify-center items-center">
     <div class="bg-white rounded-lg p-6 shadow w-full relative max-w-fit">
       <div class="text-center">

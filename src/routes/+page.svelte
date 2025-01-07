@@ -3,29 +3,13 @@
   import { onMount, onDestroy, tick } from "svelte";
   import { fade } from "svelte/transition";
   import { get } from "svelte/store";
-  import { debounce, has } from "lodash";
-  import {
-    compressToEncodedURIComponent,
-    decompressFromEncodedURIComponent,
-  } from "lz-string";
+  import { debounce } from "lodash";
 
   // Application imports
   import "../app.css";
   import { base } from "$app/paths";
-  import type { QuestsState } from "./+page";
 
   // Lib imports
-  import {
-    quests,
-    loading,
-    filteredQuests,
-    completedQuests,
-    currentExpansion,
-    toggleQuestCompletion,
-    toggleSingleQuestCompletion,
-    updateCurrentExpansion,
-  } from "$lib/stores/questsStore";
-  import { calculateAllProgress } from "$lib/stores/progressStore";
   import { getImageUrl } from "$lib/services/xivapi";
   import {
     getGarlandToolsQuestURLByID,
@@ -47,217 +31,122 @@
 
   // Stores imports
   import {
+    quests,
+    completedQuests,
+    filteredQuests,
+    isLoadingQuests,
+    setQuestCompletion,
+    setSingleQuestCompletion,
+    currentExpansion,
+    updateCurrentExpansion,
+    getLastCheckedQuest,
+  } from "$lib/stores/questsStore";
+  import {
+    initAllExpansionProgress,
+    hasSharedProgress,
+    generateShareableLink,
+    loadSharedProgress,
+    progress,
+    getProgressByExpansion,
+    getProgressByQuestGroup,
+  } from "$lib/stores/progressStore";
+  import {
     disableScrollToTop,
     enableScrollToTop,
   } from "$lib/stores/actionBarStore";
   import { openModal } from "$lib/stores/modalManager";
 
   // Exports
-  export let data: QuestsState;
+  export let data: { quests: ExpansionsQuests }; // Quest.csv data provided by load function
 
   // Properties
   let openExpansions: Record<string, boolean> = {};
-  let openLocations: Record<string, Record<string, boolean>> = {};
+  let openQuestGroups: Record<string, Record<string, boolean>> = {};
   let searchQuery = "";
   let autoMode = true;
   let showScrollToTop = false;
-  let lastCheckedQuestId: number | null = null;
-  let highlightedQuestId: number | null = null;
+  let lastCheckedQuestNumber: number | null = null;
+  let highlightedQuestNumber: number | null = null;
   let tooltipTarget: HTMLElement | null = null;
   let searchInput: HTMLInputElement;
 
-  function getSharedProgress(): string {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("progress") || "";
-  }
-
-  function loadSharedProgress() {
-    const compressedState = getSharedProgress();
-
-    if (compressedState) {
-      // Warn the user that they are viewing a shared link
-      openModal(
-        "Shared Progress",
-        "You are viewing a shared progress link. Your progress won't be overwritten without prompt.",
-        () => {},
-        () => {
-          // refresh the page
-          window.location.href =
-            window.location.origin + window.location.pathname;
-        },
-        "Understood",
-        "",
-        false
-      );
-
-      try {
-        const state = JSON.parse(
-          decompressFromEncodedURIComponent(compressedState) || "{}"
-        );
-
-        // Reconstruct the state
-        const completed: Record<number, boolean> = {};
-        state.completedQuests.forEach((id: string) => {
-          completed[Number(id)] = true;
-        });
-
-        completedQuests.set(completed);
-        currentExpansion.set(state.currentExpansion);
-      } catch (error) {
-        console.error("Failed to decode shared progress:", error);
-      }
-    }
-  }
-
-  function generateShareableLink() {
-    const completed = get(completedQuests);
-    const completedIds = Object.keys(completed).filter(
-      (id) => completed[Number(id)]
-    );
-
-    const state = {
-      completedQuests: completedIds, // Store completed quest IDs only
-      currentExpansion: get(currentExpansion), // Store current expansion
-    };
-
-    const compressedState = compressToEncodedURIComponent(
-      JSON.stringify(state)
-    );
-    const basePath =
-      window.location.origin + window.location.pathname.replace(/\/$/, ""); // Remove trailing slash
-    const shareableLink = `${basePath}?progress=${compressedState}`;
-
-    navigator.clipboard
-      .writeText(shareableLink)
-      .then(() =>
-        openModal(
-          "Shareable Link",
-          "The progress link has been copied to your clipboard. Share it with your friends!",
-          () => {},
-          () => {},
-          "Understood",
-          "",
-          false
-        )
-      )
-      .catch(() =>
-        openModal(
-          "Shareable Link",
-          "Failed to copy the progress link to your clipboard. Please try again.",
-          () => {},
-          () => {},
-          "Understood",
-          "",
-          false
-        )
-      );
-  }
-
   function filterQuests(): void {
-    const $quests = get(quests);
-    resetOpenStates();
+    const allQuests = get(quests);
+    closeExpansionAndQuestGroups();
 
-    const trimmedQuery = searchQuery.trim().toLowerCase();
-    if (!trimmedQuery) {
-      filteredQuests.set($quests);
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) {
+      filteredQuests.set(allQuests);
       return;
     }
 
-    const filteredExpansions: ExpansionsQuests =
-      $quests.reduce<ExpansionsQuests>((acc, expansion) => {
-        const filteredExpansion: Expansion = {
-          name: expansion.name,
-          quests: {},
-        };
-
-        for (const location in expansion.quests) {
-          const locationQuests = expansion.quests[location].filter((quest) => {
-            const nameMatches = quest.Name.toLowerCase().includes(trimmedQuery);
-            const descriptionMatches = quest.Description
-              ? quest.Description.toLowerCase().includes(trimmedQuery)
-              : false;
-            const unlockMatches = quest.Unlocks.some((unlock) =>
-              unlock?.Name?.toLowerCase()?.includes(trimmedQuery)
-            );
-
-            return nameMatches || descriptionMatches || unlockMatches;
-          });
-
-          if (locationQuests.length > 0) {
-            filteredExpansion.quests[location] = locationQuests;
-            openExpansions[expansion.name] = true;
-            openLocations[expansion.name][location] = true;
-          }
-        }
+    const filteredExpansions = allQuests.reduce<ExpansionsQuests>(
+      (result, expansion) => {
+        const filteredExpansion = filterExpansion(expansion, query);
 
         if (Object.keys(filteredExpansion.quests).length > 0) {
-          acc.push(filteredExpansion);
+          result.push(filteredExpansion);
         }
 
-        return acc;
-      }, []);
+        return result;
+      },
+      []
+    );
 
     filteredQuests.set(filteredExpansions);
   }
   const debouncedFilterQuests = debounce(filterQuests, 250);
 
-  function findLastCheckedQuest(): void {
-    const $completedQuests = get(completedQuests);
-    const $quests = get(quests);
+  function filterExpansion(expansion: Expansion, query: string): Expansion {
+    const filteredExpansion: Expansion = {
+      name: expansion.name,
+      quests: {},
+    };
 
-    let lastCheckedQuest = null;
-
-    // Iterate through each expansion in the order it appears in $quests
-    for (const expansion of $quests) {
-      for (const location in expansion.quests) {
-        const questsInLocation = expansion.quests[location];
-
-        for (const quest of questsInLocation) {
-          if ($completedQuests[quest["#"]]) {
-            lastCheckedQuest = quest;
-          }
-        }
+    for (const questGroup in expansion.quests) {
+      const matchingQuests = filterQuestGroupQuests(
+        expansion.quests[questGroup],
+        query
+      );
+      if (matchingQuests.length > 0) {
+        filteredExpansion.quests[questGroup] = matchingQuests;
+        openExpansions[expansion.name] = true;
+        openQuestGroups[expansion.name][questGroup] = true;
       }
     }
 
-    // Update the last checked quest ID
-    lastCheckedQuestId = lastCheckedQuest ? lastCheckedQuest["#"] : null;
+    return filteredExpansion;
   }
 
-  function updateQuest(quest: Quest, checked: boolean) {
-    if (autoMode) {
-      toggleQuestCompletion(quest, checked);
-    } else {
-      toggleSingleQuestCompletion(quest, checked);
-    }
+  function filterQuestGroupQuests(
+    questGroupQuests: Quest[],
+    query: string
+  ): Quest[] {
+    return questGroupQuests.filter((quest) => {
+      const nameMatches = quest.Name.toLowerCase().includes(query);
+      const descriptionMatches = quest.Description
+        ? quest.Description.toLowerCase().includes(query)
+        : false;
+      const unlockMatches = quest.Unlocks.some((unlock) =>
+        unlock?.Name?.toLowerCase()?.includes(query)
+      );
 
-    findLastCheckedQuest();
-    updateBackground();
+      return nameMatches || descriptionMatches || unlockMatches;
+    });
   }
 
-  function resetOpenStates() {
+  function closeExpansionAndQuestGroups() {
     const $quests = get(quests);
     openExpansions = {};
-    openLocations = {};
+    openQuestGroups = {};
 
     for (const expansion of $quests) {
       openExpansions[expansion.name] = false;
-      openLocations[expansion.name] = {};
+      openQuestGroups[expansion.name] = {};
 
-      for (const location of Object.keys(expansion.quests)) {
-        openLocations[expansion.name][location] = false;
+      for (const questGroup of Object.keys(expansion.quests)) {
+        openQuestGroups[expansion.name][questGroup] = false;
       }
-    }
-  }
-
-  function updateBackground() {
-    const bgImage = get(currentExpansion)
-      ? `${base}/background_${get(currentExpansion).replace(/\s/g, "").toLowerCase()}.webp`
-      : ""; // No background is default
-
-    const bgElement = document.getElementById("background");
-    if (bgElement) {
-      bgElement.style.backgroundImage = `url('${bgImage}')`;
     }
   }
 
@@ -275,10 +164,6 @@
     }
   }
 
-  function isQuestCompleted(completedQuest: any): boolean {
-    return Boolean(completedQuest);
-  }
-
   function scrollToTop() {
     const contentContainer =
       document.getElementsByClassName("content-container")[0];
@@ -287,44 +172,97 @@
   }
 
   function scrollToLastCheckedQuest() {
-    if (lastCheckedQuestId === null) return;
+    if (!lastCheckedQuestNumber) return;
+
+    // Clear search if it exists
     if (searchQuery) {
       searchQuery = "";
       searchInput.value = "";
-      filterQuests(); // Clear the search
+      filterQuests();
     }
 
-    // Wait for the DOM to update after clearing the search
+    // Wait for DOM updates before proceeding
     tick().then(() => {
       const questElement = document.getElementById(
-        `quest-${lastCheckedQuestId}`
+        `quest-${lastCheckedQuestNumber}`
       );
+      if (!questElement) return;
 
-      if (questElement) {
-        // Open all parent collapsibles (details elements)
-        let parentElement = questElement.parentElement as HTMLElement | null;
-        while (parentElement) {
-          if (
-            parentElement.tagName === "DETAILS" &&
-            parentElement instanceof HTMLDetailsElement
-          ) {
-            parentElement.open = true;
-          }
-          parentElement = parentElement.parentElement; // Traverse up the DOM
-        }
+      // Open parent collapsibles
+      openParentDetails(questElement);
 
-        // Wait for the collapsibles to be fully opened
-        tick().then(() => {
-          questElement.scrollIntoView({ behavior: "smooth", block: "center" });
-
-          // Highlight the quest for 3 seconds
-          highlightedQuestId = lastCheckedQuestId;
-          setTimeout(() => {
-            highlightedQuestId = null;
-          }, 3000);
-        });
-      }
+      // Scroll to the quest and highlight it
+      tick().then(() => {
+        questElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        highlightQuest(questElement);
+      });
     });
+  }
+
+  function openParentDetails(element: HTMLElement) {
+    let parent = element.parentElement;
+    while (parent) {
+      if (
+        parent.tagName === "DETAILS" &&
+        parent instanceof HTMLDetailsElement
+      ) {
+        parent.open = true;
+      }
+      parent = parent.parentElement; // Traverse up the DOM
+    }
+  }
+
+  function highlightQuest(element: HTMLElement) {
+    highlightedQuestNumber = lastCheckedQuestNumber;
+    setTimeout(() => {
+      highlightedQuestNumber = null;
+    }, 3000);
+  }
+
+  function updateBackground() {
+    const bgImage = get(currentExpansion)
+      ? `${base}/background_${get(currentExpansion).replace(/\s/g, "").toLowerCase()}.webp`
+      : ""; // No background is default
+
+    const bgElement = document.getElementById("background");
+    if (bgElement) {
+      bgElement.style.backgroundImage = `url('${bgImage}')`;
+    }
+  }
+
+  function updateLastCheckedQuest() {
+    const lastCheckedQuest = getLastCheckedQuest();
+    lastCheckedQuestNumber = lastCheckedQuest ? lastCheckedQuest["#"] : null;
+  }
+
+  function updateQuest(quest: Quest, checked: boolean) {
+    if (autoMode) {
+      setQuestCompletion(quest, checked);
+    } else {
+      setSingleQuestCompletion(quest, checked);
+    }
+
+    updateLastCheckedQuest();
+    updateBackground();
+  }
+
+  function simulateLoading() {
+    setTimeout(() => {
+      isLoadingQuests.set(false);
+
+      if (isMobile()) {
+        attachActionBar();
+      }
+
+      // The footer is not part of the Svelte app, so we need to manually append it
+      if (!document.getElementById("footer")) {
+        document?.body?.appendChild(
+          new Footer({
+            target: document.body,
+          }).$$.root.firstChild
+        );
+      }
+    }, 500);
   }
 
   function handleScroll() {
@@ -349,11 +287,10 @@
 
   function handleCheckboxChange(event: Event, quest: Quest) {
     const input = event.target as HTMLInputElement;
-    const hasSharedProgress = Boolean(getSharedProgress());
 
     createMagicParticles(input);
 
-    if (hasSharedProgress) {
+    if (hasSharedProgress()) {
       openModal(
         "Shared Progress Warning",
         "You are viewing a shared progress link. Changing progress will alter yours, continue?",
@@ -379,41 +316,31 @@
     debouncedFilterQuests(); // Trigger the debounced filter
   }
 
+  function initProgress() {
+    if (hasSharedProgress()) {
+      loadSharedProgress();
+    }
+
+    initAllExpansionProgress();
+  }
+
+  function initQuests(loadedQuests: ExpansionsQuests) {
+    quests.set(loadedQuests);
+    filteredQuests.set(loadedQuests);
+
+    closeExpansionAndQuestGroups();
+  }
+
   onMount(() => {
-    // Load shared progress if available
-    loadSharedProgress();
+    const loadedQuests = data.quests;
+    initQuests(loadedQuests);
+    initProgress();
 
-    data.quests.then((loadedQuests: ExpansionsQuests) => {
-      // Init quests
-      quests.set(loadedQuests);
-      filteredQuests.set(loadedQuests);
+    updateLastCheckedQuest();
+    updateCurrentExpansion();
+    updateBackground();
 
-      // Init state
-      resetOpenStates();
-      calculateAllProgress();
-      updateCurrentExpansion();
-      updateBackground();
-      findLastCheckedQuest();
-
-      // TODO: This is a hack, find a better way.
-      setTimeout(() => {
-        loading.set(false);
-
-        // Mobile check
-        if (isMobile()) {
-          attachActionBar();
-        }
-
-        // Append the footer after the page is loaded
-        if (!document.getElementById("footer")) {
-          document?.body?.appendChild(
-            new Footer({
-              target: document.body,
-            }).$$.root.firstChild
-          );
-        }
-      }, 750);
-    });
+    simulateLoading();
 
     // Events
     document
@@ -451,11 +378,11 @@
 <Modal />
 
 <Title />
-{#if $loading}
+{#if $isLoadingQuests}
   <Loading />
 {:else}
   <ActionBar
-    {lastCheckedQuestId}
+    lastCheckedQuestId={lastCheckedQuestNumber}
     on:generateLink={generateShareableLink}
     on:scrollToLastQuest={scrollToLastCheckedQuest}
     on:scrollToTop={scrollToTop}
@@ -467,38 +394,55 @@
     on:input={handleSearchInput}
   />
   {#each $filteredQuests as expansion}
-    <details transition:fade class="mb-8" open={openExpansions[expansion.name]}>
+    <details
+      transition:fade
+      class="relative mb-8 overflow-visible"
+      open={openExpansions[expansion.name]}
+    >
       <summary
-        class="text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative"
       >
         {expansion.name}
+        <!-- draw icon based on complete expansion progress or not -->
+        {#if getProgressByExpansion(expansion.name).percent === 100}
+          <img src="ffxiv_complete.webp" alt="Complete" class="w-6 h-6" />
+        {:else}
+          <img src="ffxiv_incomplete.webp" alt="Incomplete" class="w-6 h-6" />
+        {/if}
       </summary>
-      {#each Object.keys(expansion.quests) as location}
+      {#each Object.keys(expansion.quests) as questGroup}
         <details
           class="ml-6 mb-6 pl-6"
-          open={openLocations[expansion.name][location]}
+          open={openQuestGroups[expansion.name][questGroup]}
         >
-          {#if location !== "Main"}
+          {#if questGroup !== "Main"}
             <summary
-              class="text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow"
+              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.01] hover:bg-gray-100 hover:shadow-md"
             >
-              {location}
+              {questGroup}
+              <div class="text-right">
+                {getProgressByQuestGroup(expansion.name, questGroup)
+                  .completed}/{getProgressByQuestGroup(
+                  expansion.name,
+                  questGroup
+                ).total}
+              </div>
             </summary>
           {/if}
           <ul class="space-y-4">
-            {#each expansion.quests[location] as quest (quest.Id)}
+            {#each expansion.quests[questGroup] as quest (quest["#"])}
               <li
                 id={`quest-${quest["#"]}`}
                 class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-300"
-                class:border-2={highlightedQuestId === quest["#"]}
-                class:border-blue-600={highlightedQuestId === quest["#"]}
-                class:animate-flicker={highlightedQuestId === quest["#"]}
+                class:border-2={highlightedQuestNumber === quest["#"]}
+                class:border-blue-600={highlightedQuestNumber === quest["#"]}
+                class:animate-flicker={highlightedQuestNumber === quest["#"]}
               >
                 <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                   <input
                     type="checkbox"
                     class="form-checkbox h-6 w-6 text-green-500 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-300 focus:bg-blue-50 checked:bg-blue-100 transition-color"
-                    checked={isQuestCompleted($completedQuests[quest["#"]])}
+                    bind:checked={$completedQuests[quest["#"]]}
                     on:change={(e) => handleCheckboxChange(e, quest)}
                   />
                 </div>
@@ -517,7 +461,7 @@
                         </a>
                       {/if}
                     </p>
-                    {#if quest["#"] === lastCheckedQuestId}
+                    {#if quest["#"] === lastCheckedQuestNumber}
                       <img
                         bind:this={tooltipTarget}
                         src="moogle_current_quest.png"

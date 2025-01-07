@@ -22,15 +22,7 @@ export const modalState = writable<ModalState>({
   allowCancel: true,
 });
 
-/**
- *  Opens a modal with the given title and message.
- * @param title
- * @param message
- * @param onConfirm
- * @param onCancel
- * @param confirmLabel
- * @param cancelLabel
- */
+// Open a modal with the given title and message.
 export function openModal(
   title: string,
   message: string,
@@ -52,9 +44,7 @@ export function openModal(
   });
 }
 
-/**
- * Closes the modal.
- */
+// Close the modal.
 export function closeModal(): void {
   modalState.update((state) => ({ ...state, show: false }));
 }

@@ -2,12 +2,11 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
+  import type { ExpansionProgress } from "$lib/stores/progressStore";
   import { progress } from "$lib/stores/progressStore";
-  import type { ExpansionProgress } from "$lib/stores/questsStore";
 
   let progressData: Record<string, ExpansionProgress> = {};
 
-  // Initialize progress data on component mount
   onMount(() => {
     progress.subscribe((value) => {
       progressData = value;
