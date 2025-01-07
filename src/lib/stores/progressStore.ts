@@ -24,44 +24,9 @@ export type QuestGroupProgress = {
 
 // Store for overall progress
 export const progress = writable<Record<string, ExpansionProgress>>({});
-
-// Get progress for a single expansion
-export function getProgressByExpansion(
-  expansionName: string
-): ExpansionProgress {
-  return get(progress)[expansionName] || { percent: 0, completed: 0, total: 0 };
-}
-
-// Returns the progress for a single quest group inside the expansion
-export function getProgressByQuestGroup(
-  expansionName: string,
-  questGroup: string
-): QuestGroupProgress {
-  const allQuests = get(quests);
-  if (!allQuests.length) {
-    return { percent: 0, completed: 0, total: 0 };
-  }
-
-  // Find the expansion by name
-  const expansion = allQuests.find((exp) => exp.name === expansionName);
-  if (!expansion || !expansion.quests) {
-    return { percent: 0, completed: 0, total: 0 };
-  }
-
-  // Get the quest group within the expansion
-  const questsArray = expansion.quests[questGroup] || [];
-  const totalQuests = questsArray.length;
-  const completedCount = questsArray.reduce((count, quest) => {
-    return count + (get(completedQuests)[quest["#"]] ? 1 : 0);
-  }, 0);
-
-  return {
-    percent:
-      totalQuests > 0 ? Math.floor((completedCount / totalQuests) * 100) : 0,
-    completed: completedCount,
-    total: totalQuests,
-  };
-}
+export const groupProgress = writable<
+  Record<string, Record<string, QuestGroupProgress>>
+>({});
 
 // Calculate progress for a single expansion
 export function calculateExpansionProgress(
@@ -87,19 +52,65 @@ export function calculateExpansionProgress(
   };
 }
 
-// Calculate progress for all expansions
+// Calculate progress for a single quest group within an expansion
+export function calculateQuestGroupProgress(
+  expansionName: string,
+  questGroup: string
+): QuestGroupProgress {
+  const allQuests = get(quests);
+  if (!allQuests.length) {
+    return { percent: 0, completed: 0, total: 0 };
+  }
+
+  const expansion = allQuests.find((exp) => exp.name === expansionName);
+  if (!expansion || !expansion.quests[questGroup]) {
+    return { percent: 0, completed: 0, total: 0 };
+  }
+
+  const questsArray = expansion.quests[questGroup];
+  const totalQuests = questsArray.length;
+  const completedCount = questsArray.reduce(
+    (count, quest) => count + (get(completedQuests)[quest["#"]] ? 1 : 0),
+    0
+  );
+
+  return {
+    percent:
+      totalQuests > 0 ? Math.floor((completedCount / totalQuests) * 100) : 0,
+    completed: completedCount,
+    total: totalQuests,
+  };
+}
+
+// Initialize all expansion and quest group progress
 export function initAllExpansionProgress() {
   const allQuests = get(quests);
   if (!allQuests.length) return;
 
   const updatedProgress: Record<string, ExpansionProgress> = {};
+  const updatedGroupProgress: Record<
+    string,
+    Record<string, QuestGroupProgress>
+  > = {};
+
   allQuests.forEach((expansion) => {
+    // Calculate expansion progress
     updatedProgress[expansion.name] = calculateExpansionProgress(
       expansion.name
     );
+
+    // Initialize nested object for this expansion
+    updatedGroupProgress[expansion.name] = {};
+
+    // Calculate progress for each quest group
+    Object.keys(expansion.quests).forEach((questGroup) => {
+      updatedGroupProgress[expansion.name][questGroup] =
+        calculateQuestGroupProgress(expansion.name, questGroup);
+    });
   });
 
   progress.set(updatedProgress);
+  groupProgress.set(updatedGroupProgress);
 }
 
 // Get shared progress from URL

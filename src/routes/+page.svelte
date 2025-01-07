@@ -47,8 +47,7 @@
     generateShareableLink,
     loadSharedProgress,
     progress,
-    getProgressByExpansion,
-    getProgressByQuestGroup,
+    groupProgress,
   } from "$lib/stores/progressStore";
   import {
     disableScrollToTop,
@@ -404,7 +403,7 @@
       >
         {expansion.name}
         <!-- draw icon based on complete expansion progress or not -->
-        {#if getProgressByExpansion(expansion.name).percent === 100}
+        {#if $progress[expansion.name].percent === 100}
           <img src="ffxiv_complete.webp" alt="Complete" class="w-6 h-6" />
         {:else}
           <img src="ffxiv_incomplete.webp" alt="Incomplete" class="w-6 h-6" />
@@ -421,11 +420,8 @@
             >
               {questGroup}
               <div class="text-right">
-                {getProgressByQuestGroup(expansion.name, questGroup)
-                  .completed}/{getProgressByQuestGroup(
-                  expansion.name,
-                  questGroup
-                ).total}
+                {$groupProgress[expansion.name][questGroup]
+                  .completed}/{$groupProgress[expansion.name][questGroup].total}
               </div>
             </summary>
           {/if}
