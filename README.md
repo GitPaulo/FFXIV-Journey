@@ -6,8 +6,8 @@ The goal is to provide a **simple but well enough designed** way to track your p
 
 ### Preview
 
-<img width="1512" alt="image" src="https://github.com/user-attachments/assets/65e66547-d92b-4ba7-9207-ce187eaa6b9f">
-<img width="1510" alt="image" src="https://github.com/user-attachments/assets/4024fd1d-d236-4b5b-bba3-b13a49d47977">
+![ffxiv-journey-1](https://github.com/user-attachments/assets/d4878269-3600-4e64-9dda-79aceebcb2d9)
+![ffxiv-journey-2](https://github.com/user-attachments/assets/461c7ebf-842a-4212-81a2-01913a36a22e)
 
 ## Dev
 
@@ -25,8 +25,6 @@ npm run quests
 
 ## TODO
 
-- [ ] Bug: Very very few MSQ ARR quests are missing and there are duplicate quests.
-- [ ] Improve the 'tree/separator' layout to be more intuitive or add more actions.
 - [ ] Improve performance, the app, really, should be lightning fast. Currently: acceptable!
 
 Extra:
