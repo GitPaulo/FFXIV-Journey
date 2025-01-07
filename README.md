@@ -1,4 +1,4 @@
-# FFXIV Journey Tracker
+# FFXIV Journey - MSQ Tracker
 
 Sveltekit static site app for tracking FFXIV MSQ quest progress.
 
