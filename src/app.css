@@ -61,7 +61,8 @@ body {
   z-index: 2;
   padding: 20px;
   height: 84vh;
-  overflow: visible; /* Allows content to "pop out" */
+  overflow-x: visible; /* Allows content to "pop out" */
+  overflow-y: auto;
   background-color: rgba(244, 246, 244, 0.7);
   border-radius: inherit;
 }
