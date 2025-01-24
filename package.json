@@ -37,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@msgpack/msgpack": "^3.0.0-beta2",
 		"lodash": "^4.17.21",
 		"lz-string": "^1.5.0"
 	}

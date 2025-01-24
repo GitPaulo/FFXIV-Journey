@@ -1,6 +1,6 @@
 <script lang="ts">
   // Dependencies imports
-  import { onMount, onDestroy, tick } from "svelte";
+  import { onMount, onDestroy, tick, SvelteComponent } from "svelte";
   import { fade } from "svelte/transition";
   import { get } from "svelte/store";
   import { debounce } from "lodash";
@@ -67,7 +67,7 @@
   let lastCheckedQuestNumber: number | null = null;
   let highlightedQuestNumber: number | null = null;
   let tooltipTarget: HTMLElement | null = null;
-  let searchInput: HTMLInputElement;
+  let searchInput: SvelteComponent<Search>;
 
   function filterQuests(): void {
     const allQuests = get(quests);
@@ -176,7 +176,7 @@
     // Clear search if it exists
     if (searchQuery) {
       searchQuery = "";
-      searchInput.value = "";
+      searchInput.clear();
       filterQuests();
     }
 
@@ -389,6 +389,7 @@
   <Progress />
   <Search
     placeholder="Search quest name, description and unlocks..."
+    bind:this={searchInput}
     bind:value={searchQuery}
     on:input={handleSearchInput}
   />

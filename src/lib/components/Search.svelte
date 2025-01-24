@@ -33,6 +33,10 @@
     }
   }
 
+  export function clear() {
+    searchInput.value = "";
+  }
+
   onMount(() => {
     window.addEventListener("keydown", handleKeydown);
   });
