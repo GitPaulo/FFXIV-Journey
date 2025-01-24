@@ -24,6 +24,17 @@ export type SharableState = {
   currentExpansion: string;
 };
 
+function toBase64Url(base64: string): string {
+  return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function fromBase64Url(base64Url: string): string {
+  return (
+    base64Url.replace(/-/g, "+").replace(/_/g, "/") +
+    "=".repeat((4 - (base64Url.length % 4)) % 4)
+  );
+}
+
 // Compress and encode state into a sharable string
 export async function compressAndEncode(state: SharableState): Promise<{
   base64Encoded: string;
@@ -49,9 +60,9 @@ export async function compressAndEncode(state: SharableState): Promise<{
 
   const compressed = await new Response(stream.readable).arrayBuffer();
 
-  // Step 4: Convert to Base64
-  const base64Encoded = btoa(
-    String.fromCharCode(...new Uint8Array(compressed))
+  // Step 4: Convert to Base64 URL-safe format
+  const base64Encoded = toBase64Url(
+    btoa(String.fromCharCode(...new Uint8Array(compressed)))
   );
 
   // Create the base URL
@@ -65,8 +76,8 @@ export async function compressAndEncode(state: SharableState): Promise<{
 export async function decodeAndDecompress(
   base64Encoded: string
 ): Promise<SharableState> {
-  // Step 1: Decode Base64 back to a Uint8Array
-  const binaryString = atob(base64Encoded);
+  // Step 1: Decode Base64 URL-safe back to a Uint8Array
+  const binaryString = atob(fromBase64Url(base64Encoded));
   const compressed = Uint8Array.from(binaryString, (char) =>
     char.charCodeAt(0)
   );
@@ -124,7 +135,7 @@ function convertToDeltas(ids: string[]): number[] {
   return deltas;
 }
 
-// Utility: Convert delta-encoded array back to original IDs
+// Convert delta-encoded array back to original IDs
 function convertFromDeltas(deltas: number[]): string[] {
   if (deltas.length === 0) return [];
 
