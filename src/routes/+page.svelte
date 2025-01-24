@@ -315,9 +315,9 @@
     debouncedFilterQuests(); // Trigger the debounced filter
   }
 
-  function initProgress() {
+  async function initProgress() {
     if (hasSharedProgress()) {
-      loadSharedProgress();
+      await loadSharedProgress();
     }
 
     initAllExpansionProgress();
@@ -330,10 +330,10 @@
     closeExpansionAndQuestGroups();
   }
 
-  onMount(() => {
+  onMount(async () => {
     const loadedQuests = data.quests;
     initQuests(loadedQuests);
-    initProgress();
+    await initProgress();
 
     updateLastCheckedQuest();
     updateCurrentExpansion();
