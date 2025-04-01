@@ -14713,7 +14713,7 @@
                     "Image": "ui/icon/101000/101323_hr1.tex",
                     "Unlocks": [
                         {
-                            "Name": "The Skydeep Cenote",
+                            "Name": "the Skydeep Cenote",
                             "Image": "ui/icon/112000/112556_hr1.tex",
                             "ContentTypeName": "Dungeons"
                         }
@@ -15603,9 +15603,140 @@
                     "PreviousQuests": [
                         70785
                     ],
-                    "NextMSQ": null,
+                    "NextMSQ": 70835,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101387_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70835,
+                    "Id": "KinGmh101_05299",
+                    "Name": "A Glimmer of the Past",
+                    "Description": "Krile wishes to catch up on recent events.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70786
+                    ],
+                    "NextMSQ": 70836,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101412_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70836,
+                    "Id": "KinGmh102_05300",
+                    "Name": "Memories of a Bygone Age",
+                    "Description": "Sphene is eager to see the new Alexandria.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70835
+                    ],
+                    "NextMSQ": 70837,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70837,
+                    "Id": "KinGmh103_05301",
+                    "Name": "In Search of Meaning",
+                    "Description": "Sphene looks at you apologetically.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70836
+                    ],
+                    "NextMSQ": 70838,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70838,
+                    "Id": "KinGmh104_05302",
+                    "Name": "A Jewel Shattered",
+                    "Description": "Sphene is eager to tell Malachite of your success.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70837
+                    ],
+                    "NextMSQ": 70839,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70839,
+                    "Id": "KinGmh105_05303",
+                    "Name": "The Meeting",
+                    "Description": "Sphene has a pained look in her eyes.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70838
+                    ],
+                    "NextMSQ": 70840,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70840,
+                    "Id": "KinGmh106_05304",
+                    "Name": "Descent to the Foundation",
+                    "Description": "Shale is eager to get on with it.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70839
+                    ],
+                    "NextMSQ": 70841,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/112000/112592_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": "the Underkeep",
+                            "Image": "ui/icon/112000/112592_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "Recollection",
+                            "Image": "ui/icon/112000/112595_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
+                },
+                {
+                    "#": 70841,
+                    "Id": "KinGmh107_05305",
+                    "Name": "Shared Paths",
+                    "Description": "Sphene stands in silence.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70840
+                    ],
+                    "NextMSQ": 70842,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70842,
+                    "Id": "KinGmh108_05306",
+                    "Name": "Seekers of Eternity",
+                    "Description": "Sphene is in higher spirits.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70841
+                    ],
+                    "NextMSQ": null,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101413_hr1.tex",
                     "Unlocks": []
                 }
             ]
