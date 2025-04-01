@@ -4,15 +4,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-quest-scraper:
+  update-quests:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-
+          ref: ${{ github.head_ref }}
+          
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -31,13 +34,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas requests tqdm
 
-      - name: Run prepare_quest_data.py
+      - name: Run quest scraper
         run: npm run quests -- --auto-yes
 
-      - name: Commit Updated Quests.json
-        run: |
-          git config --local user.name "GitHub Actions"
-          git config --local user.email "actions@github.com"
-          git add static/Quests.json
-          git commit -m "[GA] Update Quests.json" || echo "[GA] No changes to commit"
-          git push
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "[GA] Update Quests.json"
+          file_pattern: 'static/Quests.json'
