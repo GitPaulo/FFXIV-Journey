@@ -68,32 +68,35 @@
   let highlightedQuestNumber: number | null = null;
   let tooltipTarget: HTMLElement | null = null;
   let searchInput: SvelteComponent<Search>;
+  let isFiltering = false;
 
   function filterQuests(): void {
+    isFiltering = true;
     const allQuests = get(quests);
     closeExpansionAndQuestGroups();
 
     const query = searchQuery.trim().toLowerCase();
     if (!query) {
       filteredQuests.set(allQuests);
+      setTimeout(() => (isFiltering = false), 300); // match fade duration, scuffed?
       return;
     }
 
     const filteredExpansions = allQuests.reduce<ExpansionsQuests>(
       (result, expansion) => {
         const filteredExpansion = filterExpansion(expansion, query);
-
         if (Object.keys(filteredExpansion.quests).length > 0) {
           result.push(filteredExpansion);
         }
-
         return result;
       },
       []
     );
 
     filteredQuests.set(filteredExpansions);
+    setTimeout(() => (isFiltering = false), 300); // match fade duration
   }
+
   const debouncedFilterQuests = debounce(filterQuests, 250);
 
   function filterExpansion(expansion: Expansion, query: string): Expansion {
@@ -543,7 +546,13 @@
   <!-- No results container (fade hack) -->
   <div class="relative">
     {#if $filteredQuests && $filteredQuests.length === 0}
-      <div transition:fade class="absolute inset-0">
+      <div
+        transition:fade
+        class="absolute inset-0"
+        style="opacity: {isFiltering ? 0 : 1}; pointer-events: {isFiltering
+          ? 'none'
+          : 'auto'}"
+      >
         <div class="flex justify-center">
           <div class="inline-block p-4 bg-white rounded-lg shadow">
             <p class="text-center text-gray-600">No quests found.</p>
