@@ -525,6 +525,7 @@
                         src={getImageUrl(unlock.Image)}
                         alt="{unlock.Name} thumbnail"
                         class="w-44 h-16 rounded-md border border-gray-300 shadow-sm mb-4 hidden sm:block"
+                        loading="lazy"
                       />
                       <p class="font-bold text-gray-800 text-center">
                         {unlock.Name}
