@@ -1,5 +1,5 @@
 <div id="footer" class="text-sm mt-1 md:mt-4 text-gray-400">
-  <div id="copyright" class="hidden md:block">
+  <div id="copyright" class="hidden md:block text-sm text-gray-400">
     FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
     <br />
     FINAL FANTASY XIV © SQUARE ENIX CO., LTD.

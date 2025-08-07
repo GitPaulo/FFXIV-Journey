@@ -2,9 +2,14 @@ import { writable } from "svelte/store";
 
 export const autoMode = writable(true);
 export const showScrollToTop = writable(false);
+export const showProgress = writable(true);
 
 export function toggleAutoMode() {
   autoMode.update((value) => !value);
+}
+
+export function toggleProgressVisibility() {
+  showProgress.update((value) => !value);
 }
 
 export function enableScrollToTop() {

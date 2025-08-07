@@ -5,6 +5,8 @@
     autoMode,
     toggleAutoMode,
     showScrollToTop,
+    showProgress,
+    toggleProgressVisibility,
   } from "$lib/stores/actionBarStore";
   import Tooltip from "./Tooltip.svelte";
 
@@ -54,21 +56,29 @@
       text={$autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
       inlineMode={true}
       offsetX={5}
-    ></Tooltip>
+    />
   </div>
 
   <!-- Share progress generate -->
   <button
     on:click={onShareProgressClicked}
-    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+    class="ml-2 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
   >
     🔗 Share
+  </button>
+
+  <!-- Progress Toggle Button -->
+  <button
+    on:click={toggleProgressVisibility}
+    class="hidden sm:block ml-2 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+  >
+    {$showProgress ? "Hide Progress" : "Show Progress"}
   </button>
 
   <!-- Last Quest Button -->
   <button
     on:click={onScrollToLastQuestClicked}
-    class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal
+    class="ml-2 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal
     {lastCheckedQuestId === null
       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
       : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'}"
@@ -84,7 +94,7 @@
     <button
       bind:this={tooltipTargetButton}
       on:click={onScrollToTopClicked}
-      class="ml-4 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
+      class="ml-2 p-2 rounded-lg shadow transition-colors duration-300 text-xs sm:text-base font-bold sm:font-normal bg-white text-gray-700 border border-gray-300 hover:bg-gray-100"
     >
       ↑
     </button>
@@ -94,6 +104,6 @@
       text="Scroll to Top"
       inlineMode={true}
       offsetX={5}
-    ></Tooltip>
+    />
   {/if}
 </div>

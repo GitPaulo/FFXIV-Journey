@@ -52,6 +52,7 @@
   import {
     disableScrollToTop,
     enableScrollToTop,
+    showProgress,
   } from "$lib/stores/actionBarStore";
   import { openModal } from "$lib/stores/modalManager";
 
@@ -389,7 +390,9 @@
     on:scrollToLastQuest={scrollToLastCheckedQuest}
     on:scrollToTop={scrollToTop}
   />
-  <Progress />
+  {#if $showProgress}
+    <Progress />
+  {/if}
   <Search
     placeholder="Search quest name, description and unlocks..."
     bind:this={searchInput}
@@ -557,14 +560,14 @@
         <div class="flex justify-center">
           <div class="inline-block p-4 bg-white rounded-lg shadow">
             <p class="text-center text-gray-600">No quests found.</p>
+            <img
+              src="moogle_no_results.png"
+              alt="A moogle displaying no results found"
+              loading="lazy"
+              class="mx-auto mt-2 w-3/12 max-w-max min-w-20 object-contain"
+            />
           </div>
         </div>
-        <img
-          src="moogle_no_results.png"
-          alt="A moogle displaying no results found"
-          loading="lazy"
-          class="mx-auto mt-2 w-3/12 max-w-max min-w-20 object-contain"
-        />
       </div>
     {/if}
   </div>

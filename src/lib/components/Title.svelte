@@ -16,7 +16,7 @@
       <h3
         class="hidden sm:block font-bold text-center text-gray-600 mt-4 text-lg"
       >
-        Track your main story journey with the utmost ease.
+        Track your main story quests and share them with friends!
       </h3>
     </div>
   </div>
