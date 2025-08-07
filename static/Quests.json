@@ -15491,7 +15491,7 @@
                             "ContentTypeName": "Dungeons"
                         },
                         {
-                            "Name": "The Interphos",
+                            "Name": "the Interphos",
                             "Image": "ui/icon/112000/112566_hr1.tex",
                             "ContentTypeName": "Trials"
                         }
@@ -15734,9 +15734,170 @@
                     "PreviousQuests": [
                         70841
                     ],
-                    "NextMSQ": null,
+                    "NextMSQ": 70900,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101413_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70900,
+                    "Id": "KinGmi101_05364",
+                    "Name": "Targeted Tragedy",
+                    "Description": "Shale wishes for a moment of your time.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70842
+                    ],
+                    "NextMSQ": 70901,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101431_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70901,
+                    "Id": "KinGmi102_05365",
+                    "Name": "The Endless Choice",
+                    "Description": "Wayakkwe is fearful for her comrade.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70900
+                    ],
+                    "NextMSQ": 70902,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70902,
+                    "Id": "KinGmi103_05366",
+                    "Name": "My Memories and Yours",
+                    "Description": "Though gripped by sadness, Sphene spurs herself to action.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70901
+                    ],
+                    "NextMSQ": 70903,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70903,
+                    "Id": "KinGmi104_05367",
+                    "Name": "A Darkness in the Heart",
+                    "Description": "Shale steels her heart for the work ahead.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70902
+                    ],
+                    "NextMSQ": 70904,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70904,
+                    "Id": "KinGmi105_05368",
+                    "Name": "Preservation Their Purpose",
+                    "Description": "Wuk Lamat assesses her surroundings with grim determination.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70903
+                    ],
+                    "NextMSQ": 70905,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70905,
+                    "Id": "KinGmi106_05369",
+                    "Name": "A Calculated Evolution",
+                    "Description": "Shale is examining the card scanner.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70904
+                    ],
+                    "NextMSQ": 70906,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70906,
+                    "Id": "KinGmi107_05370",
+                    "Name": "One of Our Own",
+                    "Description": "Sphene is resolved to take part in the coming battle.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70905
+                    ],
+                    "NextMSQ": 70907,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70907,
+                    "Id": "KinGmi108_05371",
+                    "Name": "A Terminal Invitation",
+                    "Description": "Y'shtola would proceed to the Meso Terminal.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70906
+                    ],
+                    "NextMSQ": 70908,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/112000/112611_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": "the Meso Terminal",
+                            "Image": "ui/icon/112000/112611_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        },
+                        {
+                            "Name": "the Ageless Necropolis",
+                            "Image": "ui/icon/112000/112612_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
+                },
+                {
+                    "#": 70908,
+                    "Id": "KinGmi109_05372",
+                    "Name": "Blades in Waiting",
+                    "Description": "Sphene wishes to check on the state of the outskirts.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70907
+                    ],
+                    "NextMSQ": 70909,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101432_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70909,
+                    "Id": "KinGmi110_05373",
+                    "Name": "The Promise of Tomorrow",
+                    "Description": "Shale is visibly relieved at your safe return.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70908
+                    ],
+                    "NextMSQ": null,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101433_hr1.tex",
                     "Unlocks": []
                 }
             ]
