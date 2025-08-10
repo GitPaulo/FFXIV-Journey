@@ -27,17 +27,12 @@
   $: {
     // Detach event listeners from the previous target
     if (currentTarget) {
-      console.log(
-        "Removing event listeners from currentTarget:",
-        currentTarget
-      );
       currentTarget.removeEventListener("mouseover", handleMouseOver);
       currentTarget.removeEventListener("mouseleave", handleMouseLeave);
     }
 
     // Attach event listeners to the new target
     if (targetElement) {
-      console.log("Attaching event listeners to targetElement:", targetElement);
       targetElement.addEventListener("mouseover", handleMouseOver);
       targetElement.addEventListener("mouseleave", handleMouseLeave);
       currentTarget = targetElement; // Track the current target for cleanup

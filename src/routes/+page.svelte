@@ -116,6 +116,18 @@
     return "Almost ready... <b>kupo!</b>";
   })();
 
+  /**
+   * Helper function to get the main content container element
+   * @returns The content container element or null if not found
+   */
+  function getContentContainer(): HTMLElement | null {
+    return (
+      (document.getElementsByClassName(
+        "content-container"
+      )[0] as HTMLElement) || null
+    );
+  }
+
   function filterQuests(): void {
     isFiltering = true;
     const allQuests = get(quests);
@@ -124,7 +136,7 @@
     const query = searchQuery.trim().toLowerCase();
     if (!query) {
       filteredQuests.set(allQuests);
-      setTimeout(() => (isFiltering = false), 300); // match fade duration, scuffed?
+      setTimeout(() => (isFiltering = false), 300); // Match fade transition duration
       return;
     }
 
@@ -140,7 +152,7 @@
     );
 
     filteredQuests.set(filteredExpansions);
-    setTimeout(() => (isFiltering = false), 300); // match fade duration
+    setTimeout(() => (isFiltering = false), 300); // Match fade transition duration
   }
 
   const debouncedFilterQuests = debounce(filterQuests, 250);
@@ -221,23 +233,19 @@
     openQuestGroups[expansionName][questGroup] = details.open;
   }
 
-  function detachActionBar() {
+  /**
+   * Set the action bar position (fixed for detached, absolute for attached)
+   * @param isDetached - Whether the action bar should be detached (fixed position)
+   */
+  function setActionBarPosition(isDetached: boolean) {
     const actionBar = document.getElementById("action-bar");
     if (actionBar) {
-      actionBar.style.position = "fixed";
-    }
-  }
-
-  function attachActionBar() {
-    const actionBar = document.getElementById("action-bar");
-    if (actionBar) {
-      actionBar.style.position = "absolute";
+      actionBar.style.position = isDetached ? "fixed" : "absolute";
     }
   }
 
   function scrollToTop() {
-    const contentContainer =
-      document.getElementsByClassName("content-container")[0];
+    const contentContainer = getContentContainer();
     if (!contentContainer) return;
     contentContainer.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -321,7 +329,7 @@
   async function simulateLoading() {
     // Remove artificial delay - loading will complete when all tasks are done
     if (isMobile()) {
-      attachActionBar();
+      setActionBarPosition(false); // Attach action bar for mobile
     }
 
     // The footer is not part of the Svelte app, so we need to manually append it
@@ -351,8 +359,7 @@
   }
 
   function handleScroll() {
-    const contentContainer =
-      document.getElementsByClassName("content-container")[0];
+    const contentContainer = getContentContainer();
     if (!contentContainer) return;
 
     showScrollToTop = contentContainer.scrollTop > 140;
@@ -364,12 +371,12 @@
       enableScrollToTop();
 
       if (isMobile()) return;
-      detachActionBar();
+      setActionBarPosition(true); // Detach action bar
     } else {
       disableScrollToTop();
 
       if (isMobile()) return;
-      attachActionBar();
+      setActionBarPosition(false); // Attach action bar
     }
   }
 
@@ -462,8 +469,7 @@
   }
 
   function updateBreadcrumb(): void {
-    const contentContainer =
-      document.getElementsByClassName("content-container")[0];
+    const contentContainer = getContentContainer();
     if (!contentContainer) return;
 
     const SCROLL_THRESHOLD = 100; // Distance above viewport to consider "out of view"
@@ -573,15 +579,17 @@
     await simulateLoading();
 
     // Events
-    document
-      .getElementsByClassName("content-container")[0]
-      .addEventListener("scroll", handleScroll);
+    const contentContainer = getContentContainer();
+    if (contentContainer) {
+      contentContainer.addEventListener("scroll", handleScroll);
+    }
   });
 
   onDestroy(() => {
-    document
-      .getElementsByClassName("content-container")[0]
-      .removeEventListener("scroll", handleScroll);
+    const contentContainer = getContentContainer();
+    if (contentContainer) {
+      contentContainer.removeEventListener("scroll", handleScroll);
+    }
   });
 
   // Reactively update the background whenever the current expansion changes
@@ -630,7 +638,7 @@
   <!-- Floating Breadcrumb -->
   {#if shouldShowBreadcrumb}
     <div
-      class="sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
+      class="floating-breadcrumb sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
       style="margin-top: -1rem;"
     >
       <div class="flex items-center text-sm text-gray-600 font-medium">
@@ -832,7 +840,7 @@
     </details>
   {/each}
 
-  <!-- No results container (fade hack) -->
+  <!-- No results container -->
   <div class="relative">
     {#if $filteredQuests && $filteredQuests.length === 0}
       <div

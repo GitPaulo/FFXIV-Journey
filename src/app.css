@@ -61,7 +61,8 @@ body {
   z-index: 2;
   padding: 20px;
   height: 84vh;
-  overflow-x: hidden; /* TODO: how to make it look like it pops out? */
+  overflow-x: hidden;
+  /* TODO: how to make it look like it pops out? */
   overflow-y: auto;
   background-color: rgba(244, 246, 244, 0.7);
   border-radius: inherit;
@@ -104,4 +105,23 @@ body {
 
 .particle:nth-child(5n) {
   background-color: #FF4500;
+}
+
+/* Floating breadcrumb responsive positioning */
+@media (max-height: 1160px) {
+  .floating-breadcrumb {
+    top: 20px !important;
+  }
+}
+
+@media (max-height: 965px) {
+  .floating-breadcrumb {
+    top: 20px !important;
+  }
+}
+
+@media (max-width: 639px) {
+  .floating-breadcrumb {
+    top: -15px !important;
+  }
 }
