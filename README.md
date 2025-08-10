@@ -6,8 +6,8 @@ The goal is to provide a **simple but well enough designed** way to track your p
 
 ### Preview
 
-![ffxiv-journey-1](https://github.com/user-attachments/assets/d4878269-3600-4e64-9dda-79aceebcb2d9)
-![ffxiv-journey-2](https://github.com/user-attachments/assets/461c7ebf-842a-4212-81a2-01913a36a22e)
+<img width="1742" height="1139" alt="image" src="https://github.com/user-attachments/assets/24162406-44d4-404a-b044-d088f1830a36" />
+<img width="1740" height="1165" alt="image" src="https://github.com/user-attachments/assets/f222f383-5b66-47c5-9819-fc8184d8b8cc" />
 
 ## Dev
 
