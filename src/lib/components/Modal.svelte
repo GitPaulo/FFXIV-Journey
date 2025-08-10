@@ -25,7 +25,7 @@
       <!-- Close button -->
       {#if $modalState.allowCancel}
         <button
-          class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+          class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           on:click={handleCancel}
         >
           ✕
@@ -42,14 +42,14 @@
       <div class="flex justify-end space-x-4">
         {#if $modalState.allowCancel}
           <button
-            class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded"
+            class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
             on:click={handleCancel}
           >
             {$modalState.cancelLabel}
           </button>
         {/if}
         <button
-          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
           on:click={handleConfirm}
         >
           {$modalState.confirmLabel}

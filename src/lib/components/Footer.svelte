@@ -10,7 +10,7 @@
     target="_blank"
     rel="noopener noreferrer"
     title="GitHub.com/GitPaulo/FFXIV-Journey"
-    class="text-sm text-gray-500 flex items-center space-x-2 mt-2 justify-center"
+    class="text-sm text-gray-500 flex items-center space-x-2 mt-2 justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300"
   >
     <svg
       viewBox="0 0 98 96"

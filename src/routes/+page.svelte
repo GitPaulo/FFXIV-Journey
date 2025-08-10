@@ -406,7 +406,7 @@
       open={openExpansions[expansion.name]}
     >
       <summary
-        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         {expansion.name}
         <!-- draw icon based on complete expansion progress or not -->
@@ -423,7 +423,7 @@
         >
           {#if questGroup !== "Main"}
             <summary
-              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.01] hover:bg-gray-100 hover:shadow-md"
+              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.01] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {questGroup}
               <div class="text-right">
@@ -436,7 +436,7 @@
             {#each expansion.quests[questGroup] as quest (quest["#"])}
               <li
                 id={`quest-${quest["#"]}`}
-                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-300"
+                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-500"
                 class:border-2={highlightedQuestNumber === quest["#"]}
                 class:border-blue-600={highlightedQuestNumber === quest["#"]}
                 class:animate-flicker={highlightedQuestNumber === quest["#"]}
@@ -444,7 +444,7 @@
                 <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                   <input
                     type="checkbox"
-                    class="form-checkbox h-6 w-6 text-green-500 bg-gray-100 border-gray-300 rounded focus:ring-2 focus:ring-blue-300 focus:bg-blue-50 checked:bg-blue-100 transition-color"
+                    class="form-checkbox h-6 w-6 text-blue-500 bg-gray-100 border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:bg-blue-50 checked:bg-blue-100 transition-all duration-300"
                     bind:checked={$completedQuests[quest["#"]]}
                     on:change={(e) => handleCheckboxChange(e, quest)}
                   />
@@ -458,7 +458,7 @@
                         <a
                           href={getGarlandToolsQuestURLByID(quest["#"])}
                           target="_blank"
-                          class="text-blue-500 underline hover:text-blue-600"
+                          class="text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300"
                         >
                           (View on Garland Tools)
                         </a>
@@ -495,7 +495,7 @@
                   <a
                     href={getGarlandToolsQuestURLByID(quest["#"])}
                     target="_blank"
-                    class="inline-flex items-center px-4 py-2 bg-gray-200 text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-300 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 whitespace-nowrap"
+                    class="inline-flex items-center px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap"
                   >
                     <svg
                       class="mr-1"
