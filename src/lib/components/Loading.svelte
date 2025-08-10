@@ -1,3 +1,8 @@
+<script lang="ts">
+  export let message: string =
+    "Please wait, i'm preparing your quests... <b>kupo!</b>";
+</script>
+
 <div class="bg-white p-4 rounded-lg shadow-md max-w-max mx-auto">
   <img
     src="loading.gif"
@@ -6,6 +11,6 @@
     style="margin-left: 7rem;"
   />
   <p class="text-center text-gray-600 p-3">
-    Please wait, i'm preparing your quests... <b>kupo!</b>
+    {@html message}
   </p>
 </div>

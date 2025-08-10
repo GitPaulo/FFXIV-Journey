@@ -71,6 +71,26 @@
   let searchInput: SvelteComponent<Search>;
   let isFiltering = false;
 
+  // Loading states
+  // Yes, i know this is a gimmick...
+  let isQuestsInitialized = false;
+  let isProgressInitialized = false;
+  let isBackgroundInitialized = false;
+  let isComponentsInitialized = false;
+  $: isFullyLoaded =
+    isQuestsInitialized &&
+    isProgressInitialized &&
+    isBackgroundInitialized &&
+    isComponentsInitialized;
+  $: loadingMessage = (() => {
+    if (!isQuestsInitialized) return "Loading quest data... <b>kupo!</b>";
+    if (!isProgressInitialized) return "Initializing progress... <b>kupo!</b>";
+    if (!isBackgroundInitialized)
+      return "Setting up backgrounds... <b>kupo!</b>";
+    if (!isComponentsInitialized) return "Preparing components... <b>kupo!</b>";
+    return "Almost ready... <b>kupo!</b>";
+  })();
+
   function filterQuests(): void {
     isFiltering = true;
     const allQuests = get(quests);
@@ -151,6 +171,29 @@
         openQuestGroups[expansion.name][questGroup] = false;
       }
     }
+  }
+
+  function handleExpansionToggle(expansionName: string, event: Event) {
+    const details = event.target as HTMLDetailsElement;
+    openExpansions[expansionName] = details.open;
+
+    // If closing the expansion, also close all its quest groups
+    if (!details.open) {
+      for (const questGroup of Object.keys(
+        openQuestGroups[expansionName] || {}
+      )) {
+        openQuestGroups[expansionName][questGroup] = false;
+      }
+    }
+  }
+
+  function handleQuestGroupToggle(
+    expansionName: string,
+    questGroup: string,
+    event: Event
+  ) {
+    const details = event.target as HTMLDetailsElement;
+    openQuestGroups[expansionName][questGroup] = details.open;
   }
 
   function detachActionBar() {
@@ -246,26 +289,40 @@
     }
 
     updateLastCheckedQuest();
+    updateCurrentExpansion();
     updateBackground();
   }
 
-  function simulateLoading() {
-    setTimeout(() => {
+  async function simulateLoading() {
+    // Remove artificial delay - loading will complete when all tasks are done
+    if (isMobile()) {
+      attachActionBar();
+    }
+
+    // The footer is not part of the Svelte app, so we need to manually append it
+    if (!document.getElementById("footer")) {
+      document?.body?.appendChild(
+        new Footer({
+          target: document.body,
+        }).$$.root.firstChild
+      );
+    }
+
+    // Small delay to show component loading state
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    isComponentsInitialized = true;
+  }
+
+  function completeLoading() {
+    // Only hide loading when everything is actually ready
+    if (isFullyLoaded) {
       isLoadingQuests.set(false);
+    }
+  }
 
-      if (isMobile()) {
-        attachActionBar();
-      }
-
-      // The footer is not part of the Svelte app, so we need to manually append it
-      if (!document.getElementById("footer")) {
-        document?.body?.appendChild(
-          new Footer({
-            target: document.body,
-          }).$$.root.firstChild
-        );
-      }
-    }, 500);
+  // Watch for loading completion
+  $: if (isFullyLoaded) {
+    completeLoading();
   }
 
   function handleScroll() {
@@ -325,25 +382,40 @@
     }
 
     initAllExpansionProgress();
+
+    await new Promise((resolve) => setTimeout(resolve, 250));
+    isProgressInitialized = true;
   }
 
-  function initQuests(loadedQuests: ExpansionsQuests) {
+  async function initQuests(loadedQuests: ExpansionsQuests) {
     quests.set(loadedQuests);
     filteredQuests.set(loadedQuests);
 
     closeExpansionAndQuestGroups();
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+    isQuestsInitialized = true;
+  }
+
+  async function initBackground() {
+    updateBackground();
+
+    await new Promise((resolve) => setTimeout(resolve, 220));
+    isBackgroundInitialized = true;
   }
 
   onMount(async () => {
     const loadedQuests = data.quests;
-    initQuests(loadedQuests);
+
+    // Initialize each component and mark completion with small delays
+    await initQuests(loadedQuests);
     await initProgress();
 
     updateLastCheckedQuest();
     updateCurrentExpansion();
-    updateBackground();
+    await initBackground();
 
-    simulateLoading();
+    await simulateLoading();
 
     // Events
     document
@@ -382,7 +454,7 @@
 
 <Title />
 {#if $isLoadingQuests}
-  <Loading />
+  <Loading message={loadingMessage} />
 {:else}
   <ActionBar
     lastCheckedQuestId={lastCheckedQuestNumber}
@@ -404,26 +476,38 @@
       transition:fade
       class="relative mb-8 overflow-visible"
       open={openExpansions[expansion.name]}
+      on:toggle={(event) => handleExpansionToggle(expansion.name, event)}
     >
       <summary
-        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         {expansion.name}
-        <!-- draw icon based on complete expansion progress or not -->
         {#if $progress[expansion.name].percent === 100}
-          <img src="ffxiv_complete.webp" alt="Complete" class="w-6 h-6" />
+          <img
+            src="ffxiv_complete.webp"
+            alt="Complete"
+            class="w-6 h-6"
+            title="All quests completed"
+          />
         {:else}
-          <img src="ffxiv_incomplete.webp" alt="Incomplete" class="w-6 h-6" />
+          <img
+            src="ffxiv_incomplete.webp"
+            alt="Incomplete"
+            class="w-6 h-6"
+            title="In progress"
+          />
         {/if}
       </summary>
       {#each Object.keys(expansion.quests) as questGroup}
         <details
           class="ml-6 mb-6 pl-6"
           open={openQuestGroups[expansion.name][questGroup]}
+          on:toggle={(event) =>
+            handleQuestGroupToggle(expansion.name, questGroup, event)}
         >
           {#if questGroup !== "Main"}
             <summary
-              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-transform transform hover:scale-[1.01] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-all duration-300 transform hover:scale-[1.01] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {questGroup}
               <div class="text-right">
@@ -491,7 +575,7 @@
                     class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm hidden sm:block"
                   />
                 </div>
-                <div class="ml-auto flex items-center hidden sm:block">
+                <div class="ml-auto hidden sm:flex sm:items-center">
                   <a
                     href={getGarlandToolsQuestURLByID(quest["#"])}
                     target="_blank"

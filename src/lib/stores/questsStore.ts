@@ -102,9 +102,8 @@ export function updateCurrentExpansion() {
     null
   );
 
-  if (lastCompletedExpansion) {
-    currentExpansion.set(lastCompletedExpansion);
-  }
+  // Set the current expansion, or clear it if no quests are completed
+  currentExpansion.set(lastCompletedExpansion || "");
 }
 
 // Get the last checked quest
