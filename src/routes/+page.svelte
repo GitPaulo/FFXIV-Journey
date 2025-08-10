@@ -77,6 +77,31 @@
   let isProgressInitialized = false;
   let isBackgroundInitialized = false;
   let isComponentsInitialized = false;
+
+  // Breadcrumb tracking
+  let currentVisibleExpansion = "";
+  let currentVisibleQuestGroup = "";
+  let showBreadcrumb = false;
+
+  // Hover override for breadcrumbs
+  let hoverOverrideExpansion = "";
+  let hoverOverrideQuestGroup = "";
+  let isHoveringQuest = false;
+
+  // Computed breadcrumb values (hover takes precedence over scroll-based)
+  $: displayExpansion = isHoveringQuest
+    ? hoverOverrideExpansion
+    : currentVisibleExpansion;
+  $: displayQuestGroup = isHoveringQuest
+    ? hoverOverrideQuestGroup
+    : currentVisibleQuestGroup;
+
+  // Breadcrumb visibility logic:
+  // - Never show during search/filtering
+  // - Show when we've scrolled past headers OR when hovering
+  // - This prevents hover breadcrumbs when headers are still visible
+  $: shouldShowBreadcrumb = !searchQuery && !isFiltering && showBreadcrumb;
+
   $: isFullyLoaded =
     isQuestsInitialized &&
     isProgressInitialized &&
@@ -332,6 +357,9 @@
 
     showScrollToTop = contentContainer.scrollTop > 140;
 
+    // Update breadcrumb with simple scroll detection
+    updateBreadcrumb();
+
     if (showScrollToTop) {
       enableScrollToTop();
 
@@ -343,6 +371,133 @@
       if (isMobile()) return;
       attachActionBar();
     }
+  }
+
+  function handleQuestHover(
+    quest: Quest,
+    expansionName: string,
+    questGroupName: string
+  ): void {
+    isHoveringQuest = true;
+    hoverOverrideExpansion = expansionName;
+
+    // Format quest group name, removing expansion prefix
+    const formattedQuestGroup = formatIdToTitle(
+      `questgroup-${questGroupName.toLowerCase().replace(/\s/g, "-")}`,
+      "questgroup"
+    );
+    hoverOverrideQuestGroup =
+      formattedQuestGroup.toLowerCase() !== "main" ? formattedQuestGroup : "";
+  }
+
+  function handleQuestHoverEnd(): void {
+    isHoveringQuest = false;
+    hoverOverrideExpansion = "";
+    hoverOverrideQuestGroup = "";
+  }
+
+  function formatIdToTitle(
+    id: string,
+    type: "expansion" | "questgroup"
+  ): string {
+    const cleaned = id
+      .replace(`${type}-`, "")
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
+
+    // For quest groups, remove expansion name prefixes to keep breadcrumbs concise
+    if (type === "questgroup") {
+      const EXPANSION_PREFIXES = [
+        "A Realm Reborn ",
+        "Heavensward ",
+        "Stormblood ",
+        "Shadowbringers ",
+        "Endwalker ",
+        "Dawntrail ",
+      ];
+
+      for (const prefix of EXPANSION_PREFIXES) {
+        if (cleaned.startsWith(prefix)) {
+          return cleaned.replace(prefix, "");
+        }
+      }
+    }
+
+    return cleaned;
+  }
+
+  function isElementOutOfView(element: Element, threshold: number): boolean {
+    return element.getBoundingClientRect().top < -threshold;
+  }
+
+  function findActiveQuestGroup(
+    expansionElement: HTMLElement,
+    threshold: number
+  ): string {
+    const questGroupHeaders = expansionElement.querySelectorAll(
+      '[id^="questgroup-"] > summary'
+    );
+
+    let lastActiveQuestGroup = "";
+
+    // Check all quest groups and keep track of the last one that's out of view
+    for (const header of questGroupHeaders) {
+      if (isElementOutOfView(header, threshold)) {
+        const questGroupElement = header.closest(
+          '[id^="questgroup-"]'
+        ) as HTMLElement;
+        const questGroupName = formatIdToTitle(
+          questGroupElement.id,
+          "questgroup"
+        );
+
+        // Skip "Main" quest groups as they don't provide useful breadcrumb context
+        if (questGroupName.toLowerCase() !== "main") {
+          lastActiveQuestGroup = questGroupName;
+        }
+      }
+    }
+
+    return lastActiveQuestGroup;
+  }
+
+  function updateBreadcrumb(): void {
+    const contentContainer =
+      document.getElementsByClassName("content-container")[0];
+    if (!contentContainer) return;
+
+    const SCROLL_THRESHOLD = 100; // Distance above viewport to consider "out of view"
+
+    let currentExpansion = "";
+    let currentQuestGroup = "";
+    let hasScrolledPastAnyHeader = false;
+
+    // Find the most recent expansion header that has scrolled out of view
+    const expansionHeaders = document.querySelectorAll(
+      '[id^="expansion-"] > summary'
+    );
+
+    for (const header of expansionHeaders) {
+      if (isElementOutOfView(header, SCROLL_THRESHOLD)) {
+        hasScrolledPastAnyHeader = true;
+
+        const expansionElement = header.closest(
+          '[id^="expansion-"]'
+        ) as HTMLElement;
+        currentExpansion = formatIdToTitle(expansionElement.id, "expansion");
+
+        // Find the active quest group within this expansion
+        currentQuestGroup = findActiveQuestGroup(
+          expansionElement,
+          SCROLL_THRESHOLD
+        );
+      }
+    }
+
+    // Update component state with discovered breadcrumb context
+    currentVisibleExpansion = currentExpansion;
+    currentVisibleQuestGroup = currentQuestGroup;
+    showBreadcrumb = hasScrolledPastAnyHeader && currentExpansion !== "";
   }
 
   function handleCheckboxChange(event: Event, quest: Quest) {
@@ -471,8 +626,48 @@
     bind:value={searchQuery}
     on:input={handleSearchInput}
   />
+
+  <!-- Floating Breadcrumb -->
+  {#if shouldShowBreadcrumb}
+    <div
+      class="sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
+      style="margin-top: -1rem;"
+    >
+      <div class="flex items-center text-sm text-gray-600 font-medium">
+        <svg
+          class="w-4 h-4 mr-2 text-gray-400"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span class="text-blue-600 font-semibold">{displayExpansion}</span>
+        {#if displayQuestGroup}
+          <svg
+            class="w-3 h-3 mx-2 text-gray-400"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <span class="text-gray-700">{displayQuestGroup}</span>
+        {/if}
+      </div>
+    </div>
+  {/if}
+
+  <!-- Expansion Details -->
   {#each $filteredQuests as expansion}
     <details
+      id="expansion-{expansion.name.replace(/\s/g, '-').toLowerCase()}"
       transition:fade
       class="relative mb-8 overflow-visible"
       open={openExpansions[expansion.name]}
@@ -500,6 +695,9 @@
       </summary>
       {#each Object.keys(expansion.quests) as questGroup}
         <details
+          id="questgroup-{expansion.name
+            .replace(/\s/g, '-')
+            .toLowerCase()}-{questGroup.replace(/\s/g, '-').toLowerCase()}"
           class="ml-6 mb-6 pl-6"
           open={openQuestGroups[expansion.name][questGroup]}
           on:toggle={(event) =>
@@ -524,6 +722,9 @@
                 class:border-2={highlightedQuestNumber === quest["#"]}
                 class:border-blue-600={highlightedQuestNumber === quest["#"]}
                 class:animate-flicker={highlightedQuestNumber === quest["#"]}
+                on:mouseenter={() =>
+                  handleQuestHover(quest, expansion.name, questGroup)}
+                on:mouseleave={handleQuestHoverEnd}
               >
                 <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                   <input
