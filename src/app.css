@@ -115,13 +115,14 @@ body {
 }
 
 /* Floating breadcrumb responsive positioning */
+/* Scuffed but works */
 @media (max-height: 1160px) {
   .floating-breadcrumb {
     top: 10px !important;
   }
 }
 
-@media (max-height: 900px) {
+@media (max-height: 1000px) {
   .floating-breadcrumb {
     top: 30px !important;
   }
