@@ -244,6 +244,35 @@
     }
   }
 
+  function scrollToExpansion(expansionName: string) {
+    if (!expansionName) return;
+    
+    // Clear search if it exists
+    if (searchQuery) {
+      searchQuery = "";
+      searchInput.clear();
+      filterQuests();
+    }
+
+    // Wait for DOM updates before proceeding
+    tick().then(() => {
+      const expansionId = `expansion-${expansionName.replace(/\s/g, '-').toLowerCase()}`;
+      const expansionElement = document.getElementById(expansionId);
+      if (!expansionElement) return;
+
+      // Open the expansion details if it's closed
+      if (expansionElement instanceof HTMLDetailsElement && !expansionElement.open) {
+        expansionElement.open = true;
+        openExpansions[expansionName] = true;
+      }
+
+      // Scroll to the expansion
+      tick().then(() => {
+        expansionElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
+
   function scrollToTop() {
     const contentContainer = getContentContainer();
     if (!contentContainer) return;
@@ -653,7 +682,12 @@
             clip-rule="evenodd"
           />
         </svg>
-        <span class="text-blue-600 font-semibold">{displayExpansion}</span>
+        <button
+          on:click={() => scrollToExpansion(displayExpansion)}
+          class="text-blue-600 font-semibold hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-colors duration-200"
+        >
+          {displayExpansion}
+        </button>
         {#if displayQuestGroup}
           <svg
             class="w-3 h-3 mx-2 text-gray-400"

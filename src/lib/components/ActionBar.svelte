@@ -140,15 +140,17 @@
     <button
       bind:this={tooltipTargetButton}
       on:click={onScrollToTopClicked}
-      class="inline-flex items-center px-1 py-1 sm:px-2 sm:py-1 bg-white text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap ml-1 sm:ml-2 animate-pulse"
+      class="inline-flex items-center px-2 py-1 sm:px-2 sm:py-1 bg-white text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap ml-1 sm:ml-2 mobile-flash sm:animate-pulse"
     >
-      <svg width="28px" height="28px" viewBox="0 0 40 40"
-        ><path
-          fill="#464455"
-          fill-rule="nonzero"
-          d="M20 12l6 5.656-1.5 1.414-3.44-3.242V28h-2.12V15.828L15.5 19.07 14 17.656z"
-        /></svg
-      >
+      <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 5L12 19M12 5L6 11M12 5L18 11"
+          stroke="#464455"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
     </button>
     <!-- Tooltip for Scroll to Top -->
     <Tooltip
