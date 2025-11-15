@@ -70,6 +70,7 @@
   let tooltipTarget: HTMLElement | null = null;
   let searchInput: SvelteComponent<Search>;
   let isFiltering = false;
+  let lastBackgroundExpansion: string = "";
 
   // Loading states
   // Yes, i know this is a gimmick...
@@ -246,7 +247,7 @@
 
   function scrollToExpansion(expansionName: string) {
     if (!expansionName) return;
-    
+
     // Clear search if it exists
     if (searchQuery) {
       searchQuery = "";
@@ -256,12 +257,15 @@
 
     // Wait for DOM updates before proceeding
     tick().then(() => {
-      const expansionId = `expansion-${expansionName.replace(/\s/g, '-').toLowerCase()}`;
+      const expansionId = `expansion-${expansionName.replace(/\s/g, "-").toLowerCase()}`;
       const expansionElement = document.getElementById(expansionId);
       if (!expansionElement) return;
 
       // Open the expansion details if it's closed
-      if (expansionElement instanceof HTMLDetailsElement && !expansionElement.open) {
+      if (
+        expansionElement instanceof HTMLDetailsElement &&
+        !expansionElement.open
+      ) {
         expansionElement.open = true;
         openExpansions[expansionName] = true;
       }
@@ -328,14 +332,24 @@
   }
 
   function updateBackground() {
-    const bgImage = get(currentExpansion)
-      ? `${base}/background_${get(currentExpansion).replace(/\s/g, "").toLowerCase()}.webp`
-      : ""; // No background is default
-
     const bgElement = document.getElementById("background");
-    if (bgElement) {
-      bgElement.style.backgroundImage = `url('${bgImage}')`;
-    }
+    if (!bgElement) return;
+
+    const expansion = get(currentExpansion);
+    const progressVisible = get(showProgress);
+
+    // Determine target background
+    const bgImage =
+      progressVisible && expansion
+        ? `url('${base}/background_${expansion.replace(/\s/g, "").toLowerCase()}.webp')`
+        : "";
+
+    // Fade transition
+    bgElement.style.opacity = "0";
+    setTimeout(() => {
+      bgElement.style.backgroundImage = bgImage;
+      bgElement.style.opacity = bgImage ? "0.9" : "0";
+    }, 300);
   }
 
   function updateLastCheckedQuest() {
@@ -612,8 +626,8 @@
     }
   });
 
-  // Reactively update the background whenever the current expansion changes
-  $: updateBackground();
+  // Reactively update the background whenever the current expansion or showProgress changes
+  $: $showProgress, $currentExpansion, updateBackground();
 </script>
 
 <svelte:head>
@@ -710,20 +724,22 @@
         class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         {expansion.name}
-        {#if $progress[expansion.name].percent === 100}
-          <img
-            src="ffxiv_complete.webp"
-            alt="Complete"
-            class="w-6 h-6"
-            title="All quests completed"
-          />
-        {:else}
-          <img
-            src="ffxiv_incomplete.webp"
-            alt="Incomplete"
-            class="w-6 h-6"
-            title="In progress"
-          />
+        {#if $showProgress}
+          {#if $progress[expansion.name].percent === 100}
+            <img
+              src="ffxiv_complete.webp"
+              alt="Complete"
+              class="w-6 h-6"
+              title="All quests completed"
+            />
+          {:else}
+            <img
+              src="ffxiv_incomplete.webp"
+              alt="Incomplete"
+              class="w-6 h-6"
+              title="In progress"
+            />
+          {/if}
         {/if}
       </summary>
       {#each Object.keys(expansion.quests) as questGroup}
@@ -741,10 +757,13 @@
               class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-all duration-300 transform hover:scale-[1.01] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {questGroup}
-              <div class="text-right">
-                {$groupProgress[expansion.name][questGroup]
-                  .completed}/{$groupProgress[expansion.name][questGroup].total}
-              </div>
+              {#if $showProgress}
+                <div class="text-right">
+                  {$groupProgress[expansion.name][questGroup]
+                    .completed}/{$groupProgress[expansion.name][questGroup]
+                    .total}
+                </div>
+              {/if}
             </summary>
           {/if}
           <ul class="space-y-4">
@@ -759,14 +778,16 @@
                   handleQuestHover(quest, expansion.name, questGroup)}
                 on:mouseleave={handleQuestHoverEnd}
               >
-                <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
-                  <input
-                    type="checkbox"
-                    class="form-checkbox h-6 w-6 text-blue-500 bg-gray-100 border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:bg-blue-50 checked:bg-blue-100 transition-all duration-300"
-                    bind:checked={$completedQuests[quest["#"]]}
-                    on:change={(e) => handleCheckboxChange(e, quest)}
-                  />
-                </div>
+                {#if $showProgress}
+                  <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
+                    <input
+                      type="checkbox"
+                      class="form-checkbox h-6 w-6 text-blue-500 bg-gray-100 border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:bg-blue-50 checked:bg-blue-100 transition-all duration-300"
+                      bind:checked={$completedQuests[quest["#"]]}
+                      on:change={(e) => handleCheckboxChange(e, quest)}
+                    />
+                  </div>
+                {/if}
 
                 <div class="flex-grow sm:ml-4 text-center sm:text-left">
                   <div class="flex items-center">
@@ -782,7 +803,7 @@
                         </a>
                       {/if}
                     </p>
-                    {#if quest["#"] === lastCheckedQuestNumber}
+                    {#if $showProgress && quest["#"] === lastCheckedQuestNumber}
                       <img
                         bind:this={tooltipTarget}
                         src="moogle_current_quest.png"
