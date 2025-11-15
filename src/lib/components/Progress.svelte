@@ -80,12 +80,11 @@
       on:click={handleBarInteraction}
     >
       FINAL FANTASY XIV
-      <span class="inline sm:hidden ml-1">({totalCompleted}/{totalQuests})</span>
+      <span class="inline sm:hidden ml-1">({totalCompleted}/{totalQuests})</span
+      >
     </button>
   {:else}
-    <p class="font-semibold text-gray-700 text-center">
-      FINAL FANTASY XIV
-    </p>
+    <p class="font-semibold text-gray-700 text-center">FINAL FANTASY XIV</p>
   {/if}
 
   <!-- Total Progress Bar -->
@@ -95,7 +94,9 @@
       : ''}"
     role="button"
     tabindex="0"
-    title={mobile ? "Click to expand details" : "Hover and wait to show expansions"}
+    title={mobile
+      ? "Click to expand details"
+      : "Hover and wait to show expansions"}
     aria-label={mobile
       ? "Click to expand details"
       : "Click to toggle rainbow, hover to expand details"}
