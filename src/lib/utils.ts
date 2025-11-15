@@ -45,5 +45,8 @@ export function createMagicParticles(inputElement: HTMLInputElement) {
  * @returns boolean
  */
 export function isMobile() {
-  return window.matchMedia("(max-width: 639px)").matches; // Tailwind's 'sm' breakpoint
+  // Check for mobile width OR small height (landscape mode on mobile)
+  const isMobileWidth = window.matchMedia("(max-width: 639px)").matches;
+  const isLandscapeMobile = window.matchMedia("(max-width: 1024px) and (max-height: 600px)").matches;
+  return isMobileWidth || isLandscapeMobile;
 }

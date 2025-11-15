@@ -361,15 +361,6 @@
       setActionBarPosition(false); // Attach action bar for mobile
     }
 
-    // The footer is not part of the Svelte app, so we need to manually append it
-    if (!document.getElementById("footer")) {
-      document?.body?.appendChild(
-        new Footer({
-          target: document.body,
-        }).$$.root.firstChild
-      );
-    }
-
     // Small delay to show component loading state
     await new Promise((resolve) => setTimeout(resolve, 200));
     isComponentsInitialized = true;
@@ -899,3 +890,5 @@
     {/if}
   </div>
 {/if}
+
+<Footer />

@@ -56,24 +56,17 @@
     on:input={handleInput}
   />
   <svg
-    class="absolute top-1/2 left-3 transform -translate-y-1/2 text-gray-300 pointer-events-none"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    version="1.1"
+    class="absolute top-1/2 left-3 transform -translate-y-1/2 fill-gray-300 pointer-events-none"
     width="24px"
     height="24px"
     viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
+    ><path
+      d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M9.3 19H7L14.7 5H17L9.3 19Z"
+      stroke-linejoin="round"
+      stroke-linecap="round"
+    /></svg
   >
-    <path
-      d="M13.2939 7.17041L11.9998 12L10.7058 16.8297"
-      stroke="#333333"
-      stroke-width="1.5"
-      stroke-linecap="round"
-    />
-    <path
-      d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
-      stroke="#333333"
-      stroke-width="1.5"
-      stroke-linecap="round"
-    />
-  </svg>
 </div>
