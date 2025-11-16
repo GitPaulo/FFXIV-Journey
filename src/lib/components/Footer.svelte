@@ -16,7 +16,11 @@
   });
 </script>
 
-<div bind:this={footerElement} id="footer" class="hidden md:block fixed bottom-4 left-0 right-0 text-sm text-gray-400 text-center px-4 pointer-events-none z-50">
+<div
+  bind:this={footerElement}
+  id="footer"
+  class="hidden md:block fixed bottom-4 left-0 right-0 text-sm text-gray-400 text-center px-4 pointer-events-none z-50"
+>
   <div class="inline-flex items-center gap-3 pointer-events-auto">
     <a
       href="https://GitHub.com/GitPaulo/FFXIV-Journey"
@@ -39,7 +43,7 @@
         />
       </svg>
     </a>
-    <div id="copyright" class="text-sm text-gray-400 text-left">
+    <div id="copyright" class="text-sm text-gray-800 text-left">
       FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
       <br />
       FINAL FANTASY XIV © SQUARE ENIX CO., LTD.

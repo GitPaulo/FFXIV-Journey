@@ -791,18 +791,26 @@
 
                 <div class="flex-grow sm:ml-4 text-center sm:text-left">
                   <div class="flex items-center">
-                    <p class="font-bold text-lg sm:text-xl text-gray-800">
-                      {quest.Name}
-                      {#if isMobile()}
-                        <a
-                          href={getGarlandToolsQuestURLByID(quest["#"])}
-                          target="_blank"
-                          class="text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300"
-                        >
-                          (View on Garland Tools)
-                        </a>
-                      {/if}
-                    </p>
+                    <details class="inline">
+                      <summary
+                        class="font-bold text-lg sm:text-xl text-gray-800 cursor-pointer list-none"
+                        title="Show ID"
+                      >
+                        {quest.Name}
+                      </summary>
+                      <p class="text-sm text-gray-500 mt-1 hidden sm:block">
+                        ID: {quest.Id}
+                      </p>
+                    </details>
+                    {#if isMobile()}
+                      <a
+                        href={getGarlandToolsQuestURLByID(quest["#"])}
+                        target="_blank"
+                        class="text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 ml-2"
+                      >
+                        (View on Garland Tools)
+                      </a>
+                    {/if}
                     {#if $showProgress && quest["#"] === lastCheckedQuestNumber}
                       <img
                         bind:this={tooltipTarget}
@@ -817,9 +825,6 @@
                       />
                     {/if}
                   </div>
-                  <p class="text-sm text-gray-500 mt-1 hidden sm:block">
-                    ID: {quest.Id}
-                  </p>
                   <p class="text-sm text-gray-400 mt-1 hidden sm:block">
                     <i>"{sanitizeFFXIVMarkUp(quest.Description)}"</i>
                   </p>
