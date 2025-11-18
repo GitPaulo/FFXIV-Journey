@@ -76,11 +76,14 @@
   aria-label="Progress statistics"
 >
   {#if mobile}
-    <p class="font-semibold text-gray-700 text-center">
+    <button
+      class="w-full font-semibold text-gray-700 text-center cursor-pointer active:opacity-70"
+      on:click={handleBarClick}
+    >
       FINAL FANTASY XIV
       <span class="inline sm:hidden ml-1">({totalCompleted}/{totalQuests})</span
       >
-    </p>
+    </button>
   {:else}
     <p
       class="font-semibold text-gray-700 text-center flex items-center justify-center gap-2"
@@ -117,6 +120,7 @@
       ? "Click to expand details"
       : "Hold to show progress and click to pin"}
     on:click={handleBarClick}
+    on:keydown={(e) => e.key === "Enter" && handleBarClick()}
     on:dblclick={handleBarDoubleClick}
     on:mouseenter={handleBarMouseEnter}
     on:mouseleave={handleBarMouseLeave}
