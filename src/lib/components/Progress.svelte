@@ -10,42 +10,13 @@
   let totalCompleted = 0;
   let totalQuests = 0;
   let totalPercent = 0;
-  let showRainbow = false;
   let showExpanded = false;
-  let isHovering = false;
-  let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
   let mobile = false;
-  let isPinned = false;
 
-  function handleBarClick() {
-    if (mobile) {
-      showExpanded = !showExpanded;
-    } else {
-      isPinned = !isPinned;
-      if (isPinned) showExpanded = true;
-    }
-  }
+  $: showRainbow = totalPercent === 100;
 
-  function handleBarDoubleClick() {
-    if (!mobile) showRainbow = !showRainbow;
-  }
-
-  function handleBarMouseEnter() {
-    if (mobile) return;
-    isHovering = true;
-    hoverTimeout = setTimeout(() => {
-      showExpanded = true;
-    }, 1000);
-  }
-
-  function handleBarMouseLeave() {
-    if (mobile || isPinned) return;
-    isHovering = false;
-    if (hoverTimeout) {
-      clearTimeout(hoverTimeout);
-      hoverTimeout = null;
-    }
-    showExpanded = false;
+  function toggleExpanded() {
+    showExpanded = !showExpanded;
   }
 
   onMount(() => {
@@ -75,55 +46,47 @@
   role="region"
   aria-label="Progress statistics"
 >
-  {#if mobile}
-    <button
-      class="w-full font-semibold text-gray-700 text-center cursor-pointer active:opacity-70"
-      on:click={handleBarClick}
-    >
-      FINAL FANTASY XIV
-      <span class="inline sm:hidden ml-1">({totalCompleted}/{totalQuests})</span
+  <div class="flex items-center justify-center gap-2">
+    {#if mobile}
+      <button
+        class="font-semibold text-gray-700 text-center cursor-pointer active:opacity-70"
+        on:click={toggleExpanded}
       >
-    </button>
-  {:else}
-    <p
-      class="font-semibold text-gray-700 text-center flex items-center justify-center gap-2"
-    >
-      FINAL FANTASY XIV
-      {#if showExpanded}
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          class="{isPinned
-            ? 'text-blue-500'
-            : 'text-gray-800'} transition-colors duration-300"
+        FINAL FANTASY XIV
+        <span class="inline sm:hidden ml-1"
+          >({totalCompleted}/{totalQuests})</span
         >
-          <path
-            d="M19.1835 7.80516L16.2188 4.83755C14.1921 2.8089 13.1788 1.79457 12.0904 2.03468C11.0021 2.2748 10.5086 3.62155 9.5217 6.31506L8.85373 8.1381C8.59063 8.85617 8.45908 9.2152 8.22239 9.49292C8.11619 9.61754 7.99536 9.72887 7.86251 9.82451C7.56644 10.0377 7.19811 10.1392 6.46145 10.3423C4.80107 10.8 3.97088 11.0289 3.65804 11.5721C3.5228 11.8069 3.45242 12.0735 3.45413 12.3446C3.45809 12.9715 4.06698 13.581 5.28476 14.8L6.69935 16.2163L2.22345 20.6964C1.92552 20.9946 1.92552 21.4782 2.22345 21.7764C2.52138 22.0746 3.00443 22.0746 3.30236 21.7764L7.77841 17.2961L9.24441 18.7635C10.4699 19.9902 11.0827 20.6036 11.7134 20.6045C11.9792 20.6049 12.2404 20.5358 12.4713 20.4041C13.0192 20.0914 13.2493 19.2551 13.7095 17.5825C13.9119 16.8472 14.013 16.4795 14.2254 16.1835C14.3184 16.054 14.4262 15.9358 14.5468 15.8314C14.8221 15.593 15.1788 15.459 15.8922 15.191L17.7362 14.4981C20.4 13.4973 21.7319 12.9969 21.9667 11.9115C22.2014 10.826 21.1954 9.81905 19.1835 7.80516Z"
-            fill="currentColor"
-          />
-        </svg>
-      {/if}
-    </p>
-  {/if}
+      </button>
+    {:else}
+      <p class="font-semibold text-gray-700 text-center">FINAL FANTASY XIV</p>
+    {/if}
+
+    {#if showExpanded && !mobile}
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        class="text-blue-500 transition-colors duration-300"
+      >
+        <title>Pinned</title>
+        <path
+          d="M19.1835 7.80516L16.2188 4.83755C14.1921 2.8089 13.1788 1.79457 12.0904 2.03468C11.0021 2.2748 10.5086 3.62155 9.5217 6.31506L8.85373 8.1381C8.59063 8.85617 8.45908 9.2152 8.22239 9.49292C8.11619 9.61754 7.99536 9.72887 7.86251 9.82451C7.56644 10.0377 7.19811 10.1392 6.46145 10.3423C4.80107 10.8 3.97088 11.0289 3.65804 11.5721C3.5228 11.8069 3.45242 12.0735 3.45413 12.3446C3.45809 12.9715 4.06698 13.581 5.28476 14.8L6.69935 16.2163L2.22345 20.6964C1.92552 20.9946 1.92552 21.4782 2.22345 21.7764C2.52138 22.0746 3.00443 22.0746 3.30236 21.7764L7.77841 17.2961L9.24441 18.7635C10.4699 19.9902 11.0827 20.6036 11.7134 20.6045C11.9792 20.6049 12.2404 20.5358 12.4713 20.4041C13.0192 20.0914 13.2493 19.2551 13.7095 17.5825C13.9119 16.8472 14.013 16.4795 14.2254 16.1835C14.3184 16.054 14.4262 15.9358 14.5468 15.8314C14.8221 15.593 15.1788 15.459 15.8922 15.191L17.7362 14.4981C20.4 13.4973 21.7319 12.9969 21.9667 11.9115C22.2014 10.826 21.1954 9.81905 19.1835 7.80516Z"
+          fill="currentColor"
+        />
+      </svg>
+    {/if}
+  </div>
 
   <!-- Total Progress Bar -->
   <div
-    class="hidden sm:block w-full bg-gray-200 rounded-full h-5 relative overflow-hidden shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 {isHovering
-      ? 'hovering-outline'
-      : ''}"
+    class="hidden sm:block w-full bg-gray-200 rounded-full h-5 relative overflow-hidden shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:ring-2 hover:ring-blue-400"
     role="button"
     tabindex="0"
-    title={mobile ? "Click to expand" : "Hold and wait to show or click to pin"}
-    aria-label={mobile
-      ? "Click to expand details"
-      : "Hold to show progress and click to pin"}
-    on:click={handleBarClick}
-    on:keydown={(e) => e.key === "Enter" && handleBarClick()}
-    on:dblclick={handleBarDoubleClick}
-    on:mouseenter={handleBarMouseEnter}
-    on:mouseleave={handleBarMouseLeave}
+    title="Click to toggle details"
+    aria-label="Click to toggle expansion details"
+    on:click={toggleExpanded}
+    on:keydown={(e) => e.key === "Enter" && toggleExpanded()}
   >
     <div
       class="{showRainbow
@@ -172,20 +135,6 @@
 </div>
 
 <style>
-  @keyframes blink-outline {
-    0%,
-    100% {
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.7);
-    }
-  }
-
-  .hovering-outline {
-    animation: blink-outline 1s ease-in-out infinite;
-  }
-
   .blue-bar {
     background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
   }
