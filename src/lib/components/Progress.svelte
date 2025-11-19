@@ -115,7 +115,7 @@
       : ''}"
     role="button"
     tabindex="0"
-    title={mobile ? "Click to expand" : "Hold to show progress • Click to pin"}
+    title={mobile ? "Click to expand" : "Hold and wait to show or click to pin"}
     aria-label={mobile
       ? "Click to expand details"
       : "Hold to show progress and click to pin"}
@@ -139,36 +139,36 @@
   </div>
 
   <!-- Expansion Progress Bars (shown on hover) -->
-  <div
-    class="{showExpanded
-      ? 'grid'
-      : 'hidden'} sm:grid-cols-1 md:grid-cols-2 gap-4 mt-4 transition-all duration-300"
-  >
-    {#each Object.entries(progressData) as [name, { completed, total, percent }] (name)}
-      <div class="flex flex-col items-center">
-        <!-- Expansion Name -->
-        <p class="font-semibold text-gray-700">
-          {name}
-          <span class="inline sm:hidden ml-1">({completed}/{total})</span>
-        </p>
-
-        <!-- Progress Bar -->
-        <div
-          class="hidden sm:block w-full bg-gray-200 rounded-full h-4 relative overflow-hidden shadow-inner"
-        >
-          <div
-            class="h-full rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 transition-all duration-700 ease-in-out"
-            style="width: {percent}%"
-          ></div>
-          <p
-            class="absolute w-full text-center text-xs font-semibold top-0 left-0 text-white"
-          >
-            {completed}/{total} ({percent}%)
+  {#if showExpanded}
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 transition-all duration-300"
+    >
+      {#each Object.entries(progressData) as [name, { completed, total, percent }] (name)}
+        <div class="flex flex-col items-center">
+          <!-- Expansion Name -->
+          <p class="font-semibold text-gray-700">
+            {name}
+            <span class="inline sm:hidden ml-1">({completed}/{total})</span>
           </p>
+
+          <!-- Progress Bar -->
+          <div
+            class="hidden sm:block w-full bg-gray-200 rounded-full h-4 relative overflow-hidden shadow-inner"
+          >
+            <div
+              class="h-full rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 transition-all duration-700 ease-in-out"
+              style="width: {percent}%"
+            ></div>
+            <p
+              class="absolute w-full text-center text-xs font-semibold top-0 left-0 text-white"
+            >
+              {completed}/{total} ({percent}%)
+            </p>
+          </div>
         </div>
-      </div>
-    {/each}
-  </div>
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <style>

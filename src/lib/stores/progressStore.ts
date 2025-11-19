@@ -62,7 +62,7 @@ export async function compressAndEncode(state: SharableState): Promise<{
 
   // Step 4: Convert to Base64 URL-safe format
   const base64Encoded = toBase64Url(
-    btoa(String.fromCharCode(...new Uint8Array(compressed)))
+    btoa(String.fromCharCode(...new Uint8Array(compressed))),
   );
 
   // Create the base URL
@@ -74,12 +74,12 @@ export async function compressAndEncode(state: SharableState): Promise<{
 
 // Decode and decompress a shared progress string into the original state
 export async function decodeAndDecompress(
-  base64Encoded: string
+  base64Encoded: string,
 ): Promise<SharableState> {
   // Step 1: Decode Base64 URL-safe back to a Uint8Array
   const binaryString = atob(fromBase64Url(base64Encoded));
   const compressed = Uint8Array.from(binaryString, (char) =>
-    char.charCodeAt(0)
+    char.charCodeAt(0),
   );
 
   // Step 2: Decompress using the native Gzip DecompressionStream
@@ -170,7 +170,7 @@ export const groupProgress = writable<
 
 // Calculate progress for a single expansion
 export function calculateExpansionProgress(
-  expansionName: string
+  expansionName: string,
 ): ExpansionProgress {
   const allQuests = get(quests);
   if (!allQuests.length) return { percent: 0, completed: 0, total: 0 };
@@ -181,7 +181,7 @@ export function calculateExpansionProgress(
   const questsArray = Object.values(expansion.quests).flat();
   const totalQuests = questsArray.length;
   const completedCount = questsArray.filter(
-    (quest) => get(completedQuests)[quest["#"]]
+    (quest) => get(completedQuests)[quest["#"]],
   ).length;
 
   return {
@@ -195,7 +195,7 @@ export function calculateExpansionProgress(
 // Calculate progress for a single quest group within an expansion
 export function calculateQuestGroupProgress(
   expansionName: string,
-  questGroup: string
+  questGroup: string,
 ): QuestGroupProgress {
   const allQuests = get(quests);
   if (!allQuests.length) {
@@ -211,7 +211,7 @@ export function calculateQuestGroupProgress(
   const totalQuests = questsArray.length;
   const completedCount = questsArray.reduce(
     (count, quest) => count + (get(completedQuests)[quest["#"]] ? 1 : 0),
-    0
+    0,
   );
 
   return {
@@ -235,7 +235,7 @@ export function initAllExpansionProgress(): void {
 
   allQuests.forEach((expansion) => {
     updatedProgress[expansion.name] = calculateExpansionProgress(
-      expansion.name
+      expansion.name,
     );
 
     updatedGroupProgress[expansion.name] = {};
@@ -280,7 +280,7 @@ export async function loadSharedProgress(): Promise<void> {
     },
     "Understood",
     "",
-    false
+    false,
   );
 
   try {
@@ -301,7 +301,7 @@ export async function loadSharedProgress(): Promise<void> {
 export async function generateShareableLink(): Promise<void> {
   const completed = get(completedQuests);
   const completedIds = Object.keys(completed).filter(
-    (id) => completed[Number(id)]
+    (id) => completed[Number(id)],
   );
 
   const state: SharableState = {
@@ -321,7 +321,7 @@ export async function generateShareableLink(): Promise<void> {
       () => {},
       "Understood",
       "",
-      false
+      false,
     );
   } catch (error) {
     console.error("Failed to generate shareable link:", error);
@@ -332,7 +332,7 @@ export async function generateShareableLink(): Promise<void> {
       () => {},
       "Understood",
       "",
-      false
+      false,
     );
   }
 }

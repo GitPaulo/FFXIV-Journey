@@ -1,6 +1,6 @@
 <script lang="ts">
   // Dependencies imports
-  import { onMount, onDestroy, tick, SvelteComponent } from "svelte";
+  import { onMount, onDestroy, tick } from "svelte";
   import { fade } from "svelte/transition";
   import { get } from "svelte/store";
   import { debounce } from "lodash";
@@ -68,9 +68,8 @@
   let lastCheckedQuestNumber: number | null = null;
   let highlightedQuestNumber: number | null = null;
   let tooltipTarget: HTMLElement | null = null;
-  let searchInput: SvelteComponent<Search>;
+  let searchInput: Search;
   let isFiltering = false;
-  let lastBackgroundExpansion: string = "";
 
   // Loading states
   // Yes, i know this is a gimmick...
@@ -306,7 +305,7 @@
       // Scroll to the quest and highlight it
       tick().then(() => {
         questElement.scrollIntoView({ behavior: "smooth", block: "center" });
-        highlightQuest(questElement);
+        highlightQuest();
       });
     });
   }
@@ -324,7 +323,7 @@
     }
   }
 
-  function highlightQuest(element: HTMLElement) {
+  function highlightQuest() {
     highlightedQuestNumber = lastCheckedQuestNumber;
     setTimeout(() => {
       highlightedQuestNumber = null;
@@ -627,7 +626,7 @@
   });
 
   // Reactively update the background whenever the current expansion or showProgress changes
-  $: $showProgress, $currentExpansion, updateBackground();
+  $: if ($showProgress || $currentExpansion) updateBackground();
 </script>
 
 <svelte:head>
@@ -672,7 +671,7 @@
   <!-- Floating Breadcrumb -->
   {#if shouldShowBreadcrumb}
     <div
-      class="floating-breadcrumb sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
+      class="floating-breadcrumb hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
       style="margin-top: -1rem;"
     >
       <div class="flex items-center text-sm text-gray-600 font-medium">
@@ -806,7 +805,7 @@
                       <a
                         href={getGarlandToolsQuestURLByID(quest["#"])}
                         target="_blank"
-                        class="text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 ml-2"
+                        class="text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 ml-2 [@media(min-height:601px)]:inline [@media(max-height:600px)]:hidden"
                       >
                         (View on Garland Tools)
                       </a>

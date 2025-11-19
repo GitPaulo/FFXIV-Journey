@@ -3,7 +3,7 @@
 > [!NOTE]
 > The quest list used by the app is updated weekly by a cron parsing datamined sources.
 
-The goal is to provide a super simple way to share and track your MSQ progress, **kupo**. 
+The goal is to provide a super simple way to share and track your MSQ progress, **kupo**.
 
 ## Preview
 

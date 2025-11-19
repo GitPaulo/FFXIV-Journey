@@ -53,7 +53,7 @@ body {
 .background-overlay {
   position: absolute;
   inset: 0;
-  background: url('') no-repeat center center;
+  background: url("") no-repeat center center;
   /* background is dynamic */
   background-size: cover;
   opacity: 0.9;
@@ -99,25 +99,25 @@ body {
 }
 
 .particle:nth-child(odd) {
-  background-color: #FF69B4;
+  background-color: #ff69b4;
 }
 
 .particle:nth-child(even) {
-  background-color: #FFD700;
+  background-color: #ffd700;
 }
 
 .particle:nth-child(3n) {
-  background-color: #87CEFA;
+  background-color: #87cefa;
 }
 
 .particle:nth-child(5n) {
-  background-color: #FF4500;
+  background-color: #ff4500;
 }
 
 /* Floating breadcrumb responsive positioning */
 /* Scuffed but works */
 .floating-breadcrumb {
-  top: .2rem !important;
+  top: 0.2rem !important;
 }
 
 @media (min-width: 768px) and (max-height: 1065px) {
@@ -139,7 +139,8 @@ body {
   }
 
   @keyframes mobile-pulse {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
       transform: scale(1);
     }

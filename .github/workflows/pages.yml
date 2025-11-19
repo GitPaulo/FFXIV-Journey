@@ -7,7 +7,7 @@ on:
     types:
       - completed
   push:
-    branches: 'main'
+    branches: "main"
 
 jobs:
   build_site:
@@ -27,14 +27,14 @@ jobs:
 
       - name: build
         env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
+          BASE_PATH: "/${{ github.event.repository.name }}"
         run: |
           npm run build
 
       - name: Upload Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'build/'
+          path: "build/"
 
   deploy:
     if: >
@@ -42,17 +42,16 @@ jobs:
       (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
     needs: build_site
     runs-on: ubuntu-latest
-  
+
     permissions:
       pages: write
       id-token: write
-  
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-  
+
     steps:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-

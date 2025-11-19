@@ -21,10 +21,22 @@ export function getGarlandToolsQuestURLByID(questId: number): string {
  * @returns True if the device supports touch events or has a mobile viewport.
  */
 export function isMobile(): boolean {
-  const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  const isMobileWidth = window.matchMedia("(max-width: 639px)").matches;
-  const isLandscapeMobile = window.matchMedia("(max-width: 1024px) and (max-height: 600px)").matches;
-  return hasTouch || isMobileWidth || isLandscapeMobile;
+  if (typeof window === "undefined" || typeof navigator === "undefined") {
+    return false;
+  }
+  const hasTouch =
+    "ontouchstart" in window ||
+    (navigator.maxTouchPoints ?? 0) > 0 ||
+    // Older IE/Edge
+    (navigator as any).msMaxTouchPoints > 0;
+  const matches = (query: string): boolean =>
+    typeof window.matchMedia === "function"
+      ? window.matchMedia(query).matches
+      : false;
+  const hasCoarsePointer =
+    matches("(pointer: coarse)") || matches("(any-pointer: coarse)");
+  const isSmallScreen = matches("(max-width: 768px)");
+  return (hasTouch || hasCoarsePointer) && isSmallScreen;
 }
 
 /**

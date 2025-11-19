@@ -19,7 +19,7 @@
 <div
   bind:this={footerElement}
   id="footer"
-  class="hidden md:block fixed bottom-4 left-0 right-0 text-sm text-gray-400 text-center px-4 pointer-events-none z-50"
+  class="hidden md:block [@media(max-height:600px)]:hidden fixed bottom-4 left-0 right-0 text-sm text-gray-400 text-center px-4 pointer-events-none z-50"
 >
   <div class="inline-flex items-center gap-3 pointer-events-auto">
     <a

@@ -30,7 +30,7 @@ export function openModal(
   onCancel: () => void,
   confirmLabel: string = "Confirm",
   cancelLabel: string = "Cancel",
-  allowCancel: boolean = true
+  allowCancel: boolean = true,
 ): void {
   modalState.set({
     show: true,

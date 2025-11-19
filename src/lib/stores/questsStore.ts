@@ -15,7 +15,7 @@ export const completedQuests = writable<Record<number, boolean>>(
       console.warn(`Invalid data in localStorage for key ${LOCAL_STORAGE_KEY}`);
       return {};
     }
-  })()
+  })(),
 );
 export const isLoadingQuests = writable<boolean>(true);
 export const currentExpansion = writable<string>("");
@@ -25,7 +25,7 @@ export function storeCompletedQuests() {
   try {
     localStorage.setItem(
       LOCAL_STORAGE_KEY,
-      JSON.stringify(get(completedQuests))
+      JSON.stringify(get(completedQuests)),
     );
   } catch (error) {
     console.error("Failed to store completed quests in localStorage:", error);
@@ -35,7 +35,7 @@ export function storeCompletedQuests() {
 // Helper to get a flat list of all quests
 function getAllQuests(): Quest[] {
   return get(quests).flatMap((expansion) =>
-    Object.values(expansion.quests).flat()
+    Object.values(expansion.quests).flat(),
   );
 }
 
@@ -99,7 +99,7 @@ export function updateCurrentExpansion() {
         .some((quest) => completed[quest["#"]]);
       return hasCompletedQuest ? expansion.name : last;
     },
-    null
+    null,
   );
 
   // Set the current expansion, or clear it if no quests are completed
@@ -112,6 +112,6 @@ export function getLastCheckedQuest(): Quest | null {
 
   return getAllQuests().reduce<Quest | null>(
     (lastChecked, quest) => (completed[quest["#"]] ? quest : lastChecked),
-    null
+    null,
   );
 }
