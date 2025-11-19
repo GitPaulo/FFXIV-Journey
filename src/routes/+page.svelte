@@ -97,10 +97,12 @@
     : currentVisibleQuestGroup;
 
   // Breadcrumb visibility logic:
+  // - Never show on mobile devices
   // - Never show during search/filtering
   // - Show when we've scrolled past headers OR when hovering
   // - This prevents hover breadcrumbs when headers are still visible
-  $: shouldShowBreadcrumb = !searchQuery && !isFiltering && showBreadcrumb;
+  $: shouldShowBreadcrumb =
+    !isMobile() && !searchQuery && !isFiltering && showBreadcrumb;
 
   $: isFullyLoaded =
     isQuestsInitialized &&
@@ -616,6 +618,20 @@
     if (contentContainer) {
       contentContainer.addEventListener("scroll", handleScroll);
     }
+
+    // Handle window resize to update action bar position
+    const handleResize = () => {
+      if (isMobile()) {
+        setActionBarPosition(false);
+      } else if (showScrollToTop) {
+        setActionBarPosition(true);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   });
 
   onDestroy(() => {
