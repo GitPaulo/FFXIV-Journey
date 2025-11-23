@@ -1,24 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Preload backgrounds -->
-    <link rel="prefetch" href="background_arealmreborn.webp" as="image" />
-    <link rel="prefetch" href="background_heavensward.webp" as="image" />
-    <link rel="prefetch" href="background_stormblood.webp" as="image" />
-    <link rel="prefetch" href="background_shadowbringers.webp" as="image" />
-    <link rel="prefetch" href="background_endwalker.webp" as="image" />
-    <link rel="prefetch" href="background_dawntrail.webp" as="image" />
-    <!-- Head -->
-    %sveltekit.head%
-  </head>
-  <body data-sveltekit-preload-data="hover">
-    <div class="background-container">
-      <div id="background" class="background-overlay"></div>
-      <!-- Content -->
-      <div class="content-container">%sveltekit.body%</div>
-    </div>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>FFXIV Journey</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FFXIV Journey" />
+  <meta property="og:description"
+    content="Track and share your Final Fantasy XIV Main Scenario Quest progress easily!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://gitpaulo.github.io/FFXIV-Journey/ffxiv_complete.webp" />
+  <meta property="og:image:alt" content="FFXIV Journey - Track your MSQ progress" />
+  <meta name="theme-color" content="#3b82f6" />
+
+  <!-- Preload backgrounds -->
+  <link rel="prefetch" href="background_arealmreborn.webp" as="image" />
+  <link rel="prefetch" href="background_heavensward.webp" as="image" />
+  <link rel="prefetch" href="background_stormblood.webp" as="image" />
+  <link rel="prefetch" href="background_shadowbringers.webp" as="image" />
+  <link rel="prefetch" href="background_endwalker.webp" as="image" />
+  <link rel="prefetch" href="background_dawntrail.webp" as="image" />
+  <!-- Head -->
+  %sveltekit.head%
+</head>
+
+<body data-sveltekit-preload-data="hover">
+  <div class="background-container">
+    <div id="background" class="background-overlay"></div>
+    <!-- Content -->
+    <div class="content-container">%sveltekit.body%</div>
+  </div>
+</body>
+
 </html>
