@@ -70,6 +70,7 @@
   let tooltipTarget: HTMLElement | null = null;
   let searchInput: Search;
   let isFiltering = false;
+  let isMobileDevice = false;
 
   // Loading states
   // Yes, i know this is a gimmick...
@@ -102,7 +103,7 @@
   // - Show when we've scrolled past headers OR when hovering
   // - This prevents hover breadcrumbs when headers are still visible
   $: shouldShowBreadcrumb =
-    !isMobile() && !searchQuery && !isFiltering && showBreadcrumb;
+    !isMobileDevice && !searchQuery && !isFiltering && showBreadcrumb;
 
   $: isFullyLoaded =
     isQuestsInitialized &&
@@ -372,7 +373,7 @@
 
   async function simulateLoading() {
     // Remove artificial delay - loading will complete when all tasks are done
-    if (isMobile()) {
+    if (isMobileDevice) {
       setActionBarPosition(false); // Attach action bar for mobile
     }
 
@@ -405,12 +406,12 @@
     if (showScrollToTop) {
       enableScrollToTop();
 
-      if (isMobile()) return;
+      if (isMobileDevice) return;
       setActionBarPosition(true); // Detach action bar
     } else {
       disableScrollToTop();
 
-      if (isMobile()) return;
+      if (isMobileDevice) return;
       setActionBarPosition(false); // Attach action bar
     }
   }
@@ -602,6 +603,9 @@
 
   onMount(async () => {
     const loadedQuests = data.quests;
+    
+    // Cache mobile detection result
+    isMobileDevice = isMobile();
 
     // Initialize each component and mark completion with small delays
     await initQuests(loadedQuests);
@@ -621,7 +625,8 @@
 
     // Handle window resize to update action bar position
     const handleResize = () => {
-      if (isMobile()) {
+      isMobileDevice = isMobile(); // Update cache on resize
+      if (isMobileDevice) {
         setActionBarPosition(false);
       } else if (showScrollToTop) {
         setActionBarPosition(true);
@@ -639,6 +644,7 @@
     if (contentContainer) {
       contentContainer.removeEventListener("scroll", handleScroll);
     }
+    debouncedFilterQuests.cancel();
   });
 
   // Reactively update the background whenever the current expansion or showProgress changes
@@ -757,7 +763,7 @@
           {/if}
         {/if}
       </summary>
-      {#each Object.keys(expansion.quests) as questGroup}
+      {#each Object.keys(expansion.quests) as questGroup (questGroup)}
         <details
           id="questgroup-{expansion.name
             .replace(/\s/g, '-')
@@ -785,10 +791,7 @@
             {#each expansion.quests[questGroup] as quest (quest["#"])}
               <li
                 id={`quest-${quest["#"]}`}
-                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-500"
-                class:border-2={highlightedQuestNumber === quest["#"]}
-                class:border-blue-600={highlightedQuestNumber === quest["#"]}
-                class:animate-flicker={highlightedQuestNumber === quest["#"]}
+                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-500 {highlightedQuestNumber === quest['#'] ? 'border-2 border-blue-600 animate-flicker' : ''}"
                 on:mouseenter={() =>
                   handleQuestHover(quest, expansion.name, questGroup)}
                 on:mouseleave={handleQuestHoverEnd}
@@ -805,7 +808,7 @@
                 {/if}
 
                 <div class="flex-grow sm:ml-4 text-center sm:text-left">
-                  <div class="flex items-center">
+                  <div class="flex items-center justify-center sm:justify-start">
                     <details class="inline">
                       <summary
                         class="font-bold text-lg sm:text-xl text-gray-800 cursor-pointer list-none"
@@ -817,15 +820,6 @@
                         ID: {quest.Id}
                       </p>
                     </details>
-                    {#if isMobile()}
-                      <a
-                        href={getGarlandToolsQuestURLByID(quest["#"])}
-                        target="_blank"
-                        class="text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 ml-2 [@media(min-height:601px)]:inline [@media(max-height:600px)]:hidden"
-                      >
-                        (View on Garland Tools)
-                      </a>
-                    {/if}
                     {#if $showProgress && quest["#"] === lastCheckedQuestNumber}
                       <img
                         bind:this={tooltipTarget}
@@ -840,6 +834,15 @@
                       />
                     {/if}
                   </div>
+                  {#if isMobileDevice}
+                    <a
+                      href={getGarlandToolsQuestURLByID(quest["#"])}
+                      target="_blank"
+                      class="block text-center text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 mt-1 [@media(min-height:601px)]:block [@media(max-height:600px)]:hidden"
+                    >
+                      (View on Garland Tools)
+                    </a>
+                  {/if}
                   <p class="text-sm text-gray-400 mt-1 hidden sm:block">
                     <i>"{sanitizeFFXIVMarkUp(quest.Description)}"</i>
                   </p>
@@ -879,7 +882,7 @@
                 <div
                   class="mt-4 ml-10 flex flex-col sm:flex-row sm:flex-wrap sm:justify-start gap-4"
                 >
-                  {#each quest.Unlocks as unlock}
+                  {#each quest.Unlocks as unlock (unlock.Name)}
                     <div
                       class="flex flex-col items-center p-4 bg-white rounded-lg shadow border border-gray-200"
                     >
