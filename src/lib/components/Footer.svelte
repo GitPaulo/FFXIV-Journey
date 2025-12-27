@@ -43,7 +43,7 @@
         />
       </svg>
     </a>
-    <div id="copyright" class="text-sm text-gray-800 text-left">
+    <div id="copyright" class="hidden">
       FINAL FANTASY is a registered trademark of Square Enix Holdings Co., Ltd.
       <br />
       FINAL FANTASY XIV © SQUARE ENIX CO., LTD.
