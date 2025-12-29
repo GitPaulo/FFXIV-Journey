@@ -389,6 +389,19 @@ try:
     envoy_quest_ids = list(ENVOY_TO_QUEST_GROUP.keys())
     target_ids = known_msq_ids | set(envoy_quest_ids)
     
+    # Include quests that envoy quests lead to (converging quests)
+    for envoy_id in envoy_quest_ids:
+        next_quests = quest_data[
+            (quest_data['PreviousQuest[0]'] == envoy_id) |
+            (quest_data['PreviousQuest[1]'] == envoy_id) |
+            (quest_data['PreviousQuest[2]'] == envoy_id) |
+            (quest_data['PreviousQuest[3]'] == envoy_id)
+        ]
+        for _, nq in next_quests.iterrows():
+            if pd.notna(nq['Name']) and nq['#'] not in target_ids:
+                target_ids.add(nq['#'])
+                logging.info(f"Added converging quest {nq['#']}: {nq['Name']}")
+    
     logging.info(f"Using {len(target_ids)} quest IDs from existing data")
     filtered_data = quest_data[quest_data['#'].isin(target_ids)]
 except (FileNotFoundError, json.JSONDecodeError) as e:
@@ -493,14 +506,12 @@ for envoy_quest in envoy_quests:
         quests_by_number[current_quest["#"]]["QuestGroup"] = group
         # Find the previous quests
         previous_quest_ids = current_quest["PreviousQuests"]
-        # Move to the first available previous quest that is also an MSQ (EventIconType == 3)
+        # Move to the first available previous quest (all quests in quests_by_number are MSQs)
         current_quest = None
         for prev_id in previous_quest_ids:
             if prev_id in quests_by_number:
-                potential_quest = quests_by_number[prev_id]
-                if potential_quest.get("EventIconType") == 3:  # Check if it's an MSQ
-                    current_quest = potential_quest
-                    break
+                current_quest = quests_by_number[prev_id]
+                break
 
 # Build a linked list of quests based on the NextMSQ field
 for quest in quests_by_number.values():
