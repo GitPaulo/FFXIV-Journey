@@ -377,7 +377,7 @@ quest_data = quest_data.dropna(subset=["Name"])
 # Note: As of recent patches, EventIconType no longer reliably identifies MSQs (all quests have EventIconType==0)
 # Solution: Use existing Quests.json as reference and include new quests in the chain
 try:
-    with open(OUTPUT_JSON_PATH, 'r') as f:
+    with open(OUTPUT_JSON_PATH, 'r', encoding='utf-8') as f:
         existing_data = json.load(f)
     known_msq_ids = set()
     for expansion in existing_data:
@@ -390,17 +390,18 @@ try:
     target_ids = known_msq_ids | set(envoy_quest_ids)
     
     # Include quests that envoy quests lead to (converging quests)
-    for envoy_id in envoy_quest_ids:
-        next_quests = quest_data[
-            (quest_data['PreviousQuest[0]'] == envoy_id) |
-            (quest_data['PreviousQuest[1]'] == envoy_id) |
-            (quest_data['PreviousQuest[2]'] == envoy_id) |
-            (quest_data['PreviousQuest[3]'] == envoy_id)
-        ]
-        for _, nq in next_quests.iterrows():
-            if pd.notna(nq['Name']) and nq['#'] not in target_ids:
-                target_ids.add(nq['#'])
-                logging.info(f"Added converging quest {nq['#']}: {nq['Name']}")
+    # Use vectorized operation with isin() for all envoy quests at once
+    prev_quest_mask = (
+        quest_data['PreviousQuest[0]'].isin(envoy_quest_ids) |
+        quest_data['PreviousQuest[1]'].isin(envoy_quest_ids) |
+        quest_data['PreviousQuest[2]'].isin(envoy_quest_ids) |
+        quest_data['PreviousQuest[3]'].isin(envoy_quest_ids)
+    )
+    next_quests = quest_data[prev_quest_mask]
+    for nq in next_quests.itertuples():
+        if pd.notna(nq.Name) and nq._1 not in target_ids:  # nq._1 is the '#' column
+            target_ids.add(nq._1)
+            logging.info(f"Added converging quest {nq._1}: {nq.Name}")
     
     logging.info(f"Using {len(target_ids)} quest IDs from existing data")
     filtered_data = quest_data[quest_data['#'].isin(target_ids)]
