@@ -373,8 +373,28 @@ quest_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2], low_memory=Fals
 # Drop rows where 'Name' column has NaN values
 quest_data = quest_data.dropna(subset=["Name"])
 
-# Filter to keep rows where EventIconType is 3 which represents Main Scenario Quests
-filtered_data = quest_data[quest_data["EventIconType"] == 3]
+# Filter to keep Main Scenario Quests
+# Note: As of recent patches, EventIconType no longer reliably identifies MSQs (all quests have EventIconType==0)
+# Solution: Use existing Quests.json as reference and include new quests in the chain
+try:
+    with open(OUTPUT_JSON_PATH, 'r') as f:
+        existing_data = json.load(f)
+    known_msq_ids = set()
+    for expansion in existing_data:
+        for group_name, quests in expansion['quests'].items():
+            for quest in quests:
+                known_msq_ids.add(quest['#'])
+    
+    # Also include envoy quests (needed for quest grouping logic)
+    envoy_quest_ids = list(ENVOY_TO_QUEST_GROUP.keys())
+    target_ids = known_msq_ids | set(envoy_quest_ids)
+    
+    logging.info(f"Using {len(target_ids)} quest IDs from existing data")
+    filtered_data = quest_data[quest_data['#'].isin(target_ids)]
+except (FileNotFoundError, json.JSONDecodeError) as e:
+    logging.warning(f"Could not load {OUTPUT_JSON_PATH}: {e}")
+    logging.warning("Falling back to EventIconType == 0 filter (may include non-MSQ quests)")
+    filtered_data = quest_data[quest_data["EventIconType"] == 0]
 
 # Access the penultimate column by its index (-2) and filter out obsolete quests
 filtered_data = filtered_data[filtered_data.iloc[:, -2] == False]
