@@ -50,6 +50,7 @@
     groupProgress,
   } from "$lib/stores/progressStore";
   import {
+    autoMode,
     disableScrollToTop,
     enableScrollToTop,
     showProgress,
@@ -63,7 +64,6 @@
   let openExpansions: Record<string, boolean> = {};
   let openQuestGroups: Record<string, Record<string, boolean>> = {};
   let searchQuery = "";
-  let autoMode = true;
   let showScrollToTop = false;
   let lastCheckedQuestNumber: number | null = null;
   let highlightedQuestNumber: number | null = null;
@@ -126,7 +126,7 @@
   function getContentContainer(): HTMLElement | null {
     return (
       (document.getElementsByClassName(
-        "content-container"
+        "content-container",
       )[0] as HTMLElement) || null
     );
   }
@@ -151,7 +151,7 @@
         }
         return result;
       },
-      []
+      [],
     );
 
     filteredQuests.set(filteredExpansions);
@@ -169,7 +169,7 @@
     for (const questGroup in expansion.quests) {
       const matchingQuests = filterQuestGroupQuests(
         expansion.quests[questGroup],
-        query
+        query,
       );
       if (matchingQuests.length > 0) {
         filteredExpansion.quests[questGroup] = matchingQuests;
@@ -183,7 +183,7 @@
 
   function filterQuestGroupQuests(
     questGroupQuests: Quest[],
-    query: string
+    query: string,
   ): Quest[] {
     return questGroupQuests.filter((quest) => {
       const nameMatches = quest.Name.toLowerCase().includes(query);
@@ -191,7 +191,7 @@
         ? quest.Description.toLowerCase().includes(query)
         : false;
       const unlockMatches = quest.Unlocks.some((unlock) =>
-        unlock?.Name?.toLowerCase()?.includes(query)
+        unlock?.Name?.toLowerCase()?.includes(query),
       );
 
       return nameMatches || descriptionMatches || unlockMatches;
@@ -220,7 +220,7 @@
     // If closing the expansion, also close all its quest groups
     if (!details.open) {
       for (const questGroup of Object.keys(
-        openQuestGroups[expansionName] || {}
+        openQuestGroups[expansionName] || {},
       )) {
         openQuestGroups[expansionName][questGroup] = false;
       }
@@ -230,7 +230,7 @@
   function handleQuestGroupToggle(
     expansionName: string,
     questGroup: string,
-    event: Event
+    event: Event,
   ) {
     const details = event.target as HTMLDetailsElement;
     openQuestGroups[expansionName][questGroup] = details.open;
@@ -298,7 +298,7 @@
     // Wait for DOM updates before proceeding
     tick().then(() => {
       const questElement = document.getElementById(
-        `quest-${lastCheckedQuestNumber}`
+        `quest-${lastCheckedQuestNumber}`,
       );
       if (!questElement) return;
 
@@ -360,7 +360,7 @@
   }
 
   function updateQuest(quest: Quest, checked: boolean) {
-    if (autoMode) {
+    if ($autoMode) {
       setQuestCompletion(quest, checked);
     } else {
       setSingleQuestCompletion(quest, checked);
@@ -419,7 +419,7 @@
   function handleQuestHover(
     quest: Quest,
     expansionName: string,
-    questGroupName: string
+    questGroupName: string,
   ): void {
     isHoveringQuest = true;
     hoverOverrideExpansion = expansionName;
@@ -427,7 +427,7 @@
     // Format quest group name, removing expansion prefix
     const formattedQuestGroup = formatIdToTitle(
       `questgroup-${questGroupName.toLowerCase().replace(/\s/g, "-")}`,
-      "questgroup"
+      "questgroup",
     );
     hoverOverrideQuestGroup =
       formattedQuestGroup.toLowerCase() !== "main" ? formattedQuestGroup : "";
@@ -441,7 +441,7 @@
 
   function formatIdToTitle(
     id: string,
-    type: "expansion" | "questgroup"
+    type: "expansion" | "questgroup",
   ): string {
     const cleaned = id
       .replace(`${type}-`, "")
@@ -475,10 +475,10 @@
 
   function findActiveQuestGroup(
     expansionElement: HTMLElement,
-    threshold: number
+    threshold: number,
   ): string {
     const questGroupHeaders = expansionElement.querySelectorAll(
-      '[id^="questgroup-"] > summary'
+      '[id^="questgroup-"] > summary',
     );
 
     let lastActiveQuestGroup = "";
@@ -487,11 +487,11 @@
     for (const header of questGroupHeaders) {
       if (isElementOutOfView(header, threshold)) {
         const questGroupElement = header.closest(
-          '[id^="questgroup-"]'
+          '[id^="questgroup-"]',
         ) as HTMLElement;
         const questGroupName = formatIdToTitle(
           questGroupElement.id,
-          "questgroup"
+          "questgroup",
         );
 
         // Skip "Main" quest groups as they don't provide useful breadcrumb context
@@ -516,7 +516,7 @@
 
     // Find the most recent expansion header that has scrolled out of view
     const expansionHeaders = document.querySelectorAll(
-      '[id^="expansion-"] > summary'
+      '[id^="expansion-"] > summary',
     );
 
     for (const header of expansionHeaders) {
@@ -524,14 +524,14 @@
         hasScrolledPastAnyHeader = true;
 
         const expansionElement = header.closest(
-          '[id^="expansion-"]'
+          '[id^="expansion-"]',
         ) as HTMLElement;
         currentExpansion = formatIdToTitle(expansionElement.id, "expansion");
 
         // Find the active quest group within this expansion
         currentQuestGroup = findActiveQuestGroup(
           expansionElement,
-          SCROLL_THRESHOLD
+          SCROLL_THRESHOLD,
         );
       }
     }
@@ -559,7 +559,7 @@
           input.checked = !input.checked;
         },
         "Yes",
-        "Cancel"
+        "Cancel",
       );
 
       return;
@@ -613,7 +613,7 @@
 
   onMount(async () => {
     const loadedQuests = data.quests;
-    
+
     // Cache mobile detection result
     isMobileDevice = isMobile();
 
@@ -776,7 +776,10 @@
             {#each expansion.quests[questGroup] as quest (quest["#"])}
               <li
                 id={`quest-${quest["#"]}`}
-                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-500 {highlightedQuestNumber === quest['#'] ? 'border-2 border-blue-600 animate-flicker' : ''}"
+                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-500 {highlightedQuestNumber ===
+                quest['#']
+                  ? 'border-2 border-blue-600 animate-flicker'
+                  : ''}"
                 on:mouseenter={() =>
                   handleQuestHover(quest, expansion.name, questGroup)}
                 on:mouseleave={handleQuestHoverEnd}
@@ -793,7 +796,9 @@
                 {/if}
 
                 <div class="flex-grow sm:ml-4 text-center sm:text-left">
-                  <div class="flex items-center justify-center sm:justify-start">
+                  <div
+                    class="flex items-center justify-center sm:justify-start"
+                  >
                     <details class="inline">
                       <summary
                         class="font-bold text-lg sm:text-xl text-gray-800 cursor-pointer list-none"

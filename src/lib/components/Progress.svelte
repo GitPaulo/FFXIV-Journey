@@ -6,7 +6,6 @@
   import { progress } from "$lib/stores/progressStore";
   import { isMobile } from "$lib/utils";
 
-  let progressData: Record<string, ExpansionProgress> = {};
   let totalCompleted = 0;
   let totalQuests = 0;
   let totalPercent = 0;
@@ -15,27 +14,25 @@
 
   $: showRainbow = totalPercent === 100;
 
+  $: {
+    totalCompleted = Object.values($progress).reduce(
+      (sum, exp) => sum + exp.completed,
+      0,
+    );
+    totalQuests = Object.values($progress).reduce(
+      (sum, exp) => sum + exp.total,
+      0,
+    );
+    totalPercent =
+      totalQuests > 0 ? Math.round((totalCompleted / totalQuests) * 100) : 0;
+  }
+
   function toggleExpanded() {
     showExpanded = !showExpanded;
   }
 
   onMount(() => {
     mobile = isMobile();
-
-    progress.subscribe((value) => {
-      progressData = value;
-
-      totalCompleted = Object.values(value).reduce(
-        (sum, exp) => sum + exp.completed,
-        0
-      );
-      totalQuests = Object.values(value).reduce(
-        (sum, exp) => sum + exp.total,
-        0
-      );
-      totalPercent =
-        totalQuests > 0 ? Math.round((totalCompleted / totalQuests) * 100) : 0;
-    });
   });
 </script>
 
@@ -106,7 +103,7 @@
     <div
       class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 transition-all duration-300"
     >
-      {#each Object.entries(progressData) as [name, { completed, total, percent }] (name)}
+      {#each Object.entries($progress) as [name, { completed, total, percent }] (name)}
         <div class="flex flex-col items-center">
           <!-- Expansion Name -->
           <p class="font-semibold text-gray-700">
