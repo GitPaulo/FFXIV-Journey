@@ -723,7 +723,7 @@
     <details
       id="expansion-{expansion.name.replace(/\s/g, '-').toLowerCase()}"
       transition:fade
-      class="relative mb-8 overflow-visible"
+      class="relative mb-4 overflow-visible"
       open={openExpansions[expansion.name]}
       on:toggle={(event) => handleExpansionToggle(expansion.name, event)}
     >
@@ -766,7 +766,7 @@
           id="questgroup-{expansion.name
             .replace(/\s/g, '-')
             .toLowerCase()}-{questGroup.replace(/\s/g, '-').toLowerCase()}"
-          class="ml-6 mb-6 pl-6"
+          class="ml-6 mb-2 pl-6"
           open={openQuestGroups[expansion.name][questGroup]}
           on:toggle={(event) =>
             handleQuestGroupToggle(expansion.name, questGroup, event)}

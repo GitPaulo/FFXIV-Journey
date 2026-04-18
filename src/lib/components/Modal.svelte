@@ -18,10 +18,7 @@
     class="fixed inset-0 bg-gray-600 bg-opacity-50 z-50"
     style="display: flex; justify-content: center; align-items: center;"
   >
-    <div
-      class="bg-white rounded-lg shadow-lg p-6 w-11/12 sm:w-1/3 relative"
-      style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"
-    >
+    <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 sm:w-1/3 relative">
       <!-- Close button -->
       {#if $modalState.allowCancel}
         <button
