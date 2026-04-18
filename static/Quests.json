@@ -916,7 +916,7 @@
                     "#": 65949,
                     "Id": "SubSea116_00413",
                     "Name": "Do Angry Pirates Dream",
-                    "Description": "<Emphasis>Victory</Emphasis> foreman Ahtbyrm is considering recommending you for an important job involving drydock security.",
+                    "Description": "*Victory* foreman Ahtbyrm is considering recommending you for an important job involving drydock security.",
                     "ExpansionName": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -1671,7 +1671,7 @@
                     "#": 66292,
                     "Id": "GaiUsa504_00756",
                     "Name": "Where There Is Smoke",
-                    "Description": "Hihibaru has information that will <Emphasis>surely</Emphasis> lead you to Lahabrea.",
+                    "Description": "Hihibaru has information that will *surely* lead you to Lahabrea.",
                     "ExpansionName": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -2380,7 +2380,7 @@
                     "#": 66420,
                     "Id": "GaiUsb602_00884",
                     "Name": "Cold Reception",
-                    "Description": "Vortefaurt wishes to tell you of the final flight of the <Emphasis>Enterprise</Emphasis>.",
+                    "Description": "Vortefaurt wishes to tell you of the final flight of the *Enterprise*.",
                     "ExpansionName": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -2821,7 +2821,7 @@
                     "#": 66055,
                     "Id": "ManFst404_00519",
                     "Name": "Lady of the Vortex",
-                    "Description": "With Cid's modifications now installed, the <Emphasis>Enterprise</Emphasis> is finally ready to make the journey to the Howling Eye.",
+                    "Description": "With Cid's modifications now installed, the *Enterprise* is finally ready to make the journey to the Howling Eye.",
                     "ExpansionName": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -4044,7 +4044,7 @@
                 {
                     "#": 65901,
                     "Id": "GaiUse503_00365",
-                    "Name": "Best Laid Schemes",
+                    "Name": "Best-laid Schemes",
                     "Description": "Ilberd would like nothing more than to have this incident forgotten.",
                     "ExpansionName": "A Realm Reborn",
                     "EventIconType": 3,
@@ -4313,7 +4313,7 @@
                     "#": 65962,
                     "Id": "GaiUse614_00426",
                     "Name": "Come, but Not Gone",
-                    "Description": "A hero must go where'er <If(PlayerParameter(4))>she<Else/>he</If> is needed, and according to Minfilia, you are needed elsewhere.",
+                    "Description": "A hero must go where'er she is needed, and according to Minfilia, you are needed elsewhere.",
                     "ExpansionName": "A Realm Reborn",
                     "EventIconType": 3,
                     "PreviousQuests": [
@@ -15895,9 +15895,156 @@
                     "PreviousQuests": [
                         70908
                     ],
-                    "NextMSQ": null,
+                    "NextMSQ": 70962,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101433_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70962,
+                    "Id": "KinGmj101_05426",
+                    "Name": "With the Winds",
+                    "Description": "Alphinaud has something he wishes to tell you.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70909
+                    ],
+                    "NextMSQ": 70963,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101468_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70963,
+                    "Id": "KinGmj102_05427",
+                    "Name": "Through the Thunder",
+                    "Description": "Krile has a proposal to make.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70962
+                    ],
+                    "NextMSQ": 70964,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70964,
+                    "Id": "KinGmj103_05428",
+                    "Name": "Beyond the Mountains",
+                    "Description": "Despite the ominous landscape and persistent echoes of thunder, Krile is determined to press on.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70963
+                    ],
+                    "NextMSQ": 70965,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/112000/112634_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": "Mistwake",
+                            "Image": "ui/icon/112000/112634_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        }
+                    ]
+                },
+                {
+                    "#": 70965,
+                    "Id": "KinGmj104_05429",
+                    "Name": "Around the City",
+                    "Description": "Lumull is not yet ready to release you to the sweet meditations of manual labor.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70964
+                    ],
+                    "NextMSQ": 70966,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70966,
+                    "Id": "KinGmj105_05430",
+                    "Name": "To Work",
+                    "Description": "Lumull is vibrating with nervous energy.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70965
+                    ],
+                    "NextMSQ": 70967,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70967,
+                    "Id": "KinGmj106_05431",
+                    "Name": "In Her Heart",
+                    "Description": "Eyaney seems concerned for Krile.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70966
+                    ],
+                    "NextMSQ": 70968,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70968,
+                    "Id": "KinGmj107_05432",
+                    "Name": "Toward Trouble",
+                    "Description": "Krile is speculating as to the cause of your allies' delayed return.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70967
+                    ],
+                    "NextMSQ": 70969,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 70969,
+                    "Id": "KinGmj108_05433",
+                    "Name": "Where We Call Home",
+                    "Description": "Lumull is resolved to meet the Doomtrain head-on\u2500but would prefer to depart before he can think about it any longer.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70968
+                    ],
+                    "NextMSQ": 70970,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101469_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": "Hell on Rails",
+                            "Image": "ui/icon/112000/112635_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
+                },
+                {
+                    "#": 70970,
+                    "Id": "KinGmj109_05434",
+                    "Name": "Into the Mist",
+                    "Description": "Krile is ready to hear more from Miayli\u2500or is she?",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70969
+                    ],
+                    "NextMSQ": null,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101470_hr1.tex",
                     "Unlocks": []
                 }
             ]

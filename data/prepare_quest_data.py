@@ -34,10 +34,10 @@ auto_yes = args.auto_yes # Check if auto-yes is enabled for automation
 
 OUTPUT_JSON_PATH = "static/Quests.json"
 
-RAW_QUESTS_CSV_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/Quest.csv"
-RAW_EXVERSION_CSV_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/ExVersion.csv"
-RAW_INSTANCE_CONTENT_CSV_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/InstanceContent.csv"
-RAW_JOURNAL__CSV_BASE_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/quest"  # + expansion_number_to_three_digits + quest_id + '.csv'
+RAW_QUESTS_CSV_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/en/Quest.csv"
+RAW_EXVERSION_CSV_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/en/ExVersion.csv"
+RAW_INSTANCE_CONTENT_CSV_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/en/InstanceContent.csv"
+RAW_JOURNAL__CSV_BASE_URL = "https://raw.githubusercontent.com/xivapi/ffxiv-datamining/master/csv/en/quest"  # + expansion_number_to_three_digits + quest_id + '.csv'
 
 XIV_BETA_API_SEARCH_BASE_URL = "https://beta.xivapi.com/api/1/search"
 XIV_BETA_API_INSTANCE_CONTENT_BASE_URL = "https://beta.xivapi.com/api/1/sheet/ContentFinderCondition"
@@ -112,7 +112,7 @@ def fetch_first_journal_entry(
 
         try:
             csv_content = response.content.decode("utf-8")
-            journal_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 1])
+            journal_data = pd.read_csv(StringIO(csv_content), header=None)
             if not journal_data.empty:
                 last_successful_folder_index = folder_index
                 return journal_data.iloc[0, 2]
@@ -173,9 +173,9 @@ def load_instance_content_mapping():
     response = requests.get(RAW_INSTANCE_CONTENT_CSV_URL)
     if response.status_code == 200:
         csv_content = response.content.decode("utf-8")
-        exversion_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2])
-        # Create a mapping of index to expansion name
-        return {row["#"]: row["Order"] for _, row in exversion_data.iterrows()}
+        instance_data = pd.read_csv(StringIO(csv_content))
+        # Create a mapping of index to ContentFinderCondition ID
+        return {row["#"]: row["ContentFinderCondition"] for _, row in instance_data.iterrows()}
     else:
         logging.warning(
             f"Failed to download InstanceContent.csv. Status code: {response.status_code}"
@@ -186,7 +186,7 @@ def load_expansion_mapping():
     response = requests.get(RAW_EXVERSION_CSV_URL)
     if response.status_code == 200:
         csv_content = response.content.decode("utf-8")
-        exversion_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2])
+        exversion_data = pd.read_csv(StringIO(csv_content))
         # Create a mapping of index to expansion name
         return {row["#"]: row["Name"] for _, row in exversion_data.iterrows()}
     else:
@@ -198,7 +198,7 @@ def load_expansion_mapping():
 def pd_get_previous_quests(row):
     return [
         int(row[f"PreviousQuest[{i}]"])
-        for i in range(4)
+        for i in range(3)
         if not pd.isna(row[f"PreviousQuest[{i}]"])
         and str(row[f"PreviousQuest[{i}]"]).strip() != "0"
     ]
@@ -207,8 +207,8 @@ def pd_resolve_unlocks_by_row(row):
     unlocks = []
 
     for col_idx in range(len(row)):
-        instruction_column = f"Script{{Instruction}}[{col_idx}]"
-        arg_column = f"Script{{Arg}}[{col_idx}]"
+        instruction_column = f"QuestParams[{col_idx}].ScriptInstruction"
+        arg_column = f"QuestParams[{col_idx}].ScriptArg"
 
         # Ensure both columns exist in the row
         if instruction_column in row and arg_column in row:
@@ -367,8 +367,8 @@ else:
     logging.fatal(f"Failed to download Quest.csv. Status code: {response.status_code}")
     exit()
 
-# Load the CSV content and include the first 1523 columns (including the penultimate column)
-quest_data = pd.read_csv(StringIO(csv_content), skiprows=[0, 2], low_memory=False)
+# Load the CSV content
+quest_data = pd.read_csv(StringIO(csv_content), low_memory=False)
 
 # Drop rows where 'Name' column has NaN values
 quest_data = quest_data.dropna(subset=["Name"])
