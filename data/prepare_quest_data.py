@@ -262,7 +262,7 @@ def order_quests_by_next_msq(quests, group=None):
     }
 
     if not start_quests:
-        logging.INFO(
+        logging.info(
             f"No starting quest found in the {expansion_mapping[0]} category for {group if group else QUEST_GROUP_MAIN_QUEST_LINE}. Skipping..."
         )
         return []

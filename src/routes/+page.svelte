@@ -601,6 +601,16 @@
     isBackgroundInitialized = true;
   }
 
+  // Handle window resize to update action bar position
+  function handleResize() {
+    isMobileDevice = isMobile();
+    if (isMobileDevice) {
+      setActionBarPosition(false);
+    } else if (showScrollToTop) {
+      setActionBarPosition(true);
+    }
+  }
+
   onMount(async () => {
     const loadedQuests = data.quests;
     
@@ -623,20 +633,7 @@
       contentContainer.addEventListener("scroll", handleScroll);
     }
 
-    // Handle window resize to update action bar position
-    const handleResize = () => {
-      isMobileDevice = isMobile(); // Update cache on resize
-      if (isMobileDevice) {
-        setActionBarPosition(false);
-      } else if (showScrollToTop) {
-        setActionBarPosition(true);
-      }
-    };
     window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   });
 
   onDestroy(() => {
@@ -644,6 +641,7 @@
     if (contentContainer) {
       contentContainer.removeEventListener("scroll", handleScroll);
     }
+    window.removeEventListener("resize", handleResize);
     debouncedFilterQuests.cancel();
   });
 
@@ -652,20 +650,7 @@
 </script>
 
 <svelte:head>
-  <!-- OG Tags -->
   <title>FFXIV Journey</title>
-  <meta property="og:type" content="website" />
-  <meta
-    property="og:image:alt"
-    content="Track and share your FFXIV MSQ progress easily!"
-  />
-  <!-- Preload backgrounds -->
-  <link rel="prefetch" href="background_arealmreborn.webp" as="image" />
-  <link rel="prefetch" href="background_heavensward.webp" as="image" />
-  <link rel="prefetch" href="background_stormblood.webp" as="image" />
-  <link rel="prefetch" href="background_shadowbringers.webp" as="image" />
-  <link rel="prefetch" href="background_endwalker.webp" as="image" />
-  <link rel="prefetch" href="background_dawntrail.webp" as="image" />
 </svelte:head>
 
 <Modal />
