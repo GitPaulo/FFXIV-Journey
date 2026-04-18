@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount, onDestroy } from "svelte";
   import { modalState, closeModal } from "../stores/modalManager";
 
   function handleConfirm() {
@@ -10,43 +11,73 @@
     if ($modalState.onCancel) $modalState.onCancel();
     closeModal();
   }
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === "Escape" && $modalState.allowCancel) {
+      handleCancel();
+    }
+  }
+
+  $: if ($modalState.show) {
+    if (typeof document !== "undefined") {
+      document.addEventListener("keydown", handleKeydown);
+    }
+  } else {
+    if (typeof document !== "undefined") {
+      document.removeEventListener("keydown", handleKeydown);
+    }
+  }
+
+  onDestroy(() => {
+    if (typeof document !== "undefined") {
+      document.removeEventListener("keydown", handleKeydown);
+    }
+  });
 </script>
 
 {#if $modalState.show}
   <div
     id="modal"
-    class="fixed inset-0 bg-gray-600 bg-opacity-50 z-50"
+    class="fixed inset-0 bg-surface-overlay z-50"
     style="display: flex; justify-content: center; align-items: center;"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
   >
-    <div class="bg-white rounded-lg shadow-lg p-6 w-11/12 sm:w-1/3 relative">
+    <div
+      class="bg-surface-card rounded-lg shadow-lg p-6 w-11/12 sm:w-1/3 relative"
+    >
       <!-- Close button -->
       {#if $modalState.allowCancel}
         <button
-          class="absolute top-2 right-2 text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          class="absolute top-2 right-2 text-themed-muted hover:text-themed-tertiary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
           on:click={handleCancel}
+          aria-label="Close"
         >
           ✕
         </button>
       {/if}
 
       <!-- Modal title -->
-      <h2 class="text-xl font-bold mb-4 text-gray-800">{$modalState.title}</h2>
+      <h2 id="modal-title" class="text-xl font-bold mb-4 text-themed-primary">
+        {$modalState.title}
+      </h2>
 
       <!-- Modal body -->
-      <p class="mb-6 text-gray-600">{$modalState.message}</p>
+      <p class="mb-6 text-themed-tertiary">{$modalState.message}</p>
 
       <!-- Modal actions -->
       <div class="flex justify-end space-x-4">
         {#if $modalState.allowCancel}
           <button
-            class="bg-gray-300 hover:bg-gray-400 text-gray-700 py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+            class="bg-surface-disabled hover:bg-cancel-hover text-themed-secondary py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300"
             on:click={handleCancel}
           >
             {$modalState.cancelLabel}
           </button>
         {/if}
         <button
-          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+          class="bg-accent hover:bg-accent-hover text-themed-on-accent py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300"
           on:click={handleConfirm}
         >
           {$modalState.confirmLabel}

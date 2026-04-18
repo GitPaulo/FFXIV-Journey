@@ -21,7 +21,7 @@
 <div
   bind:this={footerElement}
   id="footer"
-  class="hidden md:block [@media(max-height:600px)]:hidden fixed bottom-4 left-0 right-0 text-sm text-gray-400 text-center px-4 pointer-events-none z-50"
+  class="hidden md:block [@media(max-height:600px)]:hidden fixed bottom-4 left-0 right-0 text-sm text-themed-muted text-center px-4 pointer-events-none z-50"
 >
   <div class="inline-flex items-center gap-3 pointer-events-auto">
     <a
@@ -29,7 +29,8 @@
       href="https://GitHub.com/GitPaulo/FFXIV-Journey"
       target="_blank"
       rel="noopener noreferrer"
-      class="text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 hover:text-gray-500 flex-shrink-0 relative group"
+      class="text-themed-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-all duration-300 hover:text-themed-faint flex-shrink-0 relative group"
+      aria-label="View on GitHub"
     >
       <svg
         viewBox="0 0 98 96"

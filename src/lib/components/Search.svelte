@@ -16,7 +16,7 @@
   import { isMobile } from "$lib/utils";
   const debouncedInput = debounce(
     () => dispatch("input", inputValue),
-    debounceDelay
+    debounceDelay,
   );
 
   // Handle input changes
@@ -27,8 +27,16 @@
 
   // Handle keyboard shortcut to focus on the search bar
   function handleKeydown(event: KeyboardEvent) {
-    if (event.key === "/") {
-      event.preventDefault(); // Prevent the default '/' action
+    if (
+      event.key === "/" &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    ) {
+      const active = document.activeElement;
+      const tag = active?.tagName?.toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select") return;
+      event.preventDefault();
       searchInput?.focus();
     }
   }
@@ -48,9 +56,10 @@
 
 <div transition:fade class="mb-6 flex relative">
   <input
-    type="text"
+    type="search"
+    aria-label="Search quests"
     placeholder={isMobile() ? "Search quests..." : placeholder}
-    class="p-3 pl-10 border border-gray-300 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+    class="p-3 pl-10 border border-border rounded-lg w-full bg-surface-input text-themed-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300 placeholder:text-themed-muted"
     bind:value={inputValue}
     bind:this={searchInput}
     on:input={handleInput}
@@ -59,7 +68,8 @@
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="1.1"
-    class="absolute top-1/2 left-3 transform -translate-y-1/2 fill-gray-300 pointer-events-none"
+    class="absolute top-1/2 left-3 transform -translate-y-1/2 fill-search-icon pointer-events-none"
+    aria-hidden="true"
     width="24px"
     height="24px"
     viewBox="0 0 24 24"

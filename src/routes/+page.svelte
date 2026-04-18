@@ -680,11 +680,11 @@
   <!-- Floating Breadcrumb -->
   {#if shouldShowBreadcrumb}
     <div
-      class="floating-breadcrumb hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
+      class="floating-breadcrumb hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-surface-card rounded-lg shadow-md border border-border px-4 py-3 transition-all duration-300"
     >
-      <div class="flex items-center text-sm text-gray-600 font-medium">
+      <div class="flex items-center text-sm text-themed-tertiary font-medium">
         <svg
-          class="w-4 h-4 mr-2 text-gray-400"
+          class="w-4 h-4 mr-2 text-themed-muted"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -696,13 +696,13 @@
         </svg>
         <button
           on:click={() => scrollToExpansion(displayExpansion)}
-          class="text-blue-600 font-semibold hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-colors duration-200"
+          class="text-accent-text font-semibold hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-200"
         >
           {displayExpansion}
         </button>
         {#if displayQuestGroup}
           <svg
-            class="w-3 h-3 mx-2 text-gray-400"
+            class="w-3 h-3 mx-2 text-themed-muted"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -712,7 +712,7 @@
               clip-rule="evenodd"
             />
           </svg>
-          <span class="text-gray-700">{displayQuestGroup}</span>
+          <span class="text-themed-secondary">{displayQuestGroup}</span>
         {/if}
       </div>
     </div>
@@ -728,7 +728,7 @@
       on:toggle={(event) => handleExpansionToggle(expansion.name, event)}
     >
       <summary
-        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-themed-primary cursor-pointer mb-4 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
       >
         {expansion.name}
         {#if $showProgress}
@@ -773,7 +773,7 @@
         >
           {#if questGroup !== "Main"}
             <summary
-              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              class="flex justify-between items-center text-xl font-semibold text-themed-tertiary cursor-pointer mb-3 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               {questGroup}
               {#if $showProgress}
@@ -789,9 +789,9 @@
             {#each expansion.quests[questGroup] as quest (quest["#"])}
               <li
                 id={`quest-${quest["#"]}`}
-                class="flex flex-col sm:flex-row items-center p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-300 hover:border-blue-500 {highlightedQuestNumber ===
+                class="flex flex-col sm:flex-row items-center p-4 bg-surface-card rounded-lg shadow-md hover:shadow-lg transition-shadow border border-border hover:border-accent {highlightedQuestNumber ===
                 quest['#']
-                  ? 'border-2 border-blue-600 animate-flicker'
+                  ? 'border-2 border-accent-text animate-flicker'
                   : ''}"
                 on:mouseenter={() =>
                   handleQuestHover(quest, expansion.name, questGroup)}
@@ -801,7 +801,9 @@
                   <div class="flex-none w-10 sm:w-16 mb-4 sm:mb-0">
                     <input
                       type="checkbox"
-                      class="form-checkbox h-6 w-6 text-blue-500 bg-gray-100 border-gray-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:bg-blue-50 checked:bg-blue-100 transition-all duration-300"
+                      aria-label="Mark {quest.Name} as completed"
+                      class="h-6 w-6 rounded-sm border-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300"
+                      style="accent-color: var(--color-accent);"
                       bind:checked={$completedQuests[quest["#"]]}
                       on:change={(e) => handleCheckboxChange(e, quest)}
                     />
@@ -815,7 +817,7 @@
                     <details class="inline">
                       <summary
                         bind:this={questNameRefs[quest["#"]]}
-                        class="font-bold text-lg sm:text-xl text-gray-800 cursor-pointer list-none"
+                        class="font-bold text-lg sm:text-xl text-themed-primary cursor-pointer list-none"
                       >
                         {quest.Name}
                       </summary>
@@ -825,7 +827,7 @@
                         orientation="top"
                         offsetY={8}
                       />
-                      <p class="text-sm text-gray-500 mt-1 hidden sm:block">
+                      <p class="text-sm text-themed-faint mt-1 hidden sm:block">
                         ID: {quest.Id}
                       </p>
                     </details>
@@ -847,26 +849,26 @@
                     <a
                       href={getGarlandToolsQuestURLByID(quest["#"])}
                       target="_blank"
-                      class="block text-center text-blue-500 underline hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded transition-all duration-300 mt-1 [@media(min-height:601px)]:block [@media(max-height:600px)]:hidden"
+                      class="block text-center text-accent underline hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-all duration-300 mt-1 [@media(min-height:601px)]:block [@media(max-height:600px)]:hidden"
                     >
                       (View on Garland Tools)
                     </a>
                   {/if}
-                  <p class="text-sm text-gray-400 mt-1 hidden sm:block">
+                  <p class="text-sm text-themed-muted mt-1 hidden sm:block">
                     <i>"{sanitizeFFXIVMarkUp(quest.Description)}"</i>
                   </p>
                   <img
                     src={getImageUrl(quest.Image)}
                     alt="Quest journal thumbnail"
                     loading="lazy"
-                    class="mt-4 w-44 h-16 rounded-md border border-gray-300 shadow-sm hidden sm:block"
+                    class="mt-4 w-44 h-16 rounded-md border border-border shadow-sm hidden sm:block"
                   />
                 </div>
                 <div class="ml-auto hidden sm:flex sm:items-center">
                   <a
                     href={getGarlandToolsQuestURLByID(quest["#"])}
                     target="_blank"
-                    class="inline-flex items-center px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap"
+                    class="inline-flex items-center px-4 py-2 bg-surface-card text-icon border border-border rounded-md text-base font-medium transition-all duration-300 hover:bg-surface-card-hover hover:text-themed-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent whitespace-nowrap"
                   >
                     <svg
                       class="mr-1"
@@ -877,7 +879,7 @@
                     >
                       <path
                         d="M5 12V6C5 5.44772 5.44772 5 6 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H12M8.11111 12H12M12 12V15.8889M12 12L5 19"
-                        stroke="#464455"
+                        stroke="currentColor"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                       />
@@ -893,18 +895,18 @@
                 >
                   {#each quest.Unlocks as unlock (unlock.Name)}
                     <div
-                      class="flex flex-col items-center p-4 bg-white rounded-lg shadow border border-gray-200"
+                      class="flex flex-col items-center p-4 bg-surface-card rounded-lg shadow border border-border-light"
                     >
                       <img
                         src={getImageUrl(unlock.Image)}
                         alt="{unlock.Name} thumbnail"
-                        class="w-44 h-16 rounded-md border border-gray-300 shadow-sm mb-4 hidden sm:block"
+                        class="w-44 h-16 rounded-md border border-border shadow-sm mb-4 hidden sm:block"
                         loading="lazy"
                       />
-                      <p class="font-bold text-gray-800 text-center">
+                      <p class="font-bold text-themed-primary text-center">
                         {unlock.Name}
                       </p>
-                      <p class="text-xs text-gray-500 text-center">
+                      <p class="text-xs text-themed-faint text-center">
                         {unlock.ContentTypeName}
                       </p>
                     </div>
@@ -929,8 +931,8 @@
           : 'auto'}"
       >
         <div class="flex justify-center">
-          <div class="inline-block p-4 bg-white rounded-lg shadow">
-            <p class="text-center text-gray-600">No quests found.</p>
+          <div class="inline-block p-4 bg-surface-card rounded-lg shadow">
+            <p class="text-center text-themed-tertiary">No quests found.</p>
             <img
               src="moogle_no_results.png"
               alt="A moogle displaying no results found"

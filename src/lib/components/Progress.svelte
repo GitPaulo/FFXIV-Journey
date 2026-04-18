@@ -42,14 +42,14 @@
 <!-- Total Progress Bar (Rainbow) -->
 <div
   transition:fade
-  class="mb-4 bg-white rounded-lg p-4 shadow progress-container"
+  class="mb-4 bg-surface-card rounded-lg p-4 shadow progress-container"
   role="region"
   aria-label="Progress statistics"
 >
   <div class="flex items-center justify-center gap-2">
     {#if mobile}
       <button
-        class="font-semibold text-gray-700 text-center cursor-pointer active:opacity-70"
+        class="font-semibold text-themed-secondary text-center cursor-pointer active:opacity-70"
         on:click={toggleExpanded}
       >
         FINAL FANTASY XIV
@@ -58,7 +58,9 @@
         >
       </button>
     {:else}
-      <p class="font-semibold text-gray-700 text-center">FINAL FANTASY XIV</p>
+      <p class="font-semibold text-themed-secondary text-center">
+        FINAL FANTASY XIV
+      </p>
     {/if}
 
     {#if showExpanded && !mobile}
@@ -67,7 +69,7 @@
         height="16"
         viewBox="0 0 24 24"
         fill="none"
-        class="text-blue-500 transition-colors duration-300"
+        class="text-accent"
       >
         <title>Pinned</title>
         <path
@@ -81,21 +83,22 @@
   <!-- Total Progress Bar -->
   <div
     bind:this={progressBarElement}
-    class="hidden sm:block w-full bg-gray-200 rounded-full h-5 relative overflow-hidden shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:ring-2 hover:ring-blue-400"
+    class="hidden sm:block w-full bg-surface-track rounded-full h-5 relative overflow-hidden shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300 hover:ring-2 hover:ring-accent"
     role="button"
     tabindex="0"
     aria-label="Click to toggle expansion details"
     on:click={toggleExpanded}
-    on:keydown={(e) => e.key === "Enter" && toggleExpanded()}
+    on:keydown={(e) =>
+      (e.key === "Enter" || e.key === " ") &&
+      (e.preventDefault(), toggleExpanded())}
   >
     <div
-      class="{showRainbow
-        ? 'rainbow-bar'
-        : 'blue-bar'} h-full rounded-full transition-colors duration-300"
+      class="{showRainbow ? 'rainbow-bar' : 'blue-bar'} h-full rounded-full"
       style="width: {totalPercent}%"
     ></div>
     <p
-      class="absolute w-full text-center text-sm font-semibold top-1/2 left-0 -translate-y-1/2 text-white pointer-events-none"
+      class="absolute w-full text-center text-sm font-semibold top-1/2 left-0 -translate-y-1/2 pointer-events-none"
+      style="color: var(--color-bar-text)"
     >
       {totalCompleted}/{totalQuests} ({totalPercent}%)
     </p>
@@ -115,21 +118,22 @@
       {#each Object.entries($progress) as [name, { completed, total, percent }] (name)}
         <div class="flex flex-col items-center">
           <!-- Expansion Name -->
-          <p class="font-semibold text-gray-700">
+          <p class="font-semibold text-themed-secondary">
             {name}
             <span class="inline sm:hidden ml-1">({completed}/{total})</span>
           </p>
 
           <!-- Progress Bar -->
           <div
-            class="hidden sm:block w-full bg-gray-200 rounded-full h-4 relative overflow-hidden shadow-inner"
+            class="hidden sm:block w-full bg-surface-track rounded-full h-4 relative overflow-hidden shadow-inner"
           >
             <div
-              class="h-full rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 transition-all duration-700 ease-in-out"
-              style="width: {percent}%"
+              class="h-full rounded-full transition-all duration-700 ease-in-out"
+              style="background: var(--gradient-expansion); width: {percent}%"
             ></div>
             <p
-              class="absolute w-full text-center text-xs font-semibold top-0 left-0 text-white"
+              class="absolute w-full text-center text-xs font-semibold top-0 left-0"
+              style="color: var(--color-bar-text)"
             >
               {completed}/{total} ({percent}%)
             </p>
@@ -142,7 +146,7 @@
 
 <style>
   .blue-bar {
-    background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+    background: var(--gradient-blue);
   }
 
   .rainbow-bar {

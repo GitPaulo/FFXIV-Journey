@@ -29,12 +29,16 @@
     if (currentTarget) {
       currentTarget.removeEventListener("mouseover", handleMouseOver);
       currentTarget.removeEventListener("mouseleave", handleMouseLeave);
+      currentTarget.removeEventListener("focusin", handleMouseOver);
+      currentTarget.removeEventListener("focusout", handleMouseLeave);
     }
 
     // Attach event listeners to the new target
     if (targetElement) {
       targetElement.addEventListener("mouseover", handleMouseOver);
       targetElement.addEventListener("mouseleave", handleMouseLeave);
+      targetElement.addEventListener("focusin", handleMouseOver);
+      targetElement.addEventListener("focusout", handleMouseLeave);
       currentTarget = targetElement; // Track the current target for cleanup
     }
   }
@@ -43,6 +47,8 @@
     if (currentTarget) {
       currentTarget.removeEventListener("mouseover", handleMouseOver);
       currentTarget.removeEventListener("mouseleave", handleMouseLeave);
+      currentTarget.removeEventListener("focusin", handleMouseOver);
+      currentTarget.removeEventListener("focusout", handleMouseLeave);
     }
   });
 
@@ -76,7 +82,8 @@
   {#if inlineMode}
     <span
       transition:fade
-      class="bg-gray-800 text-white text-xs rounded px-2 py-1 shadow-lg z-50"
+      role="tooltip"
+      class="bg-tooltip-bg text-tooltip-text text-xs rounded px-2 py-1 shadow-lg z-50"
       style="margin-top: {offsetY}px; margin-left: {offsetX}px;"
     >
       {text}
@@ -85,7 +92,8 @@
     <div
       transition:fade
       bind:this={tooltipElement}
-      class="bg-gray-800 text-white text-xs rounded px-2 py-1 shadow-lg z-50 fixed"
+      role="tooltip"
+      class="bg-tooltip-bg text-tooltip-text text-xs rounded px-2 py-1 shadow-lg z-50 fixed"
       {style}
     >
       {text}

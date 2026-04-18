@@ -3,6 +3,121 @@
 @tailwind utilities;
 
 /*
+ * Theme tokens
+ */
+
+:root {
+  /* Surfaces */
+  --color-page: #f0f0f0;
+  --color-container: #ffffff;
+  --color-content: rgba(244, 246, 244, 0.7);
+  --color-card: #ffffff;
+  --color-card-hover: #f3f4f6;
+  --color-elevated: #ffffff;
+  --color-overlay: rgba(75, 85, 99, 0.5);
+  --color-input: #ffffff;
+  --color-disabled: #d1d5db;
+  --color-track: #e5e7eb;
+
+  /* Text */
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #374151;
+  --color-text-tertiary: #4b5563;
+  --color-text-muted: #9ca3af;
+  --color-text-faint: #6b7280;
+  --color-text-hover: #111827;
+  --color-text-on-accent: #ffffff;
+
+  /* Borders */
+  --color-border: #d1d5db;
+  --color-border-light: #e5e7eb;
+
+  /* Accent */
+  --color-accent: #3b82f6;
+  --color-accent-hover: #2563eb;
+  --color-accent-text: #2563eb;
+  --color-accent-light: #dbeafe;
+  --color-accent-focus: #eff6ff;
+
+  /* Icons */
+  --color-icon: #464455;
+
+  /* Interactive */
+  --color-cancel-hover: #9ca3af;
+  --color-search-icon: #d1d5db;
+
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Focus ring offset */
+  --color-ring-offset: #ffffff;
+
+  /* Tooltip (inverted) */
+  --color-tooltip-bg: #1f2937;
+  --color-tooltip-text: #ffffff;
+
+  /* Progress gradients */
+  --gradient-blue: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+  --gradient-expansion: linear-gradient(90deg,
+      #3b82f6,
+      #2563eb,
+      #1d4ed8);
+
+  /* Progress bar text */
+  --color-bar-text: #ffffff;
+}
+
+html.dark {
+  --color-page: #100e0c;
+  --color-container: #1c1814;
+  --color-content: rgba(22, 20, 16, 0.88);
+  --color-card: #211d18;
+  --color-card-hover: #2e2820;
+  --color-elevated: #2e2820;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+  --color-input: #19150f;
+  --color-disabled: #3a3430;
+  --color-track: #2e2820;
+
+  --color-text-primary: #e8e4dc;
+  --color-text-secondary: #ccc8be;
+  --color-text-tertiary: #a8a49c;
+  --color-text-muted: #7e7a72;
+  --color-text-faint: #8a8680;
+  --color-text-hover: #f4f0e8;
+  --color-text-on-accent: #12100e;
+
+  --color-border: #3e362e;
+  --color-border-light: #2e2820;
+
+  --color-accent: #c8aa4e;
+  --color-accent-hover: #dfc06a;
+  --color-accent-text: #c8aa4e;
+  --color-accent-light: rgba(200, 170, 78, 0.3);
+  --color-accent-focus: rgba(200, 170, 78, 0.2);
+
+  --color-icon: #ccc8be;
+
+  --color-cancel-hover: #3a3430;
+  --color-search-icon: #6e6a62;
+
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  --color-ring-offset: #211d18;
+
+  --color-tooltip-bg: #e8e4dc;
+  --color-tooltip-text: #1c1814;
+
+  --gradient-blue: linear-gradient(90deg, #d4b85c, #c8aa4e, #b8963e);
+  --gradient-expansion: linear-gradient(90deg,
+      #e8cc72,
+      #d4b85c,
+      #c8aa4e);
+
+  --color-bar-text: #e8e4dc;
+}
+
+/*
  * Default
  */
 
@@ -29,7 +144,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
+  background-color: var(--color-page);
 }
 
 /*
@@ -40,8 +155,8 @@ body {
 /* Container for the main background */
 .background-container {
   position: relative;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--color-container);
+  box-shadow: 0 4px 8px var(--shadow-color);
   border-radius: 8px;
   max-width: 88%;
   width: 100%;
@@ -70,8 +185,16 @@ body {
   height: 84vh;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: rgba(244, 246, 244, 0.7);
+  background-color: var(--color-content);
   border-radius: inherit;
+}
+
+/* Theme transition - only animate colors during explicit theme toggle */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
 }
 
 /* Checkbox click effect */

@@ -17,6 +17,15 @@
   <meta property="og:image:alt" content="FFXIV Journey - Track your MSQ progress" />
   <meta name="theme-color" content="#3b82f6" />
 
+  <!-- Apply theme before first paint to prevent flash -->
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var isDark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (isDark) document.documentElement.classList.add('dark');
+    })();
+  </script>
+
   <!-- Preload backgrounds -->
   <link rel="prefetch" href="background_arealmreborn.webp" as="image" />
   <link rel="prefetch" href="background_heavensward.webp" as="image" />
