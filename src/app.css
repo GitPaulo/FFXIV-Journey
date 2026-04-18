@@ -66,10 +66,9 @@ body {
 .content-container {
   position: relative;
   z-index: 2;
-  padding: 20px;
+  padding: 20px 28px;
   height: 84vh;
   overflow-x: hidden;
-  /* TODO: how to make it look like it pops out? */
   overflow-y: auto;
   background-color: rgba(244, 246, 244, 0.7);
   border-radius: inherit;
@@ -114,22 +113,9 @@ body {
   background-color: #ff4500;
 }
 
-/* Floating breadcrumb responsive positioning */
-/* Scuffed but works */
+/* Floating breadcrumb positioning */
 .floating-breadcrumb {
-  top: 0.2rem !important;
-}
-
-@media (min-width: 768px) and (max-height: 1065px) {
-  .floating-breadcrumb {
-    top: 2rem !important;
-  }
-}
-
-@media (min-width: 768px) and (max-height: 720px) {
-  .floating-breadcrumb {
-    top: 2.6rem !important;
-  }
+  top: 0 !important;
 }
 
 /* Mobile scroll to top button - more pronounced flashing animation */
@@ -139,11 +125,13 @@ body {
   }
 
   @keyframes mobile-pulse {
+
     0%,
     100% {
       opacity: 1;
       transform: scale(1);
     }
+
     50% {
       opacity: 0.3;
       transform: scale(0.95);

@@ -5,6 +5,9 @@
   import type { ExpansionProgress } from "$lib/stores/progressStore";
   import { progress } from "$lib/stores/progressStore";
   import { isMobile } from "$lib/utils";
+  import Tooltip from "./Tooltip.svelte";
+
+  let progressBarElement: HTMLDivElement;
 
   let totalCompleted = 0;
   let totalQuests = 0;
@@ -77,10 +80,10 @@
 
   <!-- Total Progress Bar -->
   <div
+    bind:this={progressBarElement}
     class="hidden sm:block w-full bg-gray-200 rounded-full h-5 relative overflow-hidden shadow-inner cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 hover:ring-2 hover:ring-blue-400"
     role="button"
     tabindex="0"
-    title="Click to toggle details"
     aria-label="Click to toggle expansion details"
     on:click={toggleExpanded}
     on:keydown={(e) => e.key === "Enter" && toggleExpanded()}
@@ -97,6 +100,12 @@
       {totalCompleted}/{totalQuests} ({totalPercent}%)
     </p>
   </div>
+  <Tooltip
+    targetElement={progressBarElement}
+    text="Click to toggle details"
+    orientation="top"
+    offsetY={8}
+  />
 
   <!-- Expansion Progress Bars (shown on hover) -->
   {#if showExpanded}

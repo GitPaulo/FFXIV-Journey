@@ -35,34 +35,10 @@
   id="action-bar"
   class="fixed md:absolute top-1 sm:top-2 mt-2 bg-white rounded-lg p-2 sm:p-3 md:p-2 shadow flex items-center justify-between z-50 overflow-auto"
 >
-  <!-- Toggle Button -->
-  <div bind:this={tooltipTargetToggle} class="flex items-center">
-    <button
-      on:click={toggleAutoMode}
-      class={`w-10 h-5 sm:w-12 sm:h-6 flex items-center rounded-full p-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
-        $autoMode ? "bg-gray-300" : "bg-blue-500"
-      }`}
-    >
-      <div
-        class={`h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
-          $autoMode ? "translate-x-0" : "translate-x-5 sm:translate-x-6"
-        }`}
-      ></div>
-    </button>
-
-    <!-- Tooltip for Auto/Manual Mode -->
-    <Tooltip
-      targetElement={tooltipTargetToggle}
-      text={$autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
-      inlineMode={true}
-      offsetX={5}
-    />
-  </div>
-
   <!-- Progress Toggle Button -->
   <button
     on:click={toggleProgressVisibility}
-    class="flex items-center px-2 py-1 sm:px-4 sm:py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap ml-1 sm:ml-2"
+    class="flex items-center px-2 py-1 sm:px-4 sm:py-2 bg-white text-gray-700 border border-gray-300 rounded-md text-base font-medium transition-all duration-300 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 whitespace-nowrap"
   >
     <svg
       class="mr-1 sm:mr-1"
@@ -162,4 +138,28 @@
       offsetX={5}
     />
   {/if}
+
+  <!-- Toggle Button -->
+  <div bind:this={tooltipTargetToggle} class="flex items-center ml-1 sm:ml-2">
+    <button
+      on:click={toggleAutoMode}
+      class={`w-10 h-5 sm:w-12 sm:h-6 flex items-center rounded-full p-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${
+        $autoMode ? "bg-gray-300" : "bg-blue-500"
+      }`}
+    >
+      <div
+        class={`h-3.5 w-3.5 sm:h-4 sm:w-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${
+          $autoMode ? "translate-x-0" : "translate-x-5 sm:translate-x-6"
+        }`}
+      ></div>
+    </button>
+
+    <!-- Tooltip for Auto/Manual Mode -->
+    <Tooltip
+      targetElement={tooltipTargetToggle}
+      text={$autoMode ? "Autochecking Quests" : "Manual Quest Checking"}
+      inlineMode={true}
+      offsetX={5}
+    />
+  </div>
 </div>

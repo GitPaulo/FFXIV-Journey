@@ -68,6 +68,8 @@
   let lastCheckedQuestNumber: number | null = null;
   let highlightedQuestNumber: number | null = null;
   let tooltipTarget: HTMLElement | null = null;
+  let expansionStatusRefs: Record<string, HTMLElement> = {};
+  let questNameRefs: Record<number, HTMLElement> = {};
   let searchInput: Search;
   let isFiltering = false;
   let isMobileDevice = false;
@@ -679,7 +681,6 @@
   {#if shouldShowBreadcrumb}
     <div
       class="floating-breadcrumb hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-white rounded-lg shadow-md border border-gray-300 px-4 py-3 transition-all duration-300"
-      style="margin-top: -1rem;"
     >
       <div class="flex items-center text-sm text-gray-600 font-medium">
         <svg
@@ -727,23 +728,35 @@
       on:toggle={(event) => handleExpansionToggle(expansion.name, event)}
     >
       <summary
-        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-gray-800 cursor-pointer mb-4 bg-white rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         {expansion.name}
         {#if $showProgress}
           {#if $progress[expansion.name].percent === 100}
             <img
+              bind:this={expansionStatusRefs[expansion.name]}
               src="ffxiv_complete.webp"
               alt="Complete"
               class="w-6 h-6"
-              title="All quests completed"
+            />
+            <Tooltip
+              targetElement={expansionStatusRefs[expansion.name]}
+              text="All quests completed"
+              orientation="top"
+              offsetY={8}
             />
           {:else}
             <img
+              bind:this={expansionStatusRefs[expansion.name]}
               src="ffxiv_incomplete.webp"
               alt="Incomplete"
               class="w-6 h-6"
-              title="In progress"
+            />
+            <Tooltip
+              targetElement={expansionStatusRefs[expansion.name]}
+              text="In progress"
+              orientation="top"
+              offsetY={8}
             />
           {/if}
         {/if}
@@ -760,7 +773,7 @@
         >
           {#if questGroup !== "Main"}
             <summary
-              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-all duration-300 transform hover:scale-[1.01] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              class="flex justify-between items-center text-xl font-semibold text-gray-600 cursor-pointer mb-3 bg-white rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
               {questGroup}
               {#if $showProgress}
@@ -801,11 +814,17 @@
                   >
                     <details class="inline">
                       <summary
+                        bind:this={questNameRefs[quest["#"]]}
                         class="font-bold text-lg sm:text-xl text-gray-800 cursor-pointer list-none"
-                        title="Show ID"
                       >
                         {quest.Name}
                       </summary>
+                      <Tooltip
+                        targetElement={questNameRefs[quest["#"]]}
+                        text="Show ID"
+                        orientation="top"
+                        offsetY={8}
+                      />
                       <p class="text-sm text-gray-500 mt-1 hidden sm:block">
                         ID: {quest.Id}
                       </p>
