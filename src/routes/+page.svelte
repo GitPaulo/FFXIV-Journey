@@ -69,21 +69,11 @@
   let highlightedQuestNumber: number | null = null;
   let tooltipTarget: HTMLElement | null = null;
   let expansionStatusRefs: Record<string, HTMLElement> = {};
-  let questNameRefs: Record<number, HTMLElement> = {};
 
-  function captureRef(node: HTMLElement, key: number) {
-    questNameRefs[key] = node;
-    questNameRefs = questNameRefs;
-    return {
-      destroy() {
-        delete questNameRefs[key];
-        questNameRefs = questNameRefs;
-      },
-    };
-  }
   let searchInput: Search;
   let isFiltering = false;
   let isMobileDevice = false;
+  let breadcrumbRafId: number | null = null;
 
   // Loading states
   // Yes, i know this is a gimmick...
@@ -413,8 +403,13 @@
 
     showScrollToTop = contentContainer.scrollTop > 140;
 
-    // Update breadcrumb with simple scroll detection
-    updateBreadcrumb();
+    // Throttle breadcrumb DOM queries to one per animation frame
+    if (!breadcrumbRafId) {
+      breadcrumbRafId = requestAnimationFrame(() => {
+        updateBreadcrumb();
+        breadcrumbRafId = null;
+      });
+    }
 
     if (showScrollToTop) {
       enableScrollToTop();
@@ -654,6 +649,7 @@
     if (contentContainer) {
       contentContainer.removeEventListener("scroll", handleScroll);
     }
+    if (breadcrumbRafId) cancelAnimationFrame(breadcrumbRafId);
     window.removeEventListener("resize", handleResize);
     debouncedFilterQuests.cancel();
   });
@@ -691,7 +687,7 @@
   <!-- Floating Breadcrumb -->
   {#if shouldShowBreadcrumb}
     <div
-      class="floating-breadcrumb hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-surface-card rounded-lg shadow-md border border-border px-4 py-3 transition-all duration-300"
+      class="hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-surface-card rounded-lg shadow-md border border-border px-4 py-3 transition-all duration-300"
     >
       <div class="flex items-center text-sm text-themed-tertiary font-medium">
         <svg
@@ -734,12 +730,12 @@
     <details
       id="expansion-{expansion.name.replace(/\s/g, '-').toLowerCase()}"
       transition:fade
-      class="relative mb-4 overflow-visible"
+      class="relative mb-1 sm:mb-4 overflow-visible"
       open={openExpansions[expansion.name]}
       on:toggle={(event) => handleExpansionToggle(expansion.name, event)}
     >
       <summary
-        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-themed-primary cursor-pointer mb-4 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-themed-primary cursor-pointer mb-1 sm:mb-4 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
       >
         {expansion.name}
         {#if $showProgress}
@@ -777,14 +773,14 @@
           id="questgroup-{expansion.name
             .replace(/\s/g, '-')
             .toLowerCase()}-{questGroup.replace(/\s/g, '-').toLowerCase()}"
-          class="ml-6 mb-2 pl-6"
+          class="ml-6 mb-0.5 sm:mb-2 pl-6"
           open={openQuestGroups[expansion.name][questGroup]}
           on:toggle={(event) =>
             handleQuestGroupToggle(expansion.name, questGroup, event)}
         >
           {#if questGroup !== "Main"}
             <summary
-              class="flex justify-between items-center text-xl font-semibold text-themed-tertiary cursor-pointer mb-3 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+              class="flex justify-between items-center text-xl font-semibold text-themed-tertiary cursor-pointer mb-1 sm:mb-3 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               {questGroup}
               {#if $showProgress}
@@ -827,17 +823,11 @@
                   >
                     <details class="inline">
                       <summary
-                        use:captureRef={quest["#"]}
                         class="font-bold text-lg sm:text-xl text-themed-primary cursor-pointer list-none rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300"
+                        title="Show ID"
                       >
                         {quest.Name}
                       </summary>
-                      <Tooltip
-                        targetElement={questNameRefs[quest["#"]]}
-                        text="Show ID"
-                        orientation="top"
-                        offsetY={8}
-                      />
                       <p class="text-sm text-themed-faint mt-1 hidden sm:block">
                         ID: {quest.Id}
                       </p>

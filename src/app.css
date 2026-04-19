@@ -178,6 +178,7 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 /* Container for the main background */
 .background-container {
   position: relative;
+  isolation: isolate;
   background-color: var(--color-container);
   box-shadow: 0 4px 8px var(--shadow-color);
   border-radius: 8px;
@@ -186,6 +187,13 @@ input[type="search"]::-webkit-search-cancel-button:hover {
   width: 100%;
   height: auto;
   margin-top: 20px;
+}
+
+@media (max-width: 767px) {
+  .background-container {
+    margin-top: 0;
+    margin-bottom: 4px;
+  }
 }
 
 /* Overlay for the background image */
@@ -214,11 +222,20 @@ input[type="search"]::-webkit-search-cancel-button:hover {
 }
 
 /* Theme transition - only animate colors during explicit theme toggle */
-html.theme-transition,
-html.theme-transition *,
-html.theme-transition *::before,
-html.theme-transition *::after {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
+html.theme-transition .background-container,
+html.theme-transition .content-container,
+html.theme-transition .background-overlay,
+html.theme-transition .progress-container,
+html.theme-transition [class*="bg-surface-"],
+html.theme-transition summary,
+html.theme-transition input[type="search"],
+html.theme-transition a,
+html.theme-transition button,
+html.theme-transition p,
+html.theme-transition span,
+html.theme-transition h1,
+html.theme-transition h2 {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 /* Checkbox click effect */
@@ -258,11 +275,6 @@ html.theme-transition *::after {
 
 .particle:nth-child(5n) {
   background-color: #ff4500;
-}
-
-/* Floating breadcrumb positioning */
-.floating-breadcrumb {
-  top: 0 !important;
 }
 
 /* Mobile scroll to top button - more pronounced flashing animation */
