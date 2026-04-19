@@ -70,6 +70,17 @@
   let tooltipTarget: HTMLElement | null = null;
   let expansionStatusRefs: Record<string, HTMLElement> = {};
   let questNameRefs: Record<number, HTMLElement> = {};
+
+  function captureRef(node: HTMLElement, key: number) {
+    questNameRefs[key] = node;
+    questNameRefs = questNameRefs;
+    return {
+      destroy() {
+        delete questNameRefs[key];
+        questNameRefs = questNameRefs;
+      },
+    };
+  }
   let searchInput: Search;
   let isFiltering = false;
   let isMobileDevice = false;
@@ -803,7 +814,7 @@
                       type="checkbox"
                       aria-label="Mark {quest.Name} as completed"
                       class="h-6 w-6 rounded-sm border-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300"
-                      style="accent-color: var(--color-accent);"
+                      style="accent-color: var(--color-check);"
                       bind:checked={$completedQuests[quest["#"]]}
                       on:change={(e) => handleCheckboxChange(e, quest)}
                     />
@@ -816,8 +827,8 @@
                   >
                     <details class="inline">
                       <summary
-                        bind:this={questNameRefs[quest["#"]]}
-                        class="font-bold text-lg sm:text-xl text-themed-primary cursor-pointer list-none"
+                        use:captureRef={quest["#"]}
+                        class="font-bold text-lg sm:text-xl text-themed-primary cursor-pointer list-none rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-all duration-300"
                       >
                         {quest.Name}
                       </summary>

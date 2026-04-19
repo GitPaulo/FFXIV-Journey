@@ -27,7 +27,7 @@
       0,
     );
     totalPercent =
-      totalQuests > 0 ? Math.round((totalCompleted / totalQuests) * 100) : 0;
+      totalQuests > 0 ? Math.floor((totalCompleted / totalQuests) * 100) : 0;
   }
 
   function toggleExpanded() {
