@@ -9,6 +9,8 @@
   export let orientation: "top" | "bottom" | "left" | "right" = "top";
   export let inlineMode: boolean = false;
 
+  const FADE = { duration: 150 };
+
   let tooltipElement: HTMLElement | null = null;
   let showTooltip = false;
   let style = "";
@@ -81,7 +83,8 @@
 {#if showTooltip}
   {#if inlineMode}
     <span
-      transition:fade
+      in:fade={FADE}
+      out:fade={FADE}
       role="tooltip"
       class="bg-tooltip-bg text-tooltip-text text-xs rounded px-2 py-1 shadow-lg z-50"
       style="margin-top: {offsetY}px; margin-left: {offsetX}px;"
@@ -90,7 +93,8 @@
     </span>
   {:else}
     <div
-      transition:fade
+      in:fade={FADE}
+      out:fade={FADE}
       bind:this={tooltipElement}
       role="tooltip"
       class="bg-tooltip-bg text-tooltip-text text-xs rounded px-2 py-1 shadow-lg z-50 fixed"

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import { fade } from "svelte/transition";
   import {
     autoMode,
     toggleAutoMode,
@@ -33,7 +32,6 @@
 </script>
 
 <div
-  transition:fade
   id="action-bar"
   class="fixed bottom-2 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:bottom-auto md:absolute md:top-2 mt-0 md:mt-2 bg-surface-card rounded-lg p-2 sm:p-3 md:p-2 shadow flex items-center justify-between z-50 overflow-auto"
 >

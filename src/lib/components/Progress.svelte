@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fade } from "svelte/transition";
 
   import type { ExpansionProgress } from "$lib/stores/progressStore";
   import { progress } from "$lib/stores/progressStore";
@@ -41,7 +40,6 @@
 
 <!-- Total Progress Bar (Rainbow) -->
 <div
-  transition:fade
   class="mb-4 bg-surface-card rounded-lg p-4 shadow progress-container"
   role="region"
   aria-label="Progress statistics"

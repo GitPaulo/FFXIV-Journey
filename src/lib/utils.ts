@@ -59,3 +59,9 @@ export function createMagicParticles(inputElement: HTMLInputElement) {
     setTimeout(() => particle.remove(), 750);
   }
 }
+
+/**
+ * Shared transition configs.
+ */
+export const FADE_IN = { duration: 300, easing: (t: number) => t };
+export const FADE_OUT = { duration: 200, easing: (t: number) => t };

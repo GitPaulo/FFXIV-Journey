@@ -16,6 +16,8 @@
     sanitizeFFXIVMarkUp,
     createMagicParticles,
     isMobile,
+    FADE_IN,
+    FADE_OUT,
   } from "$lib/utils";
   import type { Quest, ExpansionsQuests, Expansion } from "$lib/model";
 
@@ -75,13 +77,6 @@
   let isMobileDevice = false;
   let breadcrumbRafId: number | null = null;
 
-  // Loading states
-  // Yes, i know this is a gimmick...
-  let isQuestsInitialized = false;
-  let isProgressInitialized = false;
-  let isBackgroundInitialized = false;
-  let isComponentsInitialized = false;
-
   // Breadcrumb tracking
   let currentVisibleExpansion = "";
   let currentVisibleQuestGroup = "";
@@ -107,20 +102,6 @@
   // - This prevents hover breadcrumbs when headers are still visible
   $: shouldShowBreadcrumb =
     !isMobileDevice && !searchQuery && !isFiltering && showBreadcrumb;
-
-  $: isFullyLoaded =
-    isQuestsInitialized &&
-    isProgressInitialized &&
-    isBackgroundInitialized &&
-    isComponentsInitialized;
-  $: loadingMessage = (() => {
-    if (!isQuestsInitialized) return "Loading quest data... <b>kupo!</b>";
-    if (!isProgressInitialized) return "Initializing progress... <b>kupo!</b>";
-    if (!isBackgroundInitialized)
-      return "Setting up backgrounds... <b>kupo!</b>";
-    if (!isComponentsInitialized) return "Preparing components... <b>kupo!</b>";
-    return "Almost ready... <b>kupo!</b>";
-  })();
 
   /**
    * Helper function to get the main content container element
@@ -374,27 +355,8 @@
     updateBackground();
   }
 
-  async function simulateLoading() {
-    // Remove artificial delay - loading will complete when all tasks are done
-    if (isMobileDevice) {
-      setActionBarPosition(false); // Attach action bar for mobile
-    }
-
-    // Small delay to show component loading state
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    isComponentsInitialized = true;
-  }
-
   function completeLoading() {
-    // Only hide loading when everything is actually ready
-    if (isFullyLoaded) {
-      isLoadingQuests.set(false);
-    }
-  }
-
-  // Watch for loading completion
-  $: if (isFullyLoaded) {
-    completeLoading();
+    isLoadingQuests.set(false);
   }
 
   function handleScroll() {
@@ -585,28 +547,17 @@
     if (hasSharedProgress()) {
       await loadSharedProgress();
     }
-
     initAllExpansionProgress();
-
-    await new Promise((resolve) => setTimeout(resolve, 250));
-    isProgressInitialized = true;
   }
 
-  async function initQuests(loadedQuests: ExpansionsQuests) {
+  function initQuests(loadedQuests: ExpansionsQuests) {
     quests.set(loadedQuests);
     filteredQuests.set(loadedQuests);
-
     closeExpansionAndQuestGroups();
-
-    await new Promise((resolve) => setTimeout(resolve, 200));
-    isQuestsInitialized = true;
   }
 
-  async function initBackground() {
+  function initBackground() {
     updateBackground();
-
-    await new Promise((resolve) => setTimeout(resolve, 220));
-    isBackgroundInitialized = true;
   }
 
   // Handle window resize to update action bar position
@@ -625,15 +576,20 @@
     // Cache mobile detection result
     isMobileDevice = isMobile();
 
-    // Initialize each component and mark completion with small delays
-    await initQuests(loadedQuests);
+    // Initialize everything synchronously
+    initQuests(loadedQuests);
     await initProgress();
-
     updateLastCheckedQuest();
     updateCurrentExpansion();
-    await initBackground();
+    initBackground();
 
-    await simulateLoading();
+    if (isMobileDevice) {
+      setActionBarPosition(false);
+    }
+
+    // Brief delay so loading screen feels intentional
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    completeLoading();
 
     // Events
     const contentContainer = getContentContainer();
@@ -666,8 +622,9 @@
 
 <Title />
 {#if $isLoadingQuests}
-  <Loading message={loadingMessage} />
-{:else}
+  <Loading />
+{/if}
+<div class:hidden={$isLoadingQuests}>
   <ActionBar
     lastCheckedQuestId={lastCheckedQuestNumber}
     on:generateLink={generateShareableLink}
@@ -703,7 +660,7 @@
         </svg>
         <button
           on:click={() => scrollToExpansion(displayExpansion)}
-          class="text-accent-text font-semibold hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-200"
+          class="text-accent-text font-semibold hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-300"
         >
           {displayExpansion}
         </button>
@@ -729,13 +686,12 @@
   {#each $filteredQuests as expansion}
     <details
       id="expansion-{expansion.name.replace(/\s/g, '-').toLowerCase()}"
-      transition:fade
       class="relative mb-1 sm:mb-4 overflow-visible"
       open={openExpansions[expansion.name]}
       on:toggle={(event) => handleExpansionToggle(expansion.name, event)}
     >
       <summary
-        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-themed-primary cursor-pointer mb-1 sm:mb-4 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+        class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-themed-primary cursor-pointer mb-1 sm:mb-4 bg-surface-card rounded-lg p-4 shadow transition-all duration-300 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
       >
         {expansion.name}
         {#if $showProgress}
@@ -780,7 +736,7 @@
         >
           {#if questGroup !== "Main"}
             <summary
-              class="flex justify-between items-center text-xl font-semibold text-themed-tertiary cursor-pointer mb-1 sm:mb-3 bg-surface-card rounded-lg p-4 shadow transition-all duration-500 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+              class="flex justify-between items-center text-xl font-semibold text-themed-tertiary cursor-pointer mb-1 sm:mb-3 bg-surface-card rounded-lg p-4 shadow transition-all duration-300 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               {questGroup}
               {#if $showProgress}
@@ -925,7 +881,8 @@
   <div class="relative">
     {#if $filteredQuests && $filteredQuests.length === 0}
       <div
-        transition:fade
+        in:fade={FADE_IN}
+        out:fade={FADE_OUT}
         class="absolute inset-0"
         style="opacity: {isFiltering ? 0 : 1}; pointer-events: {isFiltering
           ? 'none'
@@ -945,6 +902,6 @@
       </div>
     {/if}
   </div>
-{/if}
+</div>
 
 <Footer />
