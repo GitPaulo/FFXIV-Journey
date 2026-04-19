@@ -277,6 +277,21 @@ html.theme-transition h2 {
   background-color: #ff4500;
 }
 
+/* Content fade-in on load */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out both;
+}
+
 /* Mobile scroll to top button - more pronounced flashing animation */
 @media (max-width: 767px) {
   .mobile-flash {

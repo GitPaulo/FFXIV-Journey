@@ -1,5 +1,4 @@
 <script>
-  import { slide } from "svelte/transition";
   import { isLoadingQuests } from "../stores/questsStore";
 </script>
 
@@ -26,7 +25,6 @@
   <div class="hidden sm:flex justify-end my-2">
     <div
       class="group flex items-center p-3 bg-surface-card rounded-lg shadow relative transition-all duration-300"
-      transition:slide
     >
       <h1
         class="text-accent-text text-lg font-bold opacity-0 transform scale-95 sr-only group-hover:not-sr-only group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"

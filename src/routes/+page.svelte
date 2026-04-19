@@ -76,6 +76,7 @@
   let isFiltering = false;
   let isMobileDevice = false;
   let breadcrumbRafId: number | null = null;
+  let loadingMessage = "Loading quest data... <b>kupo!</b>";
 
   // Breadcrumb tracking
   let currentVisibleExpansion = "";
@@ -543,6 +544,10 @@
     debouncedFilterQuests(); // Trigger the debounced filter
   }
 
+  function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   async function initProgress() {
     if (hasSharedProgress()) {
       await loadSharedProgress();
@@ -576,19 +581,29 @@
     // Cache mobile detection result
     isMobileDevice = isMobile();
 
-    // Initialize everything synchronously
+    // Stage 1: Quests
     initQuests(loadedQuests);
+    await delay(200);
+
+    // Stage 2: Progress
+    loadingMessage = "Initializing progress... <b>kupo!</b>";
     await initProgress();
     updateLastCheckedQuest();
     updateCurrentExpansion();
-    initBackground();
+    await delay(200);
 
+    // Stage 3: Background
+    loadingMessage = "Setting up backgrounds... <b>kupo!</b>";
+    initBackground();
+    await delay(200);
+
+    // Stage 4: Components
+    loadingMessage = "Preparing components... <b>kupo!</b>";
     if (isMobileDevice) {
       setActionBarPosition(false);
     }
+    await delay(200); // Yes, i know its a fake loading screen :)
 
-    // Brief delay so loading screen feels intentional
-    await new Promise((resolve) => setTimeout(resolve, 400));
     completeLoading();
 
     // Events
@@ -622,9 +637,9 @@
 
 <Title />
 {#if $isLoadingQuests}
-  <Loading />
+  <Loading message={loadingMessage} />
 {/if}
-<div class:hidden={$isLoadingQuests}>
+<div class:hidden={$isLoadingQuests} class:fade-in={!$isLoadingQuests}>
   <ActionBar
     lastCheckedQuestId={lastCheckedQuestNumber}
     on:generateLink={generateShareableLink}
