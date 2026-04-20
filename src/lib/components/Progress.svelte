@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import type { ExpansionProgress } from "$lib/stores/progressStore";
   import { progress } from "$lib/stores/progressStore";
   import { isMobile } from "$lib/utils";
   import Tooltip from "./Tooltip.svelte";
