@@ -709,7 +709,7 @@
         class="flex justify-between items-center text-xl sm:text-2xl font-semibold text-themed-primary cursor-pointer mb-1 sm:mb-4 bg-surface-card rounded-lg p-4 shadow transition-all duration-300 ease-out transform hover:scale-[1.01] hover:shadow-lg hover:z-[3] hover:relative focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
       >
         {expansion.name}
-        {#if $showProgress}
+        {#if $showProgress && $progress[expansion.name]}
           {#if $progress[expansion.name].percent === 100}
             <img
               bind:this={expansionStatusRefs[expansion.name]}
@@ -754,7 +754,7 @@
               class="flex justify-between items-center text-xl font-semibold text-themed-tertiary cursor-pointer mb-1 sm:mb-3 bg-surface-card rounded-lg p-4 shadow transition-all duration-300 ease-out transform hover:scale-[1.005] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
             >
               {questGroup}
-              {#if $showProgress}
+              {#if $showProgress && $groupProgress[expansion.name]?.[questGroup]}
                 <div class="text-right">
                   {$groupProgress[expansion.name][questGroup]
                     .completed}/{$groupProgress[expansion.name][questGroup]
