@@ -79,45 +79,22 @@
   let loadingMessage = "Loading quest data... <b>kupo!</b>";
 
   // Breadcrumb tracking
-  let currentVisibleExpansion = "";
-  let currentVisibleQuestGroup = "";
-  let showBreadcrumb = false;
-
-  // Hover override for breadcrumbs
-  let hoverOverrideExpansion = "";
-  let hoverOverrideQuestGroup = "";
-  let isHoveringQuest = false;
+  let breadcrumbExpansion = "";
+  let breadcrumbQuestGroup = "";
 
   // Breadcrumb expansion dropdown
   let showExpansionDropdown = false;
   let breadcrumbDropdownRef: HTMLElement;
 
-  // Computed breadcrumb values (hover takes precedence over scroll-based)
-  $: displayExpansion = isHoveringQuest
-    ? hoverOverrideExpansion
-    : currentVisibleExpansion;
-  $: displayQuestGroup = isHoveringQuest
-    ? hoverOverrideQuestGroup
-    : currentVisibleQuestGroup;
-
-  // Breadcrumb visibility logic:
-  // - Never show on mobile devices
-  // - Never show during search/filtering
-  // - Show when we've scrolled past headers OR when hovering
-  // - This prevents hover breadcrumbs when headers are still visible
+  // Breadcrumb visibility: show when we have content and not on mobile/search/filtering
   $: shouldShowBreadcrumb =
-    !isMobileDevice && !searchQuery && !isFiltering && showBreadcrumb;
+    !isMobileDevice &&
+    !searchQuery &&
+    !isFiltering &&
+    breadcrumbExpansion !== "";
 
-  /**
-   * Helper function to get the main content container element
-   * @returns The content container element or null if not found
-   */
   function getContentContainer(): HTMLElement | null {
-    return (
-      (document.getElementsByClassName(
-        "content-container",
-      )[0] as HTMLElement) || null
-    );
+    return document.querySelector<HTMLElement>(".content-container");
   }
 
   function filterQuests(): void {
@@ -225,10 +202,6 @@
     openQuestGroups[expansionName][questGroup] = details.open;
   }
 
-  /**
-   * Set the action bar position (fixed for detached, absolute for attached)
-   * @param isDetached - Whether the action bar should be detached (fixed position)
-   */
   function setActionBarPosition(isDetached: boolean) {
     const actionBar = document.getElementById("action-bar");
     if (actionBar) {
@@ -372,10 +345,6 @@
     updateBackground();
   }
 
-  function completeLoading() {
-    isLoadingQuests.set(false);
-  }
-
   function handleScroll() {
     const contentContainer = getContentContainer();
     if (!contentContainer) return;
@@ -392,14 +361,12 @@
 
     if (showScrollToTop) {
       enableScrollToTop();
-
-      if (isMobileDevice) return;
-      setActionBarPosition(true); // Detach action bar
     } else {
       disableScrollToTop();
+    }
 
-      if (isMobileDevice) return;
-      setActionBarPosition(false); // Attach action bar
+    if (!isMobileDevice) {
+      setActionBarPosition(showScrollToTop);
     }
   }
 
@@ -427,22 +394,13 @@
     expansionName: string,
     questGroupName: string,
   ): void {
-    isHoveringQuest = true;
-    hoverOverrideExpansion = expansionName;
-
-    // Format quest group name, removing expansion prefix
-    const formattedQuestGroup = formatIdToTitle(
-      `questgroup-${questGroupName.toLowerCase().replace(/\s/g, "-")}`,
-      "questgroup",
-    );
-    hoverOverrideQuestGroup =
-      formattedQuestGroup.toLowerCase() !== "main" ? formattedQuestGroup : "";
+    breadcrumbExpansion = expansionName;
+    breadcrumbQuestGroup = questGroupName === "Main" ? "" : questGroupName;
   }
 
   function handleQuestHoverEnd(): void {
-    isHoveringQuest = false;
-    hoverOverrideExpansion = "";
-    hoverOverrideQuestGroup = "";
+    // Revert to scroll-based breadcrumb
+    updateBreadcrumb();
   }
 
   function formatIdToTitle(
@@ -493,25 +451,22 @@
       return;
     }
 
-    // Only show when the expansion header has scrolled out of view
     const summary = expansionEl.querySelector(":scope > summary");
     if (!summary || summary.getBoundingClientRect().top >= containerRect.top) {
       hideBreadcrumb();
       return;
     }
 
-    currentVisibleExpansion = formatIdToTitle(expansionEl.id, "expansion");
+    breadcrumbExpansion = formatIdToTitle(expansionEl.id, "expansion");
 
     const questGroupEl = visibleQuest.closest('[id^="questgroup-"]');
     if (questGroupEl) {
       const groupName = formatIdToTitle(questGroupEl.id, "questgroup");
-      currentVisibleQuestGroup =
+      breadcrumbQuestGroup =
         groupName.toLowerCase() !== "main" ? groupName : "";
     } else {
-      currentVisibleQuestGroup = "";
+      breadcrumbQuestGroup = "";
     }
-
-    showBreadcrumb = true;
   }
 
   function findFirstVisibleQuest(
@@ -521,8 +476,10 @@
     const questItems = container.querySelectorAll('[id^="quest-"]');
 
     for (const item of questItems) {
+      // Skip quests inside closed <details> (expansion or quest group)
+      if (!isQuestVisible(item)) continue;
+
       const rect = item.getBoundingClientRect();
-      if (rect.height === 0) continue;
 
       // Quest intersects the visible container area
       if (rect.bottom > containerRect.top && rect.top < containerRect.bottom) {
@@ -536,10 +493,23 @@
     return null;
   }
 
+  function isQuestVisible(element: Element): boolean {
+    let parent = element.parentElement;
+    while (parent) {
+      if (
+        parent.tagName === "DETAILS" &&
+        !(parent as HTMLDetailsElement).open
+      ) {
+        return false;
+      }
+      parent = parent.parentElement;
+    }
+    return true;
+  }
+
   function hideBreadcrumb(): void {
-    currentVisibleExpansion = "";
-    currentVisibleQuestGroup = "";
-    showBreadcrumb = false;
+    breadcrumbExpansion = "";
+    breadcrumbQuestGroup = "";
     showExpansionDropdown = false;
   }
 
@@ -591,10 +561,6 @@
     closeExpansionAndQuestGroups();
   }
 
-  function initBackground() {
-    updateBackground();
-  }
-
   // Handle window resize to update action bar position
   function handleResize() {
     isMobileDevice = isMobile();
@@ -624,7 +590,7 @@
 
     // Stage 3: Background
     loadingMessage = "Setting up backgrounds... <b>kupo!</b>";
-    initBackground();
+    updateBackground();
     await delay(200);
 
     // Stage 4: Components
@@ -632,9 +598,9 @@
     if (isMobileDevice) {
       setActionBarPosition(false);
     }
-    await delay(200); // Yes, i know its a fake loading screen :)
+    await delay(200);
 
-    completeLoading();
+    isLoadingQuests.set(false);
 
     // Events
     const contentContainer = getContentContainer();
@@ -729,11 +695,11 @@
                 <button
                   on:click={() => selectBreadcrumbExpansion(exp.name)}
                   class="w-full text-left px-4 py-2 text-sm transition-colors duration-150
-                      {exp.name === displayExpansion
+                      {exp.name === breadcrumbExpansion
                     ? 'text-accent-text font-semibold bg-surface-input'
                     : 'text-themed-primary hover:bg-surface-input hover:text-accent-text'}"
                   role="option"
-                  aria-selected={exp.name === displayExpansion}
+                  aria-selected={exp.name === breadcrumbExpansion}
                 >
                   {exp.name}
                 </button>
@@ -743,12 +709,12 @@
         {/if}
       </div>
       <button
-        on:click={() => scrollToExpansion(displayExpansion)}
+        on:click={() => scrollToExpansion(breadcrumbExpansion)}
         class="text-accent-text font-semibold hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-300"
       >
-        {displayExpansion}
+        {breadcrumbExpansion}
       </button>
-      {#if displayQuestGroup}
+      {#if breadcrumbQuestGroup}
         <svg
           class="w-3 h-3 mx-2 text-themed-muted"
           fill="currentColor"
@@ -760,7 +726,7 @@
             clip-rule="evenodd"
           />
         </svg>
-        <span class="text-themed-secondary">{displayQuestGroup}</span>
+        <span class="text-themed-secondary">{breadcrumbQuestGroup}</span>
       {/if}
     </div>
   </div>
