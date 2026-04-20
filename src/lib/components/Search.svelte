@@ -44,8 +44,15 @@
     searchInput.value = "";
   }
 
+  export function focus() {
+    searchInput?.focus();
+  }
+
   onMount(() => {
     window.addEventListener("keydown", handleKeydown);
+    if (!isMobile()) {
+      searchInput?.focus();
+    }
   });
 
   onDestroy(() => {

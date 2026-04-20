@@ -88,6 +88,10 @@
   let hoverOverrideQuestGroup = "";
   let isHoveringQuest = false;
 
+  // Breadcrumb expansion dropdown
+  let showExpansionDropdown = false;
+  let breadcrumbDropdownRef: HTMLElement;
+
   // Computed breadcrumb values (hover takes precedence over scroll-based)
   $: displayExpansion = isHoveringQuest
     ? hoverOverrideExpansion
@@ -257,6 +261,18 @@
         openExpansions[expansionName] = true;
       }
 
+      // Open all quest groups within the expansion
+      const allQuests = get(quests);
+      const expansion = allQuests.find((exp) => exp.name === expansionName);
+      if (expansion) {
+        if (!openQuestGroups[expansionName]) {
+          openQuestGroups[expansionName] = {};
+        }
+        for (const questGroup of Object.keys(expansion.quests)) {
+          openQuestGroups[expansionName][questGroup] = true;
+        }
+      }
+
       // Scroll to the expansion
       tick().then(() => {
         expansionElement.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -387,6 +403,25 @@
     }
   }
 
+  function toggleExpansionDropdown() {
+    showExpansionDropdown = !showExpansionDropdown;
+  }
+
+  function selectBreadcrumbExpansion(expansionName: string) {
+    showExpansionDropdown = false;
+    scrollToExpansion(expansionName);
+  }
+
+  function handleClickOutsideDropdown(event: MouseEvent) {
+    if (
+      showExpansionDropdown &&
+      breadcrumbDropdownRef &&
+      !breadcrumbDropdownRef.contains(event.target as Node)
+    ) {
+      showExpansionDropdown = false;
+    }
+  }
+
   function handleQuestHover(
     quest: Quest,
     expansionName: string,
@@ -440,77 +475,73 @@
     return cleaned;
   }
 
-  function isElementOutOfView(element: Element, threshold: number): boolean {
-    return element.getBoundingClientRect().top < -threshold;
-  }
-
-  function findActiveQuestGroup(
-    expansionElement: HTMLElement,
-    threshold: number,
-  ): string {
-    const questGroupHeaders = expansionElement.querySelectorAll(
-      '[id^="questgroup-"] > summary',
-    );
-
-    let lastActiveQuestGroup = "";
-
-    // Check all quest groups and keep track of the last one that's out of view
-    for (const header of questGroupHeaders) {
-      if (isElementOutOfView(header, threshold)) {
-        const questGroupElement = header.closest(
-          '[id^="questgroup-"]',
-        ) as HTMLElement;
-        const questGroupName = formatIdToTitle(
-          questGroupElement.id,
-          "questgroup",
-        );
-
-        // Skip "Main" quest groups as they don't provide useful breadcrumb context
-        if (questGroupName.toLowerCase() !== "main") {
-          lastActiveQuestGroup = questGroupName;
-        }
-      }
-    }
-
-    return lastActiveQuestGroup;
-  }
-
   function updateBreadcrumb(): void {
     const contentContainer = getContentContainer();
     if (!contentContainer) return;
 
-    const SCROLL_THRESHOLD = 100; // Distance above viewport to consider "out of view"
+    const containerRect = contentContainer.getBoundingClientRect();
+    const visibleQuest = findFirstVisibleQuest(contentContainer, containerRect);
 
-    let currentExpansion = "";
-    let currentQuestGroup = "";
-    let hasScrolledPastAnyHeader = false;
+    if (!visibleQuest) {
+      hideBreadcrumb();
+      return;
+    }
 
-    // Find the most recent expansion header that has scrolled out of view
-    const expansionHeaders = document.querySelectorAll(
-      '[id^="expansion-"] > summary',
-    );
+    const expansionEl = visibleQuest.closest('[id^="expansion-"]');
+    if (!expansionEl) {
+      hideBreadcrumb();
+      return;
+    }
 
-    for (const header of expansionHeaders) {
-      if (isElementOutOfView(header, SCROLL_THRESHOLD)) {
-        hasScrolledPastAnyHeader = true;
+    // Only show when the expansion header has scrolled out of view
+    const summary = expansionEl.querySelector(":scope > summary");
+    if (!summary || summary.getBoundingClientRect().top >= containerRect.top) {
+      hideBreadcrumb();
+      return;
+    }
 
-        const expansionElement = header.closest(
-          '[id^="expansion-"]',
-        ) as HTMLElement;
-        currentExpansion = formatIdToTitle(expansionElement.id, "expansion");
+    currentVisibleExpansion = formatIdToTitle(expansionEl.id, "expansion");
 
-        // Find the active quest group within this expansion
-        currentQuestGroup = findActiveQuestGroup(
-          expansionElement,
-          SCROLL_THRESHOLD,
-        );
+    const questGroupEl = visibleQuest.closest('[id^="questgroup-"]');
+    if (questGroupEl) {
+      const groupName = formatIdToTitle(questGroupEl.id, "questgroup");
+      currentVisibleQuestGroup =
+        groupName.toLowerCase() !== "main" ? groupName : "";
+    } else {
+      currentVisibleQuestGroup = "";
+    }
+
+    showBreadcrumb = true;
+  }
+
+  function findFirstVisibleQuest(
+    container: HTMLElement,
+    containerRect: DOMRect,
+  ): Element | null {
+    const questItems = container.querySelectorAll('[id^="quest-"]');
+    let lastAboveQuest: Element | null = null;
+
+    for (const item of questItems) {
+      const rect = item.getBoundingClientRect();
+      if (rect.height === 0) continue;
+
+      if (rect.top < containerRect.top) {
+        lastAboveQuest = item;
+      } else if (rect.top < containerRect.bottom) {
+        return item;
+      } else {
+        break;
       }
     }
 
-    // Update component state with discovered breadcrumb context
-    currentVisibleExpansion = currentExpansion;
-    currentVisibleQuestGroup = currentQuestGroup;
-    showBreadcrumb = hasScrolledPastAnyHeader && currentExpansion !== "";
+    return lastAboveQuest;
+  }
+
+  function hideBreadcrumb(): void {
+    currentVisibleExpansion = "";
+    currentVisibleQuestGroup = "";
+    showBreadcrumb = false;
+    showExpansionDropdown = false;
   }
 
   function handleCheckboxChange(event: Event, quest: Quest) {
@@ -613,6 +644,7 @@
     }
 
     window.addEventListener("resize", handleResize);
+    window.addEventListener("click", handleClickOutsideDropdown);
   });
 
   onDestroy(() => {
@@ -622,6 +654,7 @@
     }
     if (breadcrumbRafId) cancelAnimationFrame(breadcrumbRafId);
     window.removeEventListener("resize", handleResize);
+    window.removeEventListener("click", handleClickOutsideDropdown);
     debouncedFilterQuests.cancel();
   });
 
@@ -656,46 +689,82 @@
     on:input={handleSearchInput}
   />
 
-  <!-- Floating Breadcrumb -->
-  {#if shouldShowBreadcrumb}
-    <div
-      class="hidden sm:block sticky top-0 z-10 mx-4 mb-4 bg-surface-card rounded-lg shadow-md border border-border px-4 py-3 transition-all duration-300"
-    >
-      <div class="flex items-center text-sm text-themed-tertiary font-medium">
-        <svg
-          class="w-4 h-4 mr-2 text-themed-muted"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-            clip-rule="evenodd"
-          />
-        </svg>
+  <!-- Floating Breadcrumb (always rendered to avoid layout shifts; visibility toggled) -->
+  <div
+    class="sm:block sticky top-0 z-10 transition-all duration-300
+      {shouldShowBreadcrumb
+      ? 'mx-4 mb-4 px-4 py-3 bg-surface-card rounded-lg shadow-md border border-border opacity-100'
+      : 'h-0 overflow-hidden opacity-0 pointer-events-none'}"
+  >
+    <div class="flex items-center text-sm text-themed-tertiary font-medium">
+      <div class="relative" bind:this={breadcrumbDropdownRef}>
         <button
-          on:click={() => scrollToExpansion(displayExpansion)}
-          class="text-accent-text font-semibold hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-300"
+          on:click={toggleExpansionDropdown}
+          class="flex items-center mr-2 text-themed-muted hover:text-accent-text focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-300"
+          aria-haspopup="listbox"
+          aria-expanded={showExpansionDropdown}
+          aria-label="Select expansion"
         >
-          {displayExpansion}
-        </button>
-        {#if displayQuestGroup}
           <svg
-            class="w-3 h-3 mx-2 text-themed-muted"
+            class="w-4 h-4 transition-transform duration-200 {showExpansionDropdown
+              ? 'rotate-180'
+              : ''}"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
             <path
               fill-rule="evenodd"
-              d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clip-rule="evenodd"
             />
           </svg>
-          <span class="text-themed-secondary">{displayQuestGroup}</span>
+        </button>
+        {#if showExpansionDropdown}
+          <ul
+            class="absolute top-full left-0 mt-2 min-w-[200px] bg-surface-card rounded-lg shadow-lg border border-border py-1 z-20"
+            role="listbox"
+            aria-label="Expansions"
+          >
+            {#each $filteredQuests as exp}
+              <li>
+                <button
+                  on:click={() => selectBreadcrumbExpansion(exp.name)}
+                  class="w-full text-left px-4 py-2 text-sm transition-colors duration-150
+                      {exp.name === displayExpansion
+                    ? 'text-accent-text font-semibold bg-surface-input'
+                    : 'text-themed-primary hover:bg-surface-input hover:text-accent-text'}"
+                  role="option"
+                  aria-selected={exp.name === displayExpansion}
+                >
+                  {exp.name}
+                </button>
+              </li>
+            {/each}
+          </ul>
         {/if}
       </div>
+      <button
+        on:click={() => scrollToExpansion(displayExpansion)}
+        class="text-accent-text font-semibold hover:text-accent-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent rounded transition-colors duration-300"
+      >
+        {displayExpansion}
+      </button>
+      {#if displayQuestGroup}
+        <svg
+          class="w-3 h-3 mx-2 text-themed-muted"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span class="text-themed-secondary">{displayQuestGroup}</span>
+      {/if}
     </div>
-  {/if}
+  </div>
 
   <!-- Expansion Details -->
   {#each $filteredQuests as expansion}
