@@ -519,22 +519,21 @@
     containerRect: DOMRect,
   ): Element | null {
     const questItems = container.querySelectorAll('[id^="quest-"]');
-    let lastAboveQuest: Element | null = null;
 
     for (const item of questItems) {
       const rect = item.getBoundingClientRect();
       if (rect.height === 0) continue;
 
-      if (rect.top < containerRect.top) {
-        lastAboveQuest = item;
-      } else if (rect.top < containerRect.bottom) {
+      // Quest intersects the visible container area
+      if (rect.bottom > containerRect.top && rect.top < containerRect.bottom) {
         return item;
-      } else {
-        break;
       }
+
+      // Past the viewport, stop searching
+      if (rect.top >= containerRect.bottom) break;
     }
 
-    return lastAboveQuest;
+    return null;
   }
 
   function hideBreadcrumb(): void {
