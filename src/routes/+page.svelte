@@ -91,6 +91,7 @@
     !isMobileDevice &&
     !searchQuery &&
     !isFiltering &&
+    showScrollToTop &&
     breadcrumbExpansion !== "";
 
   function getContentContainer(): HTMLElement | null {
@@ -654,12 +655,12 @@
     on:input={handleSearchInput}
   />
 
-  <!-- Floating Breadcrumb (always rendered to avoid layout shifts; visibility toggled) -->
+  <!-- Floating Breadcrumb -->
   <div
-    class="sm:block sticky top-0 z-10 transition-all duration-300
+    class="hidden sm:block sticky top-0 z-10 mx-4 px-4 py-3 rounded-lg border transition-all duration-200
       {shouldShowBreadcrumb
-      ? 'mx-4 mb-4 px-4 py-3 bg-surface-card rounded-lg shadow-md border border-border opacity-100'
-      : 'h-0 overflow-hidden opacity-0 pointer-events-none'}"
+      ? 'mb-4 bg-surface-card shadow-md border-border opacity-100'
+      : 'h-0 !py-0 !mb-0 overflow-hidden border-transparent opacity-0 pointer-events-none'}"
   >
     <div class="flex items-center text-sm text-themed-tertiary font-medium">
       <div class="relative" bind:this={breadcrumbDropdownRef}>
@@ -695,7 +696,7 @@
                 <button
                   on:click={() => selectBreadcrumbExpansion(exp.name)}
                   class="w-full text-left px-4 py-2 text-sm transition-colors duration-150
-                      {exp.name === breadcrumbExpansion
+                        {exp.name === breadcrumbExpansion
                     ? 'text-accent-text font-semibold bg-surface-input'
                     : 'text-themed-primary hover:bg-surface-input hover:text-accent-text'}"
                   role="option"
