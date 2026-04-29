@@ -16042,9 +16042,96 @@
                     "PreviousQuests": [
                         70969
                     ],
-                    "NextMSQ": null,
+                    "NextMSQ": 71006,
                     "QuestGroup": null,
                     "Image": "ui/icon/101000/101470_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 71006,
+                    "Id": "KinGmk101_05470",
+                    "Name": "In Fate's Footsteps",
+                    "Description": "Krile has a wistful glint in her eyes.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        70970
+                    ],
+                    "NextMSQ": 71007,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101493_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 71007,
+                    "Id": "KinGmk102_05471",
+                    "Name": "Two Worlds Entwined",
+                    "Description": "G'raha Tia wears a pensive expression.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        71006
+                    ],
+                    "NextMSQ": 71008,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/112000/112657_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": "the Clyteum",
+                            "Image": "ui/icon/112000/112657_hr1.tex",
+                            "ContentTypeName": "Dungeons"
+                        }
+                    ]
+                },
+                {
+                    "#": 71008,
+                    "Id": "KinGmk103_05472",
+                    "Name": "A Grave Presentiment",
+                    "Description": "Something weighs heavy on Thancred's mind.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        71007
+                    ],
+                    "NextMSQ": 71009,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101494_hr1.tex",
+                    "Unlocks": [
+                        {
+                            "Name": "the Unmaking",
+                            "Image": "ui/icon/112000/112659_hr1.tex",
+                            "ContentTypeName": "Trials"
+                        }
+                    ]
+                },
+                {
+                    "#": 71009,
+                    "Id": "KinGmk104_05473",
+                    "Name": "A Beacon from Beyond",
+                    "Description": "Zero has something to discuss with you.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        71008
+                    ],
+                    "NextMSQ": 71010,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/000000/000000_hr1.tex",
+                    "Unlocks": []
+                },
+                {
+                    "#": 71010,
+                    "Id": "KinGmk105_05474",
+                    "Name": "Trail to the Heavens",
+                    "Description": "Alphinaud continues to grapple with Halmarut's disclosure.",
+                    "ExpansionName": "Dawntrail",
+                    "EventIconType": 3,
+                    "PreviousQuests": [
+                        71009
+                    ],
+                    "NextMSQ": null,
+                    "QuestGroup": null,
+                    "Image": "ui/icon/101000/101495_hr1.tex",
                     "Unlocks": []
                 }
             ]
